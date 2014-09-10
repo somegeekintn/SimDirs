@@ -1,0 +1,413 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C9194D2B19C09A03004178EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C9194D2A19C09A03004178EB /* main.m */; };
+		C9194D2E19C09A03004178EB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9194D2D19C09A03004178EB /* AppDelegate.m */; };
+		C9194D3019C09A03004178EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9194D2F19C09A03004178EB /* Images.xcassets */; };
+		C9194D3319C09A03004178EB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9194D3119C09A03004178EB /* MainMenu.xib */; };
+		C9194D3F19C09A03004178EB /* SimDirsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9194D3E19C09A03004178EB /* SimDirsTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C9194D3919C09A03004178EB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C9194D1D19C09A03004178EB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C9194D2419C09A03004178EB;
+			remoteInfo = SimDirs;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C9194D2519C09A03004178EB /* SimDirs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimDirs.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9194D2919C09A03004178EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9194D2A19C09A03004178EB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C9194D2C19C09A03004178EB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		C9194D2D19C09A03004178EB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C9194D2F19C09A03004178EB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		C9194D3219C09A03004178EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		C9194D3819C09A03004178EB /* SimDirsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimDirsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9194D3D19C09A03004178EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9194D3E19C09A03004178EB /* SimDirsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimDirsTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C9194D2219C09A03004178EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9194D3519C09A03004178EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C9194D1C19C09A03004178EB = {
+			isa = PBXGroup;
+			children = (
+				C9194D2719C09A03004178EB /* SimDirs */,
+				C9194D3B19C09A03004178EB /* SimDirsTests */,
+				C9194D2619C09A03004178EB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C9194D2619C09A03004178EB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C9194D2519C09A03004178EB /* SimDirs.app */,
+				C9194D3819C09A03004178EB /* SimDirsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C9194D2719C09A03004178EB /* SimDirs */ = {
+			isa = PBXGroup;
+			children = (
+				C9194D2C19C09A03004178EB /* AppDelegate.h */,
+				C9194D2D19C09A03004178EB /* AppDelegate.m */,
+				C9194D2F19C09A03004178EB /* Images.xcassets */,
+				C9194D3119C09A03004178EB /* MainMenu.xib */,
+				C9194D2819C09A03004178EB /* Supporting Files */,
+			);
+			path = SimDirs;
+			sourceTree = "<group>";
+		};
+		C9194D2819C09A03004178EB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C9194D2919C09A03004178EB /* Info.plist */,
+				C9194D2A19C09A03004178EB /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C9194D3B19C09A03004178EB /* SimDirsTests */ = {
+			isa = PBXGroup;
+			children = (
+				C9194D3E19C09A03004178EB /* SimDirsTests.m */,
+				C9194D3C19C09A03004178EB /* Supporting Files */,
+			);
+			path = SimDirsTests;
+			sourceTree = "<group>";
+		};
+		C9194D3C19C09A03004178EB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C9194D3D19C09A03004178EB /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C9194D2419C09A03004178EB /* SimDirs */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9194D4219C09A03004178EB /* Build configuration list for PBXNativeTarget "SimDirs" */;
+			buildPhases = (
+				C9194D2119C09A03004178EB /* Sources */,
+				C9194D2219C09A03004178EB /* Frameworks */,
+				C9194D2319C09A03004178EB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SimDirs;
+			productName = SimDirs;
+			productReference = C9194D2519C09A03004178EB /* SimDirs.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C9194D3719C09A03004178EB /* SimDirsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9194D4519C09A03004178EB /* Build configuration list for PBXNativeTarget "SimDirsTests" */;
+			buildPhases = (
+				C9194D3419C09A03004178EB /* Sources */,
+				C9194D3519C09A03004178EB /* Frameworks */,
+				C9194D3619C09A03004178EB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C9194D3A19C09A03004178EB /* PBXTargetDependency */,
+			);
+			name = SimDirsTests;
+			productName = SimDirsTests;
+			productReference = C9194D3819C09A03004178EB /* SimDirsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C9194D1D19C09A03004178EB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0600;
+				ORGANIZATIONNAME = "Quiet Spark";
+				TargetAttributes = {
+					C9194D2419C09A03004178EB = {
+						CreatedOnToolsVersion = 6.0;
+					};
+					C9194D3719C09A03004178EB = {
+						CreatedOnToolsVersion = 6.0;
+						TestTargetID = C9194D2419C09A03004178EB;
+					};
+				};
+			};
+			buildConfigurationList = C9194D2019C09A03004178EB /* Build configuration list for PBXProject "SimDirs" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C9194D1C19C09A03004178EB;
+			productRefGroup = C9194D2619C09A03004178EB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C9194D2419C09A03004178EB /* SimDirs */,
+				C9194D3719C09A03004178EB /* SimDirsTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C9194D2319C09A03004178EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9194D3019C09A03004178EB /* Images.xcassets in Resources */,
+				C9194D3319C09A03004178EB /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9194D3619C09A03004178EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C9194D2119C09A03004178EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9194D2E19C09A03004178EB /* AppDelegate.m in Sources */,
+				C9194D2B19C09A03004178EB /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9194D3419C09A03004178EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9194D3F19C09A03004178EB /* SimDirsTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C9194D3A19C09A03004178EB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C9194D2419C09A03004178EB /* SimDirs */;
+			targetProxy = C9194D3919C09A03004178EB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C9194D3119C09A03004178EB /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C9194D3219C09A03004178EB /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C9194D4019C09A03004178EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C9194D4119C09A03004178EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		C9194D4319C09A03004178EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SimDirs/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		C9194D4419C09A03004178EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SimDirs/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		C9194D4619C09A03004178EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SimDirsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimDirs.app/Contents/MacOS/SimDirs";
+			};
+			name = Debug;
+		};
+		C9194D4719C09A03004178EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SimDirsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimDirs.app/Contents/MacOS/SimDirs";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C9194D2019C09A03004178EB /* Build configuration list for PBXProject "SimDirs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9194D4019C09A03004178EB /* Debug */,
+				C9194D4119C09A03004178EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9194D4219C09A03004178EB /* Build configuration list for PBXNativeTarget "SimDirs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9194D4319C09A03004178EB /* Debug */,
+				C9194D4419C09A03004178EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		C9194D4519C09A03004178EB /* Build configuration list for PBXNativeTarget "SimDirsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9194D4619C09A03004178EB /* Debug */,
+				C9194D4719C09A03004178EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C9194D1D19C09A03004178EB /* Project object */;
+}
