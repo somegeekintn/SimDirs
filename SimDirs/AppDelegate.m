@@ -11,7 +11,7 @@
 @interface AppDelegate ()
 
 @property (nonatomic, weak) IBOutlet NSWindow		*window;
-@property (nonatomic, weak) IBOutlet NSTableView	*locationTable;
+@property (nonatomic, weak) IBOutlet NSOutlineView	*locationOutline;
 @property (nonatomic, strong) NSMutableArray		*simLocations;
 
 @end
@@ -20,13 +20,18 @@
 
 - (void) applicationDidFinishLaunching: (NSNotification *) inNotification
 {
-	[self.locationTable setDoubleAction: @selector(handleRowSelect:)];
-	[self discoverSimLocations];
-	[self.locationTable reloadData];
+	[self.locationOutline setDoubleAction: @selector(handleRowSelect:)];
+	[self updateLocations];
 }
 
 - (void) applicationWillTerminate: (NSNotification *) inNotification
 {
+}
+
+- (void) updateLocations
+{
+	[self discoverSimLocations];
+	[self.locationOutline reloadData];
 }
 
 - (void) discoverSimLocations
@@ -53,20 +58,73 @@
 						
 						plistInfo = [NSPropertyListSerialization propertyListWithData: plistData options: NSPropertyListImmutable format: nil error: nil];
 						if (plistInfo != nil) {
-							NSString		*name = plistInfo[@"name"];
-							NSString		*runtime = plistInfo[@"runtime"];
-							NSRange			runtimeRange;
+							NSMutableDictionary		*deviceInfo = [NSMutableDictionary dictionary];
+							NSString				*name = plistInfo[@"name"];
+							NSString				*runtime = plistInfo[@"runtime"];
+							NSRange					runtimeRange;
 							
 							runtimeRange = [runtime rangeOfString: @"iOS.*" options: NSRegularExpressionSearch];
 							if (runtimeRange.location != NSNotFound) {
 								NSArray		*versionComponents = [[runtime substringWithRange: runtimeRange] componentsSeparatedByString: @"-"];
 								
-								[self.simLocations addObject: @{
-									@"path" : [baseInfoURL path],
-									@"title" : [NSString stringWithFormat: @"%@: %@ %@.%@", name, versionComponents[0], versionComponents[1], versionComponents[2]],
-								}];
+								deviceInfo[@"path"] = [baseInfoURL path];
+								deviceInfo[@"title"] = [NSString stringWithFormat: @"%@: %@ %@.%@", name, versionComponents[0], versionComponents[1], versionComponents[2]];
+								[self updateDeviceInfoForApps: deviceInfo];
+								[self.simLocations addObject: deviceInfo];
 							}
 						}
+					}
+				}
+			}
+		}
+	}
+}
+
+- (void) updateDeviceInfoForApps: (NSMutableDictionary *) inDeviceInfo
+{
+	NSFileManager	*fileManager = [NSFileManager defaultManager];
+	NSURL			*backboardInfoURL = [[NSURL alloc] initFileURLWithPath: inDeviceInfo[@"path"]];
+	
+	backboardInfoURL = [backboardInfoURL URLByAppendingPathComponent: @"data/Library/BackBoard/applicationState.plist"];
+	if (backboardInfoURL != nil && [fileManager fileExistsAtPath: [backboardInfoURL path]]) {
+		NSData			*plistData = [NSData dataWithContentsOfURL: backboardInfoURL];
+		NSDictionary	*plistInfo;
+						
+		plistInfo = [NSPropertyListSerialization propertyListWithData: plistData options: NSPropertyListImmutable format: nil error: nil];
+		for (NSString *bundleID in plistInfo) {
+			if ([bundleID rangeOfString: @"com.apple" options: NSAnchoredSearch].location == NSNotFound) {
+				NSMutableArray			*appPaths = [NSMutableArray array];
+				NSDictionary			*appInfo = plistInfo[bundleID][@"compatibilityInfo"];
+				
+				if (appInfo != nil) {
+					NSArray		*pathKeys = @[
+									@{ @"title" : @"Bundle Location", @"pathKey" : @"bundlePath" },
+									@{ @"title" : @"Sandbox Location", @"pathKey" : @"sandboxPath" } ];
+					
+					[pathKeys enumerateObjectsUsingBlock: ^(id inObject, NSUInteger inIndex, BOOL *outStop) {
+						NSString	*appPath = appInfo[inObject[@"pathKey"]];
+						
+//NSLog(@"test %@ - %@", appPath, [fileManager fileExistsAtPath: appPath] ? @"YES" : @"NO");
+						if (appPath != nil && [fileManager fileExistsAtPath: appPath]) {
+							[appPaths addObject: @{
+								@"title" : inObject[@"title"],
+								@"path" : appPath
+							}];
+						}
+					}];
+
+					if ([appPaths count]) {
+						NSMutableArray			*deviceApps = inDeviceInfo[@"children"];
+						
+						if (deviceApps == nil) {
+							deviceApps = [NSMutableArray array];
+							inDeviceInfo[@"children"] = deviceApps;
+						}
+						
+						[deviceApps addObject: @{
+							@"title" : bundleID,
+							@"children" : appPaths
+						}];
 					}
 				}
 			}
@@ -78,38 +136,67 @@
 
 - (IBAction) handleRowSelect: (id) inSender
 {
-	if (inSender == self.locationTable) {
-		NSInteger		clickedRow = [self.locationTable clickedRow];
+	if (inSender == self.locationOutline) {
+		id				item = [self.locationOutline itemAtRow: [self.locationOutline clickedRow]];
 		
-		if (clickedRow != -1) {
-			NSDictionary		*rowInfo = [self.simLocations objectAtIndex: clickedRow];
-			NSURL				*devicePathURL = [[NSURL alloc] initFileURLWithPath: rowInfo[@"path"]];
-			
-			if (devicePathURL != nil) {
-				[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs: @[ devicePathURL ]];
+		if (item != nil) {
+			if (item[@"path"] != nil) {
+				NSURL		*itemPathURL = [[NSURL alloc] initFileURLWithPath: item[@"path"]];
+
+				if (itemPathURL != nil) {
+					[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs: @[ itemPathURL ]];
+				}
+			}
+			else {
+				if ([self.locationOutline isItemExpanded: item]) {
+					[self.locationOutline collapseItem: item];
+				}
+				else {
+					[self.locationOutline expandItem: item];
+				}
 			}
 		}
 	}
 }
 
-#pragma mark - NSTableViewDataSource
-
-- (NSInteger) numberOfRowsInTableView: (NSTableView *) inTableView
+- (IBAction) handleUpdate: (id) inSender
 {
-	return [self.simLocations count];
+	[self updateLocations];
 }
 
-- (id) tableView: (NSTableView *) inTableView
-	objectValueForTableColumn: (NSTableColumn *) inTableColumn
-	row: (NSInteger) inRow
+#pragma mark - NSOutlineViewDataSource
+
+- (NSInteger) outlineView: (NSOutlineView *) inOutlineView
+	numberOfChildrenOfItem: (id) inItem
 {
-	id			cellValue = nil;
+	NSArray		*target = inItem == nil ? self.simLocations : inItem[@"children"];
 	
-	if ([inTableColumn.identifier isEqualToString: @"title"]) {
-		cellValue = [[self.simLocations objectAtIndex: inRow] objectForKey: @"title"];
-	}
-
-	return cellValue;
+	return [target count];
 }
+
+- (id) outlineView: (NSOutlineView *) inOutlineView
+	child: (NSInteger) inIndex
+	ofItem: (id) inItem
+{
+	NSArray		*target = inItem == nil ? self.simLocations : inItem[@"children"];
+
+	return [target objectAtIndex: inIndex];
+}
+
+- (BOOL) outlineView: (NSOutlineView *) inOutlineView
+	isItemExpandable: (id) inItem
+{
+	NSArray		*target = inItem == nil ? self.simLocations : inItem[@"children"];
+
+	return [target count] ? YES : NO;
+}
+
+- (id) outlineView: (NSOutlineView *) inOutlineView
+	objectValueForTableColumn: (NSTableColumn *) inTableColumn
+	byItem: (id) inItem
+{
+	return [inItem objectForKey: @"title"];
+}
+
 
 @end
