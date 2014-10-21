@@ -28,6 +28,10 @@
 {
 }
 
+-(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
+    return YES;
+}
+
 - (void) updateLocations
 {
 	[self discoverSimLocations];
