@@ -12,6 +12,9 @@
 		C9194D3019C09A03004178EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9194D2F19C09A03004178EB /* Images.xcassets */; };
 		C9194D3319C09A03004178EB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9194D3119C09A03004178EB /* MainMenu.xib */; };
 		C9194D3F19C09A03004178EB /* SimDirsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9194D3E19C09A03004178EB /* SimDirsTests.m */; };
+		C9B7078A1A03A5C70001CB77 /* QSSimAppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B707891A03A5C70001CB77 /* QSSimAppInfo.m */; };
+		C9B707901A03A63E0001CB77 /* QSSimDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7078F1A03A63E0001CB77 /* QSSimDeviceInfo.m */; };
+		C9B707931A03B6C30001CB77 /* QSSimViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B707921A03B6C30001CB77 /* QSSimViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +38,12 @@
 		C9194D3819C09A03004178EB /* SimDirsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimDirsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9194D3D19C09A03004178EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C9194D3E19C09A03004178EB /* SimDirsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimDirsTests.m; sourceTree = "<group>"; };
+		C9B707881A03A5C70001CB77 /* QSSimAppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSimAppInfo.h; sourceTree = "<group>"; };
+		C9B707891A03A5C70001CB77 /* QSSimAppInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSimAppInfo.m; sourceTree = "<group>"; };
+		C9B7078E1A03A63E0001CB77 /* QSSimDeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSimDeviceInfo.h; sourceTree = "<group>"; };
+		C9B7078F1A03A63E0001CB77 /* QSSimDeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSimDeviceInfo.m; sourceTree = "<group>"; };
+		C9B707911A03B6C30001CB77 /* QSSimViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSimViewController.h; sourceTree = "<group>"; };
+		C9B707921A03B6C30001CB77 /* QSSimViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSimViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +87,12 @@
 			children = (
 				C9194D2C19C09A03004178EB /* AppDelegate.h */,
 				C9194D2D19C09A03004178EB /* AppDelegate.m */,
+				C9B707881A03A5C70001CB77 /* QSSimAppInfo.h */,
+				C9B707891A03A5C70001CB77 /* QSSimAppInfo.m */,
+				C9B7078E1A03A63E0001CB77 /* QSSimDeviceInfo.h */,
+				C9B7078F1A03A63E0001CB77 /* QSSimDeviceInfo.m */,
+				C9B707911A03B6C30001CB77 /* QSSimViewController.h */,
+				C9B707921A03B6C30001CB77 /* QSSimViewController.m */,
 				C9194D2F19C09A03004178EB /* Images.xcassets */,
 				C9194D3119C09A03004178EB /* MainMenu.xib */,
 				C9194D2819C09A03004178EB /* Supporting Files */,
@@ -211,6 +226,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9194D2E19C09A03004178EB /* AppDelegate.m in Sources */,
+				C9B707901A03A63E0001CB77 /* QSSimDeviceInfo.m in Sources */,
+				C9B7078A1A03A5C70001CB77 /* QSSimAppInfo.m in Sources */,
+				C9B707931A03B6C30001CB77 /* QSSimViewController.m in Sources */,
 				C9194D2B19C09A03004178EB /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -398,6 +416,7 @@
 				C9194D4419C09A03004178EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C9194D4519C09A03004178EB /* Build configuration list for PBXNativeTarget "SimDirsTests" */ = {
 			isa = XCConfigurationList;
@@ -406,6 +425,7 @@
 				C9194D4719C09A03004178EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
