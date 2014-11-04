@@ -40,16 +40,8 @@
 
 - (void) updateFromLastLaunchMapInfo: (NSDictionary *) inMapInfo
 {
-	NSString	*path;
-	
-	path = inMapInfo[@"BundleContainer"];
-	if (self.bundlePath == nil && [self testPath: path]) {
-		self.bundlePath = path;
-	}
-	path = inMapInfo[@"Container"];
-	if (self.sandBoxPath == nil && [self testPath: path]) {
-		self.sandBoxPath = path;
-	}
+	self.bundlePath = inMapInfo[@"BundleContainer"];
+	self.sandBoxPath = inMapInfo[@"Container"];
 }
 
 - (void) updateFromAppStateInfo: (NSDictionary *) inStateInfo
@@ -57,16 +49,8 @@
 	NSDictionary	*compatInfo = inStateInfo[@"compatibilityInfo"];
 	
 	if (compatInfo != nil) {
-		NSString	*path;
-		
-		path = compatInfo[@"bundlePath"];
-		if (self.bundlePath == nil && [self testPath: path]) {
-			self.bundlePath = path;
-		}
-		path = compatInfo[@"sandboxPath"];
-		if (self.sandBoxPath == nil && [self testPath: path]) {
-			self.sandBoxPath = path;
-		}
+		self.bundlePath = compatInfo[@"bundlePath"];
+		self.sandBoxPath = compatInfo[@"sandboxPath"];
 	}
 }
 
@@ -85,7 +69,9 @@
 			NSString	*appPath = [appURL path];
 			
 			if ([[appPath lastPathComponent] rangeOfString: @".app"].location != NSNotFound) {
-				self.bundlePath = appPath;
+				// setter won't let us reset so access ivar directly
+				_bundlePath = appPath;
+				_childItems = nil;
 				break;
 			}
 		}
@@ -246,14 +232,18 @@
 
 - (void) setBundlePath: (NSString *) inBundlePath
 {
-	_bundlePath = inBundlePath;
-	_childItems = nil;
+	if (_bundlePath == nil && [self testPath: inBundlePath]) {
+		_bundlePath = inBundlePath;
+		_childItems = nil;
+	}
 }
 
 - (void) setSandBoxPath: (NSString *) inSandBoxPath
 {
-	_sandBoxPath = inSandBoxPath;
-	_childItems = nil;
+	if (_sandBoxPath == nil && [self testPath: inSandBoxPath]) {
+		_sandBoxPath = inSandBoxPath;
+		_childItems = nil;
+	}
 }
 
 - (NSString *) title

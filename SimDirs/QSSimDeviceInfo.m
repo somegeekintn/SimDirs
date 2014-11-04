@@ -74,6 +74,7 @@
 						
 						[self gatherAppInfoFromLastLaunchMap];
 						[self gatherAppInfoFromAppState];
+						[self gatherAppInfoFromInstallLogs];
 						[self cleanupAndRefineAppList];
 						
 						initOK = YES;
@@ -129,10 +130,10 @@
 - (void) gatherAppInfoFromAppState
 {
 	NSFileManager	*fileManager = [NSFileManager defaultManager];
-	NSURL			*apStateInfoURL = [self.baseURL URLByAppendingPathComponent: @"data/Library/BackBoard/applicationState.plist"];
+	NSURL			*appStateInfoURL = [self.baseURL URLByAppendingPathComponent: @"data/Library/BackBoard/applicationState.plist"];
 	
-	if (apStateInfoURL != nil && [fileManager fileExistsAtPath: [apStateInfoURL path]]) {
-		NSData			*plistData = [NSData dataWithContentsOfURL: apStateInfoURL];
+	if (appStateInfoURL != nil && [fileManager fileExistsAtPath: [appStateInfoURL path]]) {
+		NSData			*plistData = [NSData dataWithContentsOfURL: appStateInfoURL];
 		NSDictionary	*stateInfo;
 		
 		stateInfo = [NSPropertyListSerialization propertyListWithData: plistData options: NSPropertyListImmutable format: nil error: nil];
@@ -144,6 +145,75 @@
 				if (appInfo != nil) {
 					[appInfo updateFromAppStateInfo: stateInfo[bundleID]];
 				}
+			}
+		}
+	}
+}
+
+// mobile_installation.log.0 is my least favorite, most fragile way to scan for app installations
+// try this after everything else
+- (void) gatherAppInfoFromInstallLogs
+{
+	NSFileManager	*fileManager = [NSFileManager defaultManager];
+	NSURL			*installLogURL = [self.baseURL URLByAppendingPathComponent: @"data/Library/Logs/MobileInstallation/mobile_installation.log.0"];
+	
+	if (installLogURL != nil && [fileManager fileExistsAtPath: [installLogURL path]]) {
+		NSString		*installLog = [[NSString alloc] initWithContentsOfURL: installLogURL usedEncoding: nil error: nil];
+
+		if (installLog != nil) {
+			// check these from most recent to oldest
+			for (NSString *line in [[installLog componentsSeparatedByCharactersInSet: [NSCharacterSet newlineCharacterSet]] reverseObjectEnumerator]) {
+				if ([line rangeOfString: @"com.apple"].location == NSNotFound) {
+					NSRange		logHintRange;
+
+					logHintRange = [line rangeOfString: @"makeContainerLiveReplacingContainer"];
+					if (logHintRange.location != NSNotFound) {
+						[self extractBundleLocationFromLogEntry: line];
+					}
+					
+					logHintRange = [line rangeOfString: @"_refreshUUIDForContainer"];
+					if (logHintRange.location != NSNotFound) {
+						[self extractSandboxLocationFromLogEntry: line];
+					}
+				}
+			}
+		}
+	}
+}
+
+- (void) extractBundleLocationFromLogEntry: (NSString *) inLine
+{
+	NSArray		*logComponents = [inLine componentsSeparatedByString: @" "];
+	NSString	*bundlePath = [logComponents lastObject];
+	
+	if (bundlePath != nil) {
+		NSInteger	bundleIDIndex = [logComponents count] - 3;
+		
+		if (bundleIDIndex >= 0) {
+			NSString		*bundleID = [logComponents objectAtIndex: bundleIDIndex];
+			QSSimAppInfo	*appInfo = [self appInfoWithBundleID: bundleID];
+				
+			if (appInfo != nil) {
+				appInfo.bundlePath = bundlePath;
+			}
+		}
+	}
+}
+
+- (void) extractSandboxLocationFromLogEntry: (NSString *) inLine
+{
+	NSArray		*logComponents = [inLine componentsSeparatedByString: @" "];
+	NSString	*sandboxPath = [logComponents lastObject];
+	
+	if (sandboxPath != nil) {
+		NSInteger	bundleIDIndex = [logComponents count] - 5;
+		
+		if (bundleIDIndex >= 0) {
+			NSString		*bundleID = [logComponents objectAtIndex: bundleIDIndex];
+			QSSimAppInfo	*appInfo = [self appInfoWithBundleID: bundleID];
+				
+			if (appInfo != nil) {
+				appInfo.sandBoxPath = sandboxPath;
 			}
 		}
 	}
