@@ -259,9 +259,14 @@
 	return [self.appList count] ? YES : NO;
 }
 
-- (NSString *) outlineItemValueForColumn: (NSTableColumn *) inTableColumn
+- (NSString *) outlineItemTitle
 {
-	return [inTableColumn.identifier isEqualToString: @"title"] ? self.title : nil;
+	return self.title;
+}
+
+- (NSImage *) outlineItemImage
+{
+	return nil;
 }
 
 - (BOOL) outlineItemPerformAction

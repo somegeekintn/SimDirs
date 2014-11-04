@@ -72,10 +72,10 @@
 
 - (void) refinePaths
 {
-	NSURL		*infoURL;
+	NSFileManager	*fileManager = [NSFileManager defaultManager];
+	NSURL			*infoURL;
 	
 	if (self.bundlePath != nil && [[self.bundlePath lastPathComponent] rangeOfString: @".app"].location == NSNotFound) {
-		NSFileManager			*fileManager = [NSFileManager defaultManager];
 		NSURL					*bundleURL = [[NSURL alloc] initFileURLWithPath: self.bundlePath];
 		NSURL					*appURL;
 		NSDirectoryEnumerator	*dirEnum = [fileManager enumeratorAtURL: bundleURL includingPropertiesForKeys: nil
@@ -93,7 +93,7 @@
 	
 	infoURL = [[NSURL alloc] initFileURLWithPath: self.bundlePath];
 	infoURL = [infoURL URLByAppendingPathComponent: @"Info.plist"];
-	if (infoURL != nil && [[NSFileManager defaultManager] fileExistsAtPath: [infoURL path]]) {
+	if (infoURL != nil && [fileManager fileExistsAtPath: [infoURL path]]) {
 		NSData		*plistData = [NSData dataWithContentsOfURL: infoURL];
 
 		if (plistData != nil) {
@@ -101,12 +101,65 @@
 			
 			plistInfo = [NSPropertyListSerialization propertyListWithData: plistData options: NSPropertyListImmutable format: nil error: nil];
 			if (plistInfo != nil) {
-				self.appName = plistInfo[(__bridge NSString *)kCFBundleNameKey];
-				self.appShortVersion = plistInfo[@"CFBundleShortVersionString"];
-				self.appVersion = plistInfo[(__bridge NSString *)kCFBundleVersionKey];
+				[self discoverAppInfoFromPList: plistInfo];
 			}
 		}
 	}
+}
+
+- (void) discoverAppInfoFromPList: (NSDictionary *) inPListInfo
+{
+	NSDictionary	*bundleIcons = inPListInfo[@"CFBundleIcons"];
+	
+	self.appName = inPListInfo[(__bridge NSString *)kCFBundleNameKey];
+	self.appShortVersion = inPListInfo[@"CFBundleShortVersionString"];
+	self.appVersion = inPListInfo[(__bridge NSString *)kCFBundleVersionKey];
+	
+	if (bundleIcons != nil) {
+		NSArray			*bundleIconFiles = bundleIcons[@"CFBundlePrimaryIcon"][@"CFBundleIconFiles"];
+		
+		if (bundleIconFiles) {
+			for (NSString *iconName in bundleIconFiles) {
+				NSString	*fullIconName = iconName;
+				NSURL		*iconURL;
+				
+				if (![iconName.pathExtension length]) {
+					fullIconName = [iconName stringByAppendingPathExtension: @"png"];
+				}
+				iconURL = [[[NSURL alloc] initFileURLWithPath: self.bundlePath] URLByAppendingPathComponent: fullIconName];
+				self.appIcon = [self imageAtURL: iconURL withMinimumWidth: 32.0];
+
+				if (self.appIcon == nil) {
+					fullIconName = [NSString stringWithFormat: @"%@@2x.png", iconName];
+					iconURL = [[[NSURL alloc] initFileURLWithPath: self.bundlePath] URLByAppendingPathComponent: fullIconName];
+					self.appIcon = [self imageAtURL: iconURL withMinimumWidth: 32.0];
+					if (self.appIcon != nil) {
+						break;
+					}
+				}
+				else {
+					break;
+				}
+			}
+		}
+	}
+}
+
+- (NSImage *) imageAtURL: (NSURL *) inImageURL
+	withMinimumWidth: (CGFloat) inMinWidth
+{
+	NSImage		*image = nil;
+	
+	if (inImageURL != nil && [[NSFileManager defaultManager] fileExistsAtPath: [inImageURL path]]) {
+		image = [[NSImage alloc] initWithContentsOfURL: inImageURL];
+		if (image != nil) {
+			if (image.size.width < inMinWidth) {
+				image = nil;
+			}
+		}
+	}
+	
+	return image;
 }
 
 #pragma mark - QSOutlineProvider
@@ -128,9 +181,14 @@
 	return [self outlineChildCount] ? YES : NO;
 }
 
-- (NSString *) outlineItemValueForColumn: (NSTableColumn *) inTableColumn
+- (NSString *) outlineItemTitle
 {
-	return [inTableColumn.identifier isEqualToString: @"title"] ? self.title : nil;
+	return self.title;
+}
+
+- (NSImage *) outlineItemImage
+{
+	return self.appIcon;
 }
 
 - (BOOL) outlineItemPerformAction

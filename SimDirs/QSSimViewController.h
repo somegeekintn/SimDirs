@@ -13,7 +13,8 @@
 - (NSInteger)			outlineChildCount;
 - (id)					outlineChildAtIndex: (NSInteger) inIndex;
 - (BOOL)				outlineItemIsExpanable;
-- (NSString *)			outlineItemValueForColumn: (NSTableColumn *) inTableColumn;
+- (NSString *)			outlineItemTitle;
+- (NSImage *)			outlineItemImage;
 
 - (BOOL)				outlineItemPerformAction;
 - (BOOL)				outlineItemPerformActionForChild: (id) inChild;

@@ -14,6 +14,7 @@
 
 @property (nonatomic, weak) IBOutlet NSOutlineView	*locationOutline;
 @property (nonatomic, strong) NSArray				*deviceList;
+@property (nonatomic, assign) BOOL					didAwake;
 
 @end
 
@@ -22,10 +23,15 @@
 
 - (void) awakeFromNib
 {
-	[self reloadOutine];
+	[super awakeFromNib];
+	
+	if (!self.didAwake) {
+		[self reloadOutine];
 
-	[self.locationOutline setTarget: self];
-	[self.locationOutline setDoubleAction: @selector(handleRowSelect:)];
+		[self.locationOutline setTarget: self];
+		[self.locationOutline setDoubleAction: @selector(handleRowSelect:)];
+		self.didAwake = YES;
+	}
 }
 
 - (void) reloadOutine
@@ -90,18 +96,47 @@
 	return expandable;
 }
 
-- (id) outlineView: (NSOutlineView *) inOutlineView
-	objectValueForTableColumn: (NSTableColumn *) inTableColumn
-	byItem: (id) inItem
+#pragma mark - NSOutlineViewDelegate
+
+- (NSView *) outlineView: (NSOutlineView *) inOutlineView
+	viewForTableColumn: (NSTableColumn *) inTableColumn
+	item: (id) inItem
 {
-	if ([inItem conformsToProtocol: @protocol(QSOutlineProvider)]) {
-		inItem = [inItem outlineItemValueForColumn: inTableColumn];
-	}
-	else if (![inTableColumn.identifier isEqualToString: @"title"]) {
-		inItem = nil;
+	NSTableCellView		*cellView = nil;
+	
+	if ([inTableColumn.identifier isEqualToString: @"title"]) {
+		NSString		*itemTitle = inItem;
+		NSImage			*itemImage = nil;
+
+		cellView = [inOutlineView makeViewWithIdentifier: @"ItemCell" owner: self];
+	
+		if ([inItem conformsToProtocol: @protocol(QSOutlineProvider)]) {
+			itemTitle = [inItem outlineItemTitle];
+			itemImage = [inItem outlineItemImage];
+		}
+
+		cellView = [inOutlineView makeViewWithIdentifier: itemImage != nil ? @"ImageCell" : @"TextCell" owner: self];
+		cellView.textField.stringValue = itemTitle;
+		cellView.imageView.image = itemImage;
 	}
 	
-	return inItem;
+	return cellView;
+}
+
+- (CGFloat) outlineView: (NSOutlineView *) inOutlineView
+	heightOfRowByItem: (id) inItem
+{
+	CGFloat		rowHeight = 17.0f;
+	
+	if ([inItem conformsToProtocol: @protocol(QSOutlineProvider)]) {
+		NSImage			*itemImage = [inItem outlineItemImage];
+		
+		if (itemImage != nil) {
+			rowHeight = 24.0f;
+		}
+	}
+
+	return rowHeight;
 }
 
 #pragma mark - Handlers

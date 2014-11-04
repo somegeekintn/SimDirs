@@ -22,6 +22,7 @@
 @property (nonatomic, strong) NSString		*appName;
 @property (nonatomic, strong) NSString		*appShortVersion;
 @property (nonatomic, strong) NSString		*appVersion;
+@property (nonatomic, strong) NSImage		*appIcon;
 
 @property (nonatomic, strong) NSString		*bundlePath;
 @property (nonatomic, strong) NSString		*sandBoxPath;
