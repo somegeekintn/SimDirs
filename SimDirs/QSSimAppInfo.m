@@ -129,6 +129,10 @@
 			}
 		}
 	}
+	
+	if (self.appIcon == nil) {
+		self.appIcon = [NSImage imageNamed: @"defaultIcon"];
+	}
 }
 
 - (NSImage *) imageAtURL: (NSURL *) inImageURL
