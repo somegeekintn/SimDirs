@@ -7,13 +7,32 @@
 //
 
 #import "QSSimViewController.h"
+#import "QSSimAppInfo.h"
 #import "QSSimDeviceInfo.h"
 
 
 @interface QSSimViewController ()
 
 @property (nonatomic, weak) IBOutlet NSOutlineView	*locationOutline;
+@property (nonatomic, weak) IBOutlet NSTabView		*infoTabView;
+
+// Device outlets
+@property (nonatomic, weak) IBOutlet NSTextField	*deviceModel;
+@property (nonatomic, weak) IBOutlet NSTextField	*deviceVersion;
+@property (nonatomic, weak) IBOutlet NSTextField	*deviceUDID;
+@property (nonatomic, weak) IBOutlet NSTextField	*devicePath;
+
+// App outlets
+@property (nonatomic, weak) IBOutlet NSImageView	*appIcon;
+@property (nonatomic, weak) IBOutlet NSTextField	*appName;
+@property (nonatomic, weak) IBOutlet NSTextField	*appBundleID;
+@property (nonatomic, weak) IBOutlet NSTextField	*appVersion;
+@property (nonatomic, weak) IBOutlet NSTextField	*appBundlePath;
+@property (nonatomic, weak) IBOutlet NSTextField	*appSandboxPath;
+
 @property (nonatomic, strong) NSArray				*deviceList;
+@property (nonatomic, strong) QSSimDeviceInfo		*selectedDevice;
+@property (nonatomic, strong) QSSimAppInfo			*selectedApp;
 @property (nonatomic, assign) BOOL					didAwake;
 
 @end
@@ -126,7 +145,7 @@
 - (CGFloat) outlineView: (NSOutlineView *) inOutlineView
 	heightOfRowByItem: (id) inItem
 {
-	CGFloat		rowHeight = 17.0f;
+	CGFloat		rowHeight = 20.0f;
 	
 	if ([inItem conformsToProtocol: @protocol(QSOutlineProvider)]) {
 		NSImage			*itemImage = [inItem outlineItemImage];
@@ -139,7 +158,86 @@
 	return rowHeight;
 }
 
+- (void) outlineViewSelectionDidChange: (NSNotification *) inNotification
+{
+	NSInteger	row = [self.locationOutline selectedRow];
+	BOOL		selectedTab = NO;
+	
+	self.selectedDevice = nil;
+	self.selectedApp = nil;
+	
+	if (row != -1) {
+		id				item = [self.locationOutline itemAtRow: row];
+		
+		if ([item isKindOfClass: [QSSimDeviceInfo class]]) {
+			self.selectedDevice = item;
+			[self updateDeviceTabWithSelection];
+			
+			[self.infoTabView selectTabViewItemWithIdentifier: @"device"];
+			selectedTab = YES;
+		}
+		if ([item isKindOfClass: [QSSimAppInfo class]]) {
+			self.selectedApp = item;
+			[self updateAppTabWithSelection];
+			
+			[self.infoTabView selectTabViewItemWithIdentifier: @"app"];
+			selectedTab = YES;
+		}
+	}
+
+	if (!selectedTab) {
+		[self.infoTabView selectTabViewItemWithIdentifier: @"empty"];
+	}
+}
+
+#pragma mark - Updating
+
+- (void) updateDeviceTabWithSelection
+{
+	self.deviceModel.stringValue = self.selectedDevice.name;
+	self.deviceVersion.stringValue = self.selectedDevice.version;
+	self.deviceUDID.stringValue = self.selectedDevice.udid;
+	self.devicePath.stringValue = [self.selectedDevice.baseURL path];
+}
+
+- (void) updateAppTabWithSelection
+{
+	NSString	*bundlePath = self.selectedApp.bundlePath;
+	
+	if ([[bundlePath lastPathComponent] rangeOfString: @".app"].location != NSNotFound) {
+		bundlePath = [bundlePath stringByDeletingLastPathComponent];
+	}
+	
+	self.appIcon.image = self.selectedApp.appIcon;
+	self.appName.stringValue = self.selectedApp.appName;
+	self.appBundleID.stringValue = self.selectedApp.bundleID;
+	self.appVersion.stringValue = self.selectedApp.fullVersion;
+	self.appBundlePath.stringValue = bundlePath;
+	self.appSandboxPath.stringValue = self.selectedApp.sandboxPath;
+}
+
 #pragma mark - Handlers
+
+- (void) openSelectedDeviceLocation: (id) inSender
+{
+	if (self.selectedDevice != nil) {
+		[self.selectedDevice openDeviceLocation];
+	}
+}
+
+- (void) openSelectedAppBundleLoc: (id) inSender
+{
+	if (self.selectedApp != nil) {
+		[self.selectedApp openBundleLocation];
+	}
+}
+
+- (void) openSelectedAppSandboxLoc: (id) inSender
+{
+	if (self.selectedApp != nil) {
+		[self.selectedApp openSandboxLocation];
+	}
+}
 
 - (void) handleRowSelect: (id) inSender
 {

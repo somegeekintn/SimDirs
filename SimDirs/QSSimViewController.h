@@ -23,4 +23,8 @@
 
 @interface QSSimViewController : NSObject
 
+- (IBAction)			openSelectedDeviceLocation: (id) inSender;
+- (IBAction)			openSelectedAppBundleLoc: (id) inSender;
+- (IBAction)			openSelectedAppSandboxLoc: (id) inSender;
+
 @end

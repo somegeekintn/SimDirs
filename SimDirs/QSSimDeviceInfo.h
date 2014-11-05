@@ -9,13 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "QSSimViewController.h"
 
+
 @interface QSSimDeviceInfo : NSObject <QSOutlineProvider>
 
 + (NSArray *)		gatherDeviceLocations;
 
+- (void)			openDeviceLocation;
+
 @property (nonatomic, strong) NSURL			*baseURL;
 @property (nonatomic, strong) NSString		*name;
-@property (nonatomic, strong) NSString		*model;
+@property (nonatomic, strong) NSString		*udid;
 @property (nonatomic, strong) NSString		*version;
 @property (nonatomic, readonly) NSString	*title;
 

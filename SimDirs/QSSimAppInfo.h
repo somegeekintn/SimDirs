@@ -18,6 +18,9 @@
 - (void)		updateFromAppStateInfo: (NSDictionary *) inStateInfo;
 - (void)		refinePaths;
 
+- (void)		openBundleLocation;
+- (void)		openSandboxLocation;
+
 @property (nonatomic, strong) NSString		*bundleID;
 @property (nonatomic, strong) NSString		*appName;
 @property (nonatomic, strong) NSString		*appShortVersion;
@@ -25,8 +28,9 @@
 @property (nonatomic, strong) NSImage		*appIcon;
 
 @property (nonatomic, strong) NSString		*bundlePath;
-@property (nonatomic, strong) NSString		*sandBoxPath;
+@property (nonatomic, strong) NSString		*sandboxPath;
 @property (nonatomic, readonly) NSString	*title;
+@property (nonatomic, readonly) NSString	*fullVersion;
 @property (nonatomic, readonly) BOOL		hasValidPaths;
 
 @end

@@ -68,7 +68,7 @@
 						NSArray		*versionComponents = [[runtime substringWithRange: runtimeRange] componentsSeparatedByString: @"-"];
 						
 						self.name = plistInfo[@"name"];
-						self.model = versionComponents[0];
+						self.udid = plistInfo[@"UDID"];
 						self.version = [NSString stringWithFormat: @"%@.%@", versionComponents[1], versionComponents[2]];
 						self.appList = [NSMutableArray array];
 						
@@ -99,7 +99,7 @@
 		[childDescriptions addObject: [appInfo description]];
 	}
 	
-	return [NSString stringWithFormat: @"%@: %@ %@ %@", self.name, self.model, self.version, childDescriptions];
+	return [NSString stringWithFormat: @"%@: %@ %@", self.name, self.version, childDescriptions];
 }
 
 // LastLaunchServicesMap.plist seems to be the most reliable location to gather app info
@@ -213,7 +213,7 @@
 			QSSimAppInfo	*appInfo = [self appInfoWithBundleID: bundleID];
 				
 			if (appInfo != nil) {
-				appInfo.sandBoxPath = sandboxPath;
+				appInfo.sandboxPath = sandboxPath;
 			}
 		}
 	}
@@ -237,57 +237,6 @@
 	}
 }
 
-// Used to also scan installation logs for clues but uncertain how useful this is.
-// Leaving it here in case I decide to put it back
-
-#if 0
-- (void) updateDeviceInfoForAppsFromLogs: (NSMutableDictionary *) inDeviceInfo
-{
-	NSFileManager	*fileManager = [NSFileManager defaultManager];
-	NSURL			*installLogURL = [[NSURL alloc] initFileURLWithPath: inDeviceInfo[@"path"]];
-	
-	installLogURL = [installLogURL URLByAppendingPathComponent: @"data/Library/Logs/MobileInstallation/mobile_installation.log.0"];
-	if (installLogURL != nil && [fileManager fileExistsAtPath: [installLogURL path]]) {
-		NSString		*installLog = [[NSString alloc] initWithContentsOfURL: installLogURL usedEncoding: nil error: nil];
-		
-		if (installLog != nil) {
-			NSRange		logMentionRange;
-			
-			for (NSString *line in [installLog componentsSeparatedByCharactersInSet: [NSCharacterSet newlineCharacterSet]]) {
-				logMentionRange = [line rangeOfString: @"Made container live for "];
-				if (logMentionRange.location != NSNotFound) {
-					NSArray		*installParts = [[line substringFromIndex: logMentionRange.location + logMentionRange.length] componentsSeparatedByString: @" "];
-					
-					if ([installParts count] == 3) {	// expecting com.foo.bar at UUID
-						NSString		*bundleID = [installParts objectAtIndex: 0];
-
-						if ([bundleID rangeOfString: @"com.apple"].location == NSNotFound) {
-							NSString		*path = [installParts objectAtIndex: 2];
-							
-							if (path != nil && [fileManager fileExistsAtPath: path]) {
-								NSString		*pathTitle;
-								
-								if ([path rangeOfString: @"Data/Application"].location != NSNotFound) {
-									pathTitle = @"Sandbox Location";
-								}
-								else if ([path rangeOfString: @"Bundle/Application"].location != NSNotFound) {
-									pathTitle = @"Bundle Location";
-								}
-								else {
-									pathTitle = @"???";
-								}
-								
-								[self addPath: path withTitle: pathTitle forBundleID: bundleID withDeviceInfo: inDeviceInfo];
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-}
-#endif
-
 - (QSSimAppInfo *) appInfoWithBundleID: (NSString *) inBundleID
 {
 	QSSimAppInfo	*appInfo = nil;
@@ -310,6 +259,13 @@
 	}
 	
 	return appInfo;
+}
+
+- (void) openDeviceLocation
+{
+	if (self.baseURL != nil) {
+		[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs: @[ self.baseURL ]];
+	}
 }
 
 #pragma mark - QSOutlineProvider
@@ -341,9 +297,7 @@
 
 - (BOOL) outlineItemPerformAction
 {
-	if (self.baseURL != nil) {
-		[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs: @[ self.baseURL ]];
-	}
+	[self openDeviceLocation];
 	
 	return YES;
 }
@@ -357,7 +311,7 @@
 
 - (NSString *) title
 {
-	return [NSString stringWithFormat: @"%@: %@ %@", self.name, self.model, self.version];
+	return [NSString stringWithFormat: @"%@: %@", self.name, self.version];
 }
 
 @end

@@ -29,7 +29,7 @@
 
 - (NSString *) description
 {
-//	return [NSString stringWithFormat: @"%@: bundle %@ sandbox %@", self.bundleID, [self.bundlePath lastPathComponent], [self.sandBoxPath lastPathComponent]];
+//	return [NSString stringWithFormat: @"%@: bundle %@ sandbox %@", self.bundleID, [self.bundlePath lastPathComponent], [self.sandboxPath lastPathComponent]];
 	return self.bundleID;
 }
 
@@ -41,7 +41,7 @@
 - (void) updateFromLastLaunchMapInfo: (NSDictionary *) inMapInfo
 {
 	self.bundlePath = inMapInfo[@"BundleContainer"];
-	self.sandBoxPath = inMapInfo[@"Container"];
+	self.sandboxPath = inMapInfo[@"Container"];
 }
 
 - (void) updateFromAppStateInfo: (NSDictionary *) inStateInfo
@@ -50,7 +50,7 @@
 	
 	if (compatInfo != nil) {
 		self.bundlePath = compatInfo[@"bundlePath"];
-		self.sandBoxPath = compatInfo[@"sandboxPath"];
+		self.sandboxPath = compatInfo[@"sandboxPath"];
 	}
 }
 
@@ -113,12 +113,12 @@
 					fullIconName = [iconName stringByAppendingPathExtension: @"png"];
 				}
 				iconURL = [[[NSURL alloc] initFileURLWithPath: self.bundlePath] URLByAppendingPathComponent: fullIconName];
-				self.appIcon = [self imageAtURL: iconURL withMinimumWidth: 32.0];
+				self.appIcon = [self imageAtURL: iconURL withMinimumWidth: 57.0];
 
 				if (self.appIcon == nil) {
 					fullIconName = [NSString stringWithFormat: @"%@@2x.png", iconName];
 					iconURL = [[[NSURL alloc] initFileURLWithPath: self.bundlePath] URLByAppendingPathComponent: fullIconName];
-					self.appIcon = [self imageAtURL: iconURL withMinimumWidth: 32.0];
+					self.appIcon = [self imageAtURL: iconURL withMinimumWidth: 57.0];
 					if (self.appIcon != nil) {
 						break;
 					}
@@ -152,7 +152,8 @@
 
 - (NSInteger) outlineChildCount
 {
-	return [self.childItems count];
+//	return [self.childItems count];
+	return 0;
 }
 
 - (id) outlineChildAtIndex: (NSInteger) inIndex
@@ -208,6 +209,24 @@
 	return handled;
 }
 
+- (void) openBundleLocation
+{
+	NSURL			*pathURL = [[NSURL alloc] initFileURLWithPath: self.bundlePath];
+
+	if (pathURL != nil) {
+		[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs: @[ pathURL ]];
+	}
+}
+
+- (void) openSandboxLocation
+{
+	NSURL			*pathURL = [[NSURL alloc] initFileURLWithPath: self.sandboxPath];
+
+	if (pathURL != nil) {
+		[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs: @[ pathURL ]];
+	}
+}
+
 #pragma mark - Setters / Getters
 
 - (NSArray *) childItems
@@ -220,8 +239,8 @@
 		if (self.bundlePath != nil) {
 			[childItems addObject: @{ @"title" : @"Bundle Location", @"path" : self.bundlePath }];
 		}
-		if (self.sandBoxPath != nil) {
-			[childItems addObject: @{ @"title" : @"Sandbox Location", @"path" : self.sandBoxPath }];
+		if (self.sandboxPath != nil) {
+			[childItems addObject: @{ @"title" : @"Sandbox Location", @"path" : self.sandboxPath }];
 		}
 		
 		_childItems = childItems;
@@ -238,10 +257,10 @@
 	}
 }
 
-- (void) setSandBoxPath: (NSString *) inSandBoxPath
+- (void) setSandboxPath: (NSString *) inSandboxPath
 {
-	if (_sandBoxPath == nil && [self testPath: inSandBoxPath]) {
-		_sandBoxPath = inSandBoxPath;
+	if (_sandboxPath == nil && [self testPath: inSandboxPath]) {
+		_sandboxPath = inSandboxPath;
 		_childItems = nil;
 	}
 }
@@ -252,16 +271,26 @@
 	
 	if (self.appName != nil) {
 		title = [NSString stringWithFormat: @"%@ v%@", self.appName, self.appShortVersion];
-		if (![self.appShortVersion isEqualToString: self.appVersion]) {
-			title = [title stringByAppendingString: [NSString stringWithFormat: @" (%@)", self.appVersion]];
-		}
-		title = [title stringByAppendingString: [NSString stringWithFormat: @" - %@", self.bundleID]];
 	}
 	else {
 		title = self.bundleID;
 	}
 	
 	return title;
+}
+
+- (NSString *) fullVersion
+{
+	NSString	*fullVersion = nil;
+	
+	if (self.appShortVersion != nil) {
+		fullVersion = self.appShortVersion;
+		if (![self.appShortVersion isEqualToString: self.appVersion]) {
+			fullVersion = [fullVersion stringByAppendingString: [NSString stringWithFormat: @" (%@)", self.appVersion]];
+		}
+	}
+	
+	return fullVersion;
 }
 
 - (BOOL) hasValidPaths
