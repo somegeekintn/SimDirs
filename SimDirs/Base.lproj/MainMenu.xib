@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6221" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6221"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -20,9 +20,11 @@
         <customObject id="SyX-BE-Buh" userLabel="Main Controller" customClass="QSSimViewController">
             <connections>
                 <outlet property="appBundleID" destination="fu0-Nm-sW5" id="TWC-KY-ton"/>
+                <outlet property="appBundleLocButton" destination="57Z-sR-fVg" id="nEJ-8c-qTX"/>
                 <outlet property="appBundlePath" destination="dak-hQ-AVU" id="cf5-cA-AOK"/>
                 <outlet property="appIcon" destination="qPe-AS-wrF" id="86j-79-bHG"/>
                 <outlet property="appName" destination="LtZ-g9-rO4" id="DT0-pq-Zsy"/>
+                <outlet property="appSandboxLocButton" destination="wpz-Qd-3vU" id="X0z-UT-uxs"/>
                 <outlet property="appSandboxPath" destination="Srv-29-Chn" id="RsT-a4-QhL"/>
                 <outlet property="appVersion" destination="x2w-fP-x3K" id="Fxe-ry-CqD"/>
                 <outlet property="deviceModel" destination="Iy7-MJ-sIV" id="Ze0-e7-MWD"/>
@@ -120,7 +122,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES"/>
             <rect key="contentRect" x="100" y="1000" width="559" height="370"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <value key="minSize" type="size" width="280" height="400"/>
             <view key="contentView" id="5rQ-mH-cgE">
                 <rect key="frame" x="0.0" y="0.0" width="559" height="370"/>

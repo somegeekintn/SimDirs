@@ -29,6 +29,8 @@
 @property (nonatomic, weak) IBOutlet NSTextField	*appVersion;
 @property (nonatomic, weak) IBOutlet NSTextField	*appBundlePath;
 @property (nonatomic, weak) IBOutlet NSTextField	*appSandboxPath;
+@property (nonatomic, weak) IBOutlet NSButton		*appBundleLocButton;
+@property (nonatomic, weak) IBOutlet NSButton		*appSandboxLocButton;
 
 @property (nonatomic, strong) NSArray				*deviceList;
 @property (nonatomic, strong) QSSimDeviceInfo		*selectedDevice;
@@ -203,17 +205,34 @@
 - (void) updateAppTabWithSelection
 {
 	NSString	*bundlePath = self.selectedApp.bundlePath;
+	NSString	*sandboxPath = self.selectedApp.sandboxPath;
+	NSString	*appName = self.selectedApp.appName;
+	NSString	*fullVersion = self.selectedApp.fullVersion;
 	
 	if ([[bundlePath lastPathComponent] rangeOfString: @".app"].location != NSNotFound) {
 		bundlePath = [bundlePath stringByDeletingLastPathComponent];
 	}
 	
 	self.appIcon.image = self.selectedApp.appIcon;
-	self.appName.stringValue = self.selectedApp.appName;
 	self.appBundleID.stringValue = self.selectedApp.bundleID;
-	self.appVersion.stringValue = self.selectedApp.fullVersion;
-	self.appBundlePath.stringValue = bundlePath;
-	self.appSandboxPath.stringValue = self.selectedApp.sandboxPath;
+	self.appName.stringValue = appName != nil ? appName : self.selectedApp.bundleID;
+	self.appVersion.stringValue = fullVersion != nil ? fullVersion : @"unknown version";
+	if (bundlePath != nil) {
+		self.appBundlePath.stringValue = bundlePath;
+		self.appBundleLocButton.enabled = YES;
+	}
+	else {
+		self.appBundlePath.stringValue = @"";
+		self.appBundleLocButton.enabled = NO;
+	}
+	if (sandboxPath != nil) {
+		self.appSandboxPath.stringValue = sandboxPath;
+		self.appSandboxLocButton.enabled = YES;
+	}
+	else {
+		self.appSandboxPath.stringValue = @"";
+		self.appSandboxLocButton.enabled = NO;
+	}
 }
 
 #pragma mark - Handlers

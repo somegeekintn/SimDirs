@@ -59,35 +59,37 @@
 	NSFileManager	*fileManager = [NSFileManager defaultManager];
 	NSURL			*infoURL;
 	
-	if (self.bundlePath != nil && [[self.bundlePath lastPathComponent] rangeOfString: @".app"].location == NSNotFound) {
-		NSURL					*bundleURL = [[NSURL alloc] initFileURLWithPath: self.bundlePath];
-		NSURL					*appURL;
-		NSDirectoryEnumerator	*dirEnum = [fileManager enumeratorAtURL: bundleURL includingPropertiesForKeys: nil
-													options: NSDirectoryEnumerationSkipsSubdirectoryDescendants | NSDirectoryEnumerationSkipsHiddenFiles errorHandler: nil];
+	if (self.bundlePath != nil) {
+		if ([[self.bundlePath lastPathComponent] rangeOfString: @".app"].location == NSNotFound) {
+			NSURL					*bundleURL = [[NSURL alloc] initFileURLWithPath: self.bundlePath];
+			NSURL					*appURL;
+			NSDirectoryEnumerator	*dirEnum = [fileManager enumeratorAtURL: bundleURL includingPropertiesForKeys: nil
+														options: NSDirectoryEnumerationSkipsSubdirectoryDescendants | NSDirectoryEnumerationSkipsHiddenFiles errorHandler: nil];
 
-		while ((appURL = [dirEnum nextObject])) {
-			NSString	*appPath = [appURL path];
-			
-			if ([[appPath lastPathComponent] rangeOfString: @".app"].location != NSNotFound) {
-				// setter won't let us reset so access ivar directly
-				_bundlePath = appPath;
-				_childItems = nil;
-				break;
+			while ((appURL = [dirEnum nextObject])) {
+				NSString	*appPath = [appURL path];
+				
+				if ([[appPath lastPathComponent] rangeOfString: @".app"].location != NSNotFound) {
+					// setter won't let us reset so access ivar directly
+					_bundlePath = appPath;
+					_childItems = nil;
+					break;
+				}
 			}
 		}
-	}
 	
-	infoURL = [[NSURL alloc] initFileURLWithPath: self.bundlePath];
-	infoURL = [infoURL URLByAppendingPathComponent: @"Info.plist"];
-	if (infoURL != nil && [fileManager fileExistsAtPath: [infoURL path]]) {
-		NSData		*plistData = [NSData dataWithContentsOfURL: infoURL];
+		infoURL = [[NSURL alloc] initFileURLWithPath: self.bundlePath];
+		infoURL = [infoURL URLByAppendingPathComponent: @"Info.plist"];
+		if (infoURL != nil && [fileManager fileExistsAtPath: [infoURL path]]) {
+			NSData		*plistData = [NSData dataWithContentsOfURL: infoURL];
 
-		if (plistData != nil) {
-			NSDictionary	*plistInfo;
-			
-			plistInfo = [NSPropertyListSerialization propertyListWithData: plistData options: NSPropertyListImmutable format: nil error: nil];
-			if (plistInfo != nil) {
-				[self discoverAppInfoFromPList: plistInfo];
+			if (plistData != nil) {
+				NSDictionary	*plistInfo;
+				
+				plistInfo = [NSPropertyListSerialization propertyListWithData: plistData options: NSPropertyListImmutable format: nil error: nil];
+				if (plistInfo != nil) {
+					[self discoverAppInfoFromPList: plistInfo];
+				}
 			}
 		}
 	}
@@ -215,19 +217,23 @@
 
 - (void) openBundleLocation
 {
-	NSURL			*pathURL = [[NSURL alloc] initFileURLWithPath: self.bundlePath];
+	if (self.bundlePath != nil) {
+		NSURL			*pathURL = [[NSURL alloc] initFileURLWithPath: self.bundlePath];
 
-	if (pathURL != nil) {
-		[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs: @[ pathURL ]];
+		if (pathURL != nil) {
+			[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs: @[ pathURL ]];
+		}
 	}
 }
 
 - (void) openSandboxLocation
 {
-	NSURL			*pathURL = [[NSURL alloc] initFileURLWithPath: self.sandboxPath];
+	if (self.sandboxPath != nil) {
+		NSURL			*pathURL = [[NSURL alloc] initFileURLWithPath: self.sandboxPath];
 
-	if (pathURL != nil) {
-		[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs: @[ pathURL ]];
+		if (pathURL != nil) {
+			[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs: @[ pathURL ]];
+		}
 	}
 }
 
