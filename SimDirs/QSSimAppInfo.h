@@ -16,6 +16,7 @@
 
 - (void)		updateFromLastLaunchMapInfo: (NSDictionary *) inMapInfo;
 - (void)		updateFromAppStateInfo: (NSDictionary *) inStateInfo;
+- (void)		updateFromCacheInfo: (NSDictionary *) inCachedInfo;
 - (void)		refinePaths;
 
 - (void)		openBundleLocation;

@@ -74,6 +74,7 @@
 						
 						[self gatherAppInfoFromLastLaunchMap];
 						[self gatherAppInfoFromAppState];
+						[self gatherAppInfoFromCaches];
 						[self gatherAppInfoFromInstallLogs];
 						[self cleanupAndRefineAppList];
 						
@@ -144,6 +145,49 @@
 				
 				if (appInfo != nil) {
 					[appInfo updateFromAppStateInfo: stateInfo[bundleID]];
+				}
+			}
+		}
+	}
+}
+
+// Xcode 6.2 seems to have changed things up for 7.1 apps
+- (void) gatherAppInfoFromCaches
+{
+	NSFileManager	*fileManager = [NSFileManager defaultManager];
+	NSURL			*cacheDirURL = [self.baseURL URLByAppendingPathComponent: @"data/Library/Caches/"];
+
+	if (cacheDirURL != nil) {
+		NSArray		*cacheFileURLS = [fileManager contentsOfDirectoryAtURL: cacheDirURL includingPropertiesForKeys: nil options: NSDirectoryEnumerationSkipsSubdirectoryDescendants | NSDirectoryEnumerationSkipsPackageDescendants error: nil];
+		NSInteger	installInfoIndex;
+		
+		installInfoIndex = [cacheFileURLS indexOfObjectPassingTest: ^(id inObject, NSUInteger inIndex, BOOL *outStop) {
+			NSURL	*testURL = inObject;
+			BOOL	match = NO;
+			
+			if ([[testURL path] rangeOfString: @"com.apple.mobile.installation"].location != NSNotFound) {
+				match = YES;
+			}
+			
+			*outStop = match;
+			return match;
+		}];
+		
+		if (installInfoIndex != NSNotFound) {
+			NSURL			*installInfoURL = [cacheFileURLS objectAtIndex: installInfoIndex];
+			NSData			*plistData = [NSData dataWithContentsOfURL: installInfoURL];
+			NSDictionary	*installInfo;
+			NSDictionary	*userInfo;
+		
+			installInfo = [NSPropertyListSerialization propertyListWithData: plistData options: NSPropertyListImmutable format: nil error: nil];
+			userInfo = installInfo[@"User"];
+			if (userInfo != nil) {
+				for (NSString *bundleID in [userInfo allKeys]) {
+					QSSimAppInfo			*appInfo = [self appInfoWithBundleID: bundleID];
+
+					if (appInfo != nil) {
+						[appInfo updateFromCacheInfo: userInfo[bundleID]];
+					}
 				}
 			}
 		}
