@@ -176,17 +176,20 @@
 		if (installInfoIndex != NSNotFound) {
 			NSURL			*installInfoURL = [cacheFileURLS objectAtIndex: installInfoIndex];
 			NSData			*plistData = [NSData dataWithContentsOfURL: installInfoURL];
-			NSDictionary	*installInfo;
-			NSDictionary	*userInfo;
 		
-			installInfo = [NSPropertyListSerialization propertyListWithData: plistData options: NSPropertyListImmutable format: nil error: nil];
-			userInfo = installInfo[@"User"];
-			if (userInfo != nil) {
-				for (NSString *bundleID in [userInfo allKeys]) {
-					QSSimAppInfo			*appInfo = [self appInfoWithBundleID: bundleID];
+			if (plistData != nil) {
+				NSDictionary	*installInfo;
+				NSDictionary	*userInfo;
+				
+				installInfo = [NSPropertyListSerialization propertyListWithData: plistData options: NSPropertyListImmutable format: nil error: nil];
+				userInfo = installInfo[@"User"];
+				if (userInfo != nil) {
+					for (NSString *bundleID in [userInfo allKeys]) {
+						QSSimAppInfo			*appInfo = [self appInfoWithBundleID: bundleID];
 
-					if (appInfo != nil) {
-						[appInfo updateFromCacheInfo: userInfo[bundleID]];
+						if (appInfo != nil) {
+							[appInfo updateFromCacheInfo: userInfo[bundleID]];
+						}
 					}
 				}
 			}
