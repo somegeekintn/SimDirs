@@ -131,20 +131,24 @@
 - (void) gatherAppInfoFromAppState
 {
 	NSFileManager	*fileManager = [NSFileManager defaultManager];
-	NSURL			*appStateInfoURL = [self.baseURL URLByAppendingPathComponent: @"data/Library/BackBoard/applicationState.plist"];
+	NSArray			*appStatePathFragment = @[ @"data/Library/FrontBoard/applicationState.plist", @"data/Library/BackBoard/applicationState.plist" ];
 	
-	if (appStateInfoURL != nil && [fileManager fileExistsAtPath: [appStateInfoURL path]]) {
-		NSData			*plistData = [NSData dataWithContentsOfURL: appStateInfoURL];
-		NSDictionary	*stateInfo;
+	for (NSString *pathFragment in appStatePathFragment) {
+		NSURL			*appStateInfoURL = [self.baseURL URLByAppendingPathComponent: pathFragment];
 		
-		stateInfo = [NSPropertyListSerialization propertyListWithData: plistData options: NSPropertyListImmutable format: nil error: nil];
-		
-		for (NSString *bundleID in stateInfo) {
-			if ([bundleID rangeOfString: @"com.apple"].location == NSNotFound) {
-				QSSimAppInfo			*appInfo = [self appInfoWithBundleID: bundleID];
-				
-				if (appInfo != nil) {
-					[appInfo updateFromAppStateInfo: stateInfo[bundleID]];
+		if (appStateInfoURL != nil && [fileManager fileExistsAtPath: [appStateInfoURL path]]) {
+			NSData			*plistData = [NSData dataWithContentsOfURL: appStateInfoURL];
+			NSDictionary	*stateInfo;
+			
+			stateInfo = [NSPropertyListSerialization propertyListWithData: plistData options: NSPropertyListImmutable format: nil error: nil];
+			
+			for (NSString *bundleID in stateInfo) {
+				if ([bundleID rangeOfString: @"com.apple"].location == NSNotFound) {
+					QSSimAppInfo			*appInfo = [self appInfoWithBundleID: bundleID];
+					
+					if (appInfo != nil) {
+						[appInfo updateFromAppStateInfo: stateInfo[bundleID]];
+					}
 				}
 			}
 		}
@@ -158,37 +162,41 @@
 	NSURL			*cacheDirURL = [self.baseURL URLByAppendingPathComponent: @"data/Library/Caches/"];
 
 	if (cacheDirURL != nil) {
-		NSArray		*cacheFileURLS = [fileManager contentsOfDirectoryAtURL: cacheDirURL includingPropertiesForKeys: nil options: NSDirectoryEnumerationSkipsSubdirectoryDescendants | NSDirectoryEnumerationSkipsPackageDescendants error: nil];
-		NSInteger	installInfoIndex;
+		NSArray		*cacheFileURLs = [fileManager contentsOfDirectoryAtURL: cacheDirURL includingPropertiesForKeys: nil
+											options: NSDirectoryEnumerationSkipsSubdirectoryDescendants | NSDirectoryEnumerationSkipsPackageDescendants error: nil];
 		
-		installInfoIndex = [cacheFileURLS indexOfObjectPassingTest: ^(id inObject, NSUInteger inIndex, BOOL *outStop) {
-			NSURL	*testURL = inObject;
-			BOOL	match = NO;
+		if (cacheFileURLs != nil) {
+			NSInteger	installInfoIndex;
 			
-			if ([[testURL path] rangeOfString: @"com.apple.mobile.installation"].location != NSNotFound) {
-				match = YES;
-			}
-			
-			*outStop = match;
-			return match;
-		}];
-		
-		if (installInfoIndex != NSNotFound) {
-			NSURL			*installInfoURL = [cacheFileURLS objectAtIndex: installInfoIndex];
-			NSData			*plistData = [NSData dataWithContentsOfURL: installInfoURL];
-		
-			if (plistData != nil) {
-				NSDictionary	*installInfo;
-				NSDictionary	*userInfo;
+			installInfoIndex = [cacheFileURLs indexOfObjectPassingTest: ^(id inObject, NSUInteger inIndex, BOOL *outStop) {
+				NSURL	*testURL = inObject;
+				BOOL	match = NO;
 				
-				installInfo = [NSPropertyListSerialization propertyListWithData: plistData options: NSPropertyListImmutable format: nil error: nil];
-				userInfo = installInfo[@"User"];
-				if (userInfo != nil) {
-					for (NSString *bundleID in [userInfo allKeys]) {
-						QSSimAppInfo			*appInfo = [self appInfoWithBundleID: bundleID];
+				if ([[testURL path] rangeOfString: @"com.apple.mobile.installation"].location != NSNotFound) {
+					match = YES;
+				}
+				
+				*outStop = match;
+				return match;
+			}];
+			
+			if (installInfoIndex != NSNotFound) {
+				NSURL			*installInfoURL = [cacheFileURLs objectAtIndex: installInfoIndex];
+				NSData			*plistData = [NSData dataWithContentsOfURL: installInfoURL];
+			
+				if (plistData != nil) {
+					NSDictionary	*installInfo;
+					NSDictionary	*userInfo;
+					
+					installInfo = [NSPropertyListSerialization propertyListWithData: plistData options: NSPropertyListImmutable format: nil error: nil];
+					userInfo = installInfo[@"User"];
+					if (userInfo != nil) {
+						for (NSString *bundleID in [userInfo allKeys]) {
+							QSSimAppInfo			*appInfo = [self appInfoWithBundleID: bundleID];
 
-						if (appInfo != nil) {
-							[appInfo updateFromCacheInfo: userInfo[bundleID]];
+							if (appInfo != nil) {
+								[appInfo updateFromCacheInfo: userInfo[bundleID]];
+							}
 						}
 					}
 				}
