@@ -62,8 +62,15 @@
 				if (plistInfo != nil) {
 					NSString				*runtime = plistInfo[@"runtime"];
 					NSRange					runtimeRange;
+					NSArray					*platforms = @[ @"iOS.*",  @"watchOS.*",  @"tvOS.*"];
 					
-					runtimeRange = [runtime rangeOfString: @"iOS.*" options: NSRegularExpressionSearch];
+					for (NSString *platform in platforms) {
+						runtimeRange = [runtime rangeOfString: platform options: NSRegularExpressionSearch];
+						if (runtimeRange.location != NSNotFound) {
+							break;
+						}
+					}
+					
 					if (runtimeRange.location != NSNotFound) {
 						NSArray		*versionComponents = [[runtime substringWithRange: runtimeRange] componentsSeparatedByString: @"-"];
 						

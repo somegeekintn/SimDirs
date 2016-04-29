@@ -109,29 +109,33 @@
 	self.appVersion = inPListInfo[(__bridge NSString *)kCFBundleVersionKey];
 	
 	if (bundleIcons != nil) {
-		NSArray			*bundleIconFiles = bundleIcons[@"CFBundlePrimaryIcon"][@"CFBundleIconFiles"];
+		id		primaryIcon = bundleIcons[@"CFBundlePrimaryIcon"];
 		
-		if (bundleIconFiles) {
-			for (NSString *iconName in bundleIconFiles) {
-				NSString	*fullIconName = iconName;
-				NSURL		*iconURL;
-				
-				if (![iconName.pathExtension length]) {
-					fullIconName = [iconName stringByAppendingPathExtension: @"png"];
-				}
-				iconURL = [[[NSURL alloc] initFileURLWithPath: self.bundlePath] URLByAppendingPathComponent: fullIconName];
-				self.appIcon = [self imageAtURL: iconURL withMinimumWidth: 57.0];
-
-				if (self.appIcon == nil) {
-					fullIconName = [NSString stringWithFormat: @"%@@2x.png", iconName];
+		if (primaryIcon != nil && [primaryIcon isKindOfClass: [NSDictionary class]]) {
+			NSArray			*bundleIconFiles = primaryIcon[@"CFBundleIconFiles"];
+			
+			if (bundleIconFiles) {
+				for (NSString *iconName in bundleIconFiles) {
+					NSString	*fullIconName = iconName;
+					NSURL		*iconURL;
+					
+					if (![iconName.pathExtension length]) {
+						fullIconName = [iconName stringByAppendingPathExtension: @"png"];
+					}
 					iconURL = [[[NSURL alloc] initFileURLWithPath: self.bundlePath] URLByAppendingPathComponent: fullIconName];
 					self.appIcon = [self imageAtURL: iconURL withMinimumWidth: 57.0];
-					if (self.appIcon != nil) {
+
+					if (self.appIcon == nil) {
+						fullIconName = [NSString stringWithFormat: @"%@@2x.png", iconName];
+						iconURL = [[[NSURL alloc] initFileURLWithPath: self.bundlePath] URLByAppendingPathComponent: fullIconName];
+						self.appIcon = [self imageAtURL: iconURL withMinimumWidth: 57.0];
+						if (self.appIcon != nil) {
+							break;
+						}
+					}
+					else {
 						break;
 					}
-				}
-				else {
-					break;
 				}
 			}
 		}
