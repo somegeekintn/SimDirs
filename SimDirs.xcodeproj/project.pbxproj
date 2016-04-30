@@ -15,6 +15,8 @@
 		C948814E1CD3EA5500209C09 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C948814D1CD3EA5500209C09 /* AppDelegate.swift */; };
 		C94881501CD3EA5500209C09 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C948814F1CD3EA5500209C09 /* Assets.xcassets */; };
 		C94881531CD3EA5500209C09 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C94881511CD3EA5500209C09 /* MainMenu.xib */; };
+		C9AE594A1CD4EAD80090655C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9AE59481CD4EAD80090655C /* Main.storyboard */; };
+		C9AE594C1CD4F1C70090655C /* SourceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AE594B1CD4F1C70090655C /* SourceController.swift */; };
 		C9B7078A1A03A5C70001CB77 /* QSSimAppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B707891A03A5C70001CB77 /* QSSimAppInfo.m */; };
 		C9B707901A03A63E0001CB77 /* QSSimDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7078F1A03A63E0001CB77 /* QSSimDeviceInfo.m */; };
 		C9B707931A03B6C30001CB77 /* QSSimViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B707921A03B6C30001CB77 /* QSSimViewController.m */; };
@@ -52,6 +54,9 @@
 		C948814F1CD3EA5500209C09 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C94881521CD3EA5500209C09 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		C94881541CD3EA5500209C09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9AE59491CD4EAD80090655C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C9AE594B1CD4F1C70090655C /* SourceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceController.swift; sourceTree = "<group>"; };
+		C9AE594D1CD503850090655C /* CUINamedLayerStack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CUINamedLayerStack.h; sourceTree = "<group>"; };
 		C9B707881A03A5C70001CB77 /* QSSimAppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSimAppInfo.h; sourceTree = "<group>"; };
 		C9B707891A03A5C70001CB77 /* QSSimAppInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSimAppInfo.m; sourceTree = "<group>"; };
 		C9B7078E1A03A63E0001CB77 /* QSSimDeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSimDeviceInfo.h; sourceTree = "<group>"; };
@@ -164,10 +169,12 @@
 			children = (
 				C9ECF8A21CD4CEC800499965 /* Model */,
 				C9ECF8AE1CD4E13500499965 /* Support */,
+				C9ECF8B41CD4E96A00499965 /* UI */,
 				C948814D1CD3EA5500209C09 /* AppDelegate.swift */,
 				C9ECF8AB1CD4CF8400499965 /* Support.swift */,
 				C948814F1CD3EA5500209C09 /* Assets.xcassets */,
 				C94881511CD3EA5500209C09 /* MainMenu.xib */,
+				C9AE59481CD4EAD80090655C /* Main.storyboard */,
 				C94881541CD3EA5500209C09 /* Info.plist */,
 			);
 			path = SimDirs2;
@@ -188,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				C9ECF8AF1CD4E13500499965 /* CUICatalog.h */,
+				C9AE594D1CD503850090655C /* CUINamedLayerStack.h */,
 				C9ECF8B01CD4E14C00499965 /* SimDirs-Bridge.h */,
 			);
 			path = Support;
@@ -199,6 +207,14 @@
 				C9ECF8B11CD4E26300499965 /* CoreUI.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C9ECF8B41CD4E96A00499965 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				C9AE594B1CD4F1C70090655C /* SourceController.swift */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -319,6 +335,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9AE594A1CD4EAD80090655C /* Main.storyboard in Resources */,
 				C94881501CD3EA5500209C09 /* Assets.xcassets in Resources */,
 				C94881531CD3EA5500209C09 /* MainMenu.xib in Resources */,
 			);
@@ -353,6 +370,7 @@
 			files = (
 				C9ECF8A41CD4CEE300499965 /* SimPlatform.swift in Sources */,
 				C9ECF8A61CD4CF1600499965 /* SimOSVersion.swift in Sources */,
+				C9AE594C1CD4F1C70090655C /* SourceController.swift in Sources */,
 				C9ECF8AA1CD4CF5A00499965 /* SimApp.swift in Sources */,
 				C948814E1CD3EA5500209C09 /* AppDelegate.swift in Sources */,
 				C9ECF8A81CD4CF4000499965 /* SimDevice.swift in Sources */,
@@ -385,6 +403,14 @@
 				C94881521CD3EA5500209C09 /* Base */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		C9AE59481CD4EAD80090655C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C9AE59491CD4EAD80090655C /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

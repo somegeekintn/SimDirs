@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6221" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6221"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -122,7 +122,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES"/>
             <rect key="contentRect" x="100" y="1000" width="559" height="370"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <value key="minSize" type="size" width="280" height="400"/>
             <view key="contentView" id="5rQ-mH-cgE">
                 <rect key="frame" x="0.0" y="0.0" width="559" height="370"/>
@@ -142,9 +142,10 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="24" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationPerLevel="14" outlineTableColumn="dVq-2Q-Cyd" id="hie-77-RjD">
+                                                    <rect key="frame" x="0.0" y="0.0" width="170" height="0.0"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="0.0"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                     <tableColumns>
                                                         <tableColumn identifier="title" editable="NO" width="167" minWidth="40" maxWidth="1000" id="dVq-2Q-Cyd">
@@ -263,7 +264,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="388" height="370"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <textField horizontalHuggingPriority="300" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Y6y-dR-gdL">
+                                                        <textField horizontalHuggingPriority="300" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y6y-dR-gdL">
                                                             <rect key="frame" x="6" y="345" width="47" height="17"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Model:" id="S6R-yD-Ftt">
                                                                 <font key="font" metaFont="system"/>
@@ -271,7 +272,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Iy7-MJ-sIV" userLabel="Model Name">
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Iy7-MJ-sIV" userLabel="Model Name">
                                                             <rect key="frame" x="57" y="345" width="325" height="17"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" placeholderString="Model Name" id="qlD-K6-xsU">
                                                                 <font key="font" metaFont="system"/>
@@ -279,7 +280,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField horizontalHuggingPriority="300" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5e1-FU-R7K" userLabel="iOS Version:">
+                                                        <textField horizontalHuggingPriority="300" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5e1-FU-R7K" userLabel="iOS Version:">
                                                             <rect key="frame" x="6" y="320" width="80" height="17"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iOS Version:" id="R0k-bT-P9G">
                                                                 <font key="font" metaFont="system"/>
@@ -287,7 +288,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="azv-wH-qe7" userLabel="iOS Version Value">
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="azv-wH-qe7" userLabel="iOS Version Value">
                                                             <rect key="frame" x="90" y="320" width="292" height="17"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" placeholderString="iOS Version" id="IEi-4g-Kd9">
                                                                 <font key="font" metaFont="system"/>
@@ -295,7 +296,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField horizontalHuggingPriority="300" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1gX-5W-oZE">
+                                                        <textField horizontalHuggingPriority="300" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1gX-5W-oZE">
                                                             <rect key="frame" x="6" y="270" width="62" height="17"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Location:" id="jwA-Fz-zcD">
                                                                 <font key="font" metaFont="system"/>
@@ -303,7 +304,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="N4t-DN-DH8" userLabel="Location Path">
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N4t-DN-DH8" userLabel="Location Path">
                                                             <rect key="frame" x="72" y="270" width="278" height="13"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingHead" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" placeholderString="Device Base Path" id="ZSL-uL-vki">
                                                                 <font key="font" metaFont="label"/>
@@ -324,7 +325,7 @@
                                                                 <action selector="openSelectedDeviceLocation:" target="SyX-BE-Buh" id="8wn-Ew-p5x"/>
                                                             </connections>
                                                         </button>
-                                                        <textField horizontalHuggingPriority="300" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UDo-8Z-Uro" userLabel="UDID:">
+                                                        <textField horizontalHuggingPriority="300" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UDo-8Z-Uro" userLabel="UDID:">
                                                             <rect key="frame" x="6" y="295" width="41" height="17"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="UDID:" id="ERW-al-1LV">
                                                                 <font key="font" metaFont="system"/>
@@ -332,7 +333,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="zSt-XI-Bwq" userLabel="UDID Value">
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zSt-XI-Bwq" userLabel="UDID Value">
                                                             <rect key="frame" x="51" y="295" width="331" height="17"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" placeholderString="UDID" id="3f3-4h-h0k">
                                                                 <font key="font" metaFont="system"/>
@@ -380,7 +381,7 @@
                                                             </constraints>
                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="7Ua-Fr-9lg"/>
                                                         </imageView>
-                                                        <textField horizontalHuggingPriority="300" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kut-14-azR" userLabel="App:">
+                                                        <textField horizontalHuggingPriority="300" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kut-14-azR" userLabel="App:">
                                                             <rect key="frame" x="6" y="345" width="34" height="17"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="App:" id="ree-Qg-D0T">
                                                                 <font key="font" metaFont="system"/>
@@ -388,7 +389,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="LtZ-g9-rO4" userLabel="App Name">
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LtZ-g9-rO4" userLabel="App Name">
                                                             <rect key="frame" x="44" y="345" width="282" height="17"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" placeholderString="App Name" id="JQD-0Z-zDu">
                                                                 <font key="font" metaFont="system"/>
@@ -396,7 +397,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField horizontalHuggingPriority="300" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Yc0-Yy-NZZ" userLabel="Bundle ID:">
+                                                        <textField horizontalHuggingPriority="300" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yc0-Yy-NZZ" userLabel="Bundle ID:">
                                                             <rect key="frame" x="6" y="320" width="69" height="17"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Bundle ID:" id="kUH-2N-fIW">
                                                                 <font key="font" metaFont="system"/>
@@ -404,7 +405,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="fu0-Nm-sW5" userLabel="Bundle ID Value">
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fu0-Nm-sW5" userLabel="Bundle ID Value">
                                                             <rect key="frame" x="79" y="320" width="247" height="17"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" placeholderString="Bundle ID" id="iTY-lY-6Vu">
                                                                 <font key="font" metaFont="system"/>
@@ -412,7 +413,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField horizontalHuggingPriority="300" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GQp-k9-qgY" userLabel="Version:">
+                                                        <textField horizontalHuggingPriority="300" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GQp-k9-qgY" userLabel="Version:">
                                                             <rect key="frame" x="6" y="295" width="55" height="17"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Version:" id="zRO-N1-bHX">
                                                                 <font key="font" metaFont="system"/>
@@ -420,7 +421,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="x2w-fP-x3K" userLabel="Version Value">
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x2w-fP-x3K" userLabel="Version Value">
                                                             <rect key="frame" x="65" y="295" width="317" height="17"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" placeholderString="Version" id="ApH-xj-Sbb">
                                                                 <font key="font" metaFont="system"/>
@@ -428,7 +429,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField horizontalHuggingPriority="300" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Oiv-Xa-lRi" userLabel="Bundle:">
+                                                        <textField horizontalHuggingPriority="300" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oiv-Xa-lRi" userLabel="Bundle:">
                                                             <rect key="frame" x="6" y="270" width="51" height="17"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Bundle:" id="w6f-qz-tAm">
                                                                 <font key="font" metaFont="system"/>
@@ -436,7 +437,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="dak-hQ-AVU" userLabel="Bundle Path">
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dak-hQ-AVU" userLabel="Bundle Path">
                                                             <rect key="frame" x="61" y="270" width="289" height="13"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingHead" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" placeholderString="Bundle Path" id="Uxm-Hn-P1c">
                                                                 <font key="font" metaFont="label"/>
@@ -457,7 +458,7 @@
                                                                 <action selector="openSelectedAppBundleLoc:" target="SyX-BE-Buh" id="ymV-YQ-8c8"/>
                                                             </connections>
                                                         </button>
-                                                        <textField horizontalHuggingPriority="300" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ms6-5h-vbb" userLabel="Sandbox:">
+                                                        <textField horizontalHuggingPriority="300" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ms6-5h-vbb" userLabel="Sandbox:">
                                                             <rect key="frame" x="6" y="239" width="63" height="17"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Sandbox:" id="Z6T-In-Vzk">
                                                                 <font key="font" metaFont="system"/>
@@ -465,7 +466,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Srv-29-Chn" userLabel="Sandbox Path">
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Srv-29-Chn" userLabel="Sandbox Path">
                                                             <rect key="frame" x="73" y="239" width="277" height="13"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingHead" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" placeholderString="Sandbox Path" id="sFy-K1-1dP">
                                                                 <font key="font" metaFont="label"/>
@@ -577,7 +578,7 @@
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>
-        <image name="NSFollowLinkFreestandingTemplate" width="10" height="10"/>
-        <image name="NSRefreshTemplate" width="10" height="12"/>
+        <image name="NSFollowLinkFreestandingTemplate" width="14" height="14"/>
+        <image name="NSRefreshTemplate" width="11" height="15"/>
     </resources>
 </document>

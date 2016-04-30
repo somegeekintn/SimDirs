@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SimDevice {
+class SimDevice: OutlineProvider {
 	let name			: String
 	let udid			: String
 	let baseURL			: NSURL
@@ -23,9 +23,17 @@ class SimDevice {
 		self.gatherAppInfoFromAppState()
 //		self.gatherAppInfoFromCaches()	obsolete
 		self.gatherAppInfoFromInstallLogs()
-		self.cleanupAndRefineAppList()
 	}
 
+	func completeScan() {
+		self.apps = self.apps.filter { return $0.hasValidPaths }
+		
+		for app in self.apps {
+			app.completeScan()
+		}
+		self.apps.sortInPlace { $0.name < $1.name }
+	}
+	
 	// LastLaunchServicesMap.plist seems to be the most reliable location to gather app info
 	func gatherAppInfoFromLastLaunchMap() {
 		let launchMapInfoURL	= self.baseURL.URLByAppendingPathComponent("data/Library/MobileInstallation/LastLaunchServicesMap.plist")
@@ -102,13 +110,13 @@ class SimDevice {
 		}
 	}
 
-	func cleanupAndRefineAppList() {
-		self.apps = self.apps.filter { return $0.hasValidPaths }
-		
-		for simApp in self.apps {
-			simApp.completeInitialization()
-		}
-		
-		// sort?
+	// MARK: - OutlineProvider -
+	
+	var outlineTitle	: String { return self.name }
+	var outlineImage	: NSImage? { return nil }
+	var childCount		: Int { return self.apps.count  }
+	
+	func childAtIndex(index: Int) -> OutlineProvider? {
+		return self.apps[index]
 	}
 }

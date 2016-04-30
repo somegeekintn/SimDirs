@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SimApp {
+class SimApp: OutlineProvider {
 	let bundleID						: String
 	var name							= ""
 	var shortVersion					= ""
@@ -43,6 +43,11 @@ class SimApp {
 		self.bundleID = bundleID
 	}
 	
+	func completeScan() {
+		self.refinePaths()
+		self.loadInfoPlist()
+	}
+	
 	func updateFromLastLaunchMapInfo(launchBundleInfo: [String : AnyObject]) {
 		self.bundlePath = launchBundleInfo["BundleContainer"] as? String
 		self.sandboxPath = launchBundleInfo["Container"] as? String
@@ -53,11 +58,6 @@ class SimApp {
 
 		self.bundlePath = compatInfo["bundlePath"] as? String
 		self.sandboxPath = compatInfo["sandboxPath"] as? String
-	}
-	
-	func completeInitialization() {
-		self.refinePaths()
-		self.loadInfoPlist()
 	}
 	
 	func refinePaths() {
@@ -83,21 +83,22 @@ class SimApp {
 	func loadInfoPlist() {
 		guard let bundleURL		= self.bundleURL else { return }
 		let infoPlistURL		= bundleURL.URLByAppendingPathComponent("Info.plist")
-//		let assetFileURL		= bundleURL.URLByAppendingPathComponent("Assets.car")
 
 		if let plistInfo = NSPropertyListSerialization.propertyListWithURL(infoPlistURL) {
 			self.name = plistInfo[String(kCFBundleNameKey)] as? String ?? ""
 			self.shortVersion = plistInfo["CFBundleShortVersionString"] as? String ?? ""
 			self.version = plistInfo[String(kCFBundleVersionKey)] as? String ?? ""
-
-//			if assetFileURL.validPath {
-//				if let catalog = try? CUICatalog.init(URL: assetFileURL) {
-//print("\(catalog.allImageNames)")
-//				}
-//			}
 			
 			if let bundleIcons = plistInfo["CFBundleIcons"] as? [String : AnyObject] {
-				if let primaryIcon = bundleIcons["CFBundlePrimaryIcon"] as? [String : AnyObject] {
+				let primaryIconValue = bundleIcons["CFBundlePrimaryIcon"].flatMap { item -> [String : AnyObject]? in
+					switch item {
+						case let dict as [String : AnyObject]:	return dict
+						case let str as String:					return ["CFBundleIconFiles" : [str]]
+						default:								return nil
+					}
+				}
+				
+				if let primaryIcon = primaryIconValue {
 					if let bundleIconFiles = primaryIcon["CFBundleIconFiles"] as? [String] {
 						for iconName in bundleIconFiles {
 							var iconURL		= bundleURL.URLByAppendingPathComponent(iconName)
@@ -108,25 +109,62 @@ class SimApp {
 								iconURL = iconURL.URLByAppendingPathExtension("png")
 							}
 							
-							if let icon = NSImage(contentsOfURL: iconURL) {
-								if self.icon?.size.width ?? 0 < icon.size.width {
-									self.icon = icon
+// .car files not yet working :/
+
+//							if !iconURL.validPath && !icon2XURL.validPath {		// Believe this would only happen once per bundle
+//								let assetFileURL	= bundleURL.URLByAppendingPathComponent("Assets.car")
+//								
+//								if assetFileURL.validPath {
+//									if let catalog = try? CUICatalog.init(URL: assetFileURL) {
+//										let catalogImages = catalog.imagesWithName(iconName)
+//										
+//										for catalogImage in catalogImages {
+//											if let namedImage = catalogImage as? CUINamedImage where !(namedImage is CUINamedLayerStack) {
+//												if self.icon?.size.width ?? 0 < namedImage.size.width {
+//													let imageRep = NSBitmapImageRep(CGImage: namedImage.image)
+//													
+//													imageRep.size = namedImage.size
+//													if let pngData = imageRep.representationUsingType(.NSPNGFileType, properties: [NSImageInterlaced : false]) where pngData.length > 0 {
+//														self.icon = NSImage(data: pngData)
+//													}
+//													self.icon = NSImage(CGImage: namedImage.image, size: namedImage.size)
+//												}
+//											}
+//										}
+//									}
+//								}
+//							}
+//							else {
+								if let icon = NSImage(contentsOfURL: iconURL) {
+									if self.icon?.size.width ?? 0 < icon.size.width {
+										self.icon = icon
+									}
 								}
-							}
-							
-							if let icon = NSImage(contentsOfURL: icon2XURL) {
-								if self.icon?.size.width ?? 0 < icon.size.width {
-									self.icon = icon
+								
+								if let icon = NSImage(contentsOfURL: icon2XURL) {
+									if self.icon?.size.width ?? 0 < icon.size.width {
+										self.icon = icon
+									}
 								}
-							}
+//							}
 						}
 					}
 				}
 			}
 			
 			if self.icon == nil {
-				self.icon = NSImage(named: "defaultIcon")
+				self.icon = NSImage(named: "default_icon")
 			}
 		}
+	}
+
+	// MARK: - OutlineProvider -
+	
+	var outlineTitle	: String { return self.name }
+	var outlineImage	: NSImage? { return self.icon }
+	var childCount		: Int { return 0 }
+	
+	func childAtIndex(index: Int) -> OutlineProvider? {
+		return nil
 	}
 }

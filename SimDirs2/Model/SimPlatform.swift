@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SimPlatform {
+class SimPlatform: OutlineProvider {
 	let name			: String
 	var osVersions		= [SimOSVersion]()
 	
@@ -36,12 +36,23 @@ class SimPlatform {
 				}
 			}
 		}
-	
-		return platforms
+		
+		for platform in platforms {
+			platform.completeScan()
+		}
+		
+		return platforms.sort { $0.name < $1.name }
 	}
 	
 	init(runtimeComponents: [String], deviceInfo: [String : AnyObject]) {
 		self.name = runtimeComponents[0]
+	}
+	
+	func completeScan() {
+		for osVersion in self.osVersions {
+			osVersion.completeScan()
+		}
+		self.osVersions.sortInPlace { $0.name > $1.name }
 	}
 	
 	func updateWith(runtimeComponents: [String], deviceInfo: [String : AnyObject], baseURL: NSURL) {
@@ -49,5 +60,15 @@ class SimPlatform {
 		let osVersion	= self.osVersions.match({ $0.name == versionID }, orMake: { SimOSVersion(name: versionID, deviceInfo: deviceInfo) })
 		
 		osVersion.updateWithDeviceInfo(deviceInfo, baseURL: baseURL)
+	}
+
+	// MARK: - OutlineProvider -
+	
+	var outlineTitle	: String { return self.name }
+	var outlineImage	: NSImage? { return nil }
+	var childCount		: Int { return self.osVersions.count }
+	
+	func childAtIndex(index: Int) -> OutlineProvider? {
+		return self.osVersions[index]
 	}
 }
