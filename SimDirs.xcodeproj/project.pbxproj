@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C9194D2B19C09A03004178EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C9194D2A19C09A03004178EB /* main.m */; };
-		C9194D2E19C09A03004178EB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9194D2D19C09A03004178EB /* AppDelegate.m */; };
-		C9194D3019C09A03004178EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9194D2F19C09A03004178EB /* Images.xcassets */; };
-		C9194D3319C09A03004178EB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9194D3119C09A03004178EB /* MainMenu.xib */; };
-		C9194D3F19C09A03004178EB /* SimDirsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9194D3E19C09A03004178EB /* SimDirsTests.m */; };
 		C921B3C71CD6219F0091C1AD /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C921B3C51CD6219F0091C1AD /* DetailController.swift */; };
 		C921B3CA1CD629180091C1AD /* DetailTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C921B3C91CD629180091C1AD /* DetailTableView.swift */; };
 		C921B3CC1CD63EF30091C1AD /* ActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C921B3CB1CD63EF30091C1AD /* ActionCell.swift */; };
@@ -19,9 +14,6 @@
 		C94881501CD3EA5500209C09 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C948814F1CD3EA5500209C09 /* Assets.xcassets */; };
 		C9AE594A1CD4EAD80090655C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9AE59481CD4EAD80090655C /* Main.storyboard */; };
 		C9AE594C1CD4F1C70090655C /* SourceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AE594B1CD4F1C70090655C /* SourceController.swift */; };
-		C9B7078A1A03A5C70001CB77 /* QSSimAppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B707891A03A5C70001CB77 /* QSSimAppInfo.m */; };
-		C9B707901A03A63E0001CB77 /* QSSimDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7078F1A03A63E0001CB77 /* QSSimDeviceInfo.m */; };
-		C9B707931A03B6C30001CB77 /* QSSimViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B707921A03B6C30001CB77 /* QSSimViewController.m */; };
 		C9ECF8A41CD4CEE300499965 /* SimPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ECF8A31CD4CEE300499965 /* SimPlatform.swift */; };
 		C9ECF8A61CD4CF1600499965 /* SimOSVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ECF8A51CD4CF1600499965 /* SimOSVersion.swift */; };
 		C9ECF8A81CD4CF4000499965 /* SimDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ECF8A71CD4CF4000499965 /* SimDevice.swift */; };
@@ -30,43 +22,17 @@
 		C9ECF8B21CD4E26300499965 /* CoreUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9ECF8B11CD4E26300499965 /* CoreUI.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		C9194D3919C09A03004178EB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C9194D1D19C09A03004178EB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C9194D2419C09A03004178EB;
-			remoteInfo = SimDirs;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		C9194D2519C09A03004178EB /* SimDirs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimDirs.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C9194D2919C09A03004178EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C9194D2A19C09A03004178EB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		C9194D2C19C09A03004178EB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		C9194D2D19C09A03004178EB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		C9194D2F19C09A03004178EB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		C9194D3219C09A03004178EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		C9194D3819C09A03004178EB /* SimDirsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimDirsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C9194D3D19C09A03004178EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C9194D3E19C09A03004178EB /* SimDirsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimDirsTests.m; sourceTree = "<group>"; };
 		C921B3C51CD6219F0091C1AD /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		C921B3C91CD629180091C1AD /* DetailTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableView.swift; sourceTree = "<group>"; };
 		C921B3CB1CD63EF30091C1AD /* ActionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCell.swift; sourceTree = "<group>"; };
-		C948814B1CD3EA5500209C09 /* SimDirs2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimDirs2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C948814B1CD3EA5500209C09 /* SimDirs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimDirs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C948814D1CD3EA5500209C09 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C948814F1CD3EA5500209C09 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C94881541CD3EA5500209C09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C9AE59491CD4EAD80090655C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C9AE594B1CD4F1C70090655C /* SourceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceController.swift; sourceTree = "<group>"; };
 		C9AE594D1CD503850090655C /* CUINamedLayerStack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CUINamedLayerStack.h; sourceTree = "<group>"; };
-		C9B707881A03A5C70001CB77 /* QSSimAppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSimAppInfo.h; sourceTree = "<group>"; };
-		C9B707891A03A5C70001CB77 /* QSSimAppInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSimAppInfo.m; sourceTree = "<group>"; };
-		C9B7078E1A03A63E0001CB77 /* QSSimDeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSimDeviceInfo.h; sourceTree = "<group>"; };
-		C9B7078F1A03A63E0001CB77 /* QSSimDeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSimDeviceInfo.m; sourceTree = "<group>"; };
-		C9B707911A03B6C30001CB77 /* QSSimViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSimViewController.h; sourceTree = "<group>"; };
-		C9B707921A03B6C30001CB77 /* QSSimViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSimViewController.m; sourceTree = "<group>"; };
 		C9ECF8A31CD4CEE300499965 /* SimPlatform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimPlatform.swift; sourceTree = "<group>"; };
 		C9ECF8A51CD4CF1600499965 /* SimOSVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimOSVersion.swift; sourceTree = "<group>"; };
 		C9ECF8A71CD4CF4000499965 /* SimDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimDevice.swift; sourceTree = "<group>"; };
@@ -78,20 +44,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		C9194D2219C09A03004178EB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C9194D3519C09A03004178EB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C94881481CD3EA5500209C09 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -106,10 +58,8 @@
 		C9194D1C19C09A03004178EB = {
 			isa = PBXGroup;
 			children = (
-				C9194D2719C09A03004178EB /* SimDirs */,
-				C948814C1CD3EA5500209C09 /* SimDirs2 */,
+				C948814C1CD3EA5500209C09 /* SimDirs */,
 				C9ECF8B31CD4E27B00499965 /* Frameworks */,
-				C9194D3B19C09A03004178EB /* SimDirsTests */,
 				C9194D2619C09A03004178EB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -117,58 +67,12 @@
 		C9194D2619C09A03004178EB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C9194D2519C09A03004178EB /* SimDirs.app */,
-				C9194D3819C09A03004178EB /* SimDirsTests.xctest */,
-				C948814B1CD3EA5500209C09 /* SimDirs2.app */,
+				C948814B1CD3EA5500209C09 /* SimDirs.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C9194D2719C09A03004178EB /* SimDirs */ = {
-			isa = PBXGroup;
-			children = (
-				C9194D2C19C09A03004178EB /* AppDelegate.h */,
-				C9194D2D19C09A03004178EB /* AppDelegate.m */,
-				C9B707881A03A5C70001CB77 /* QSSimAppInfo.h */,
-				C9B707891A03A5C70001CB77 /* QSSimAppInfo.m */,
-				C9B7078E1A03A63E0001CB77 /* QSSimDeviceInfo.h */,
-				C9B7078F1A03A63E0001CB77 /* QSSimDeviceInfo.m */,
-				C9B707911A03B6C30001CB77 /* QSSimViewController.h */,
-				C9B707921A03B6C30001CB77 /* QSSimViewController.m */,
-				C9194D2F19C09A03004178EB /* Images.xcassets */,
-				C9194D3119C09A03004178EB /* MainMenu.xib */,
-				C9194D2819C09A03004178EB /* Supporting Files */,
-			);
-			path = SimDirs;
-			sourceTree = "<group>";
-		};
-		C9194D2819C09A03004178EB /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				C9194D2919C09A03004178EB /* Info.plist */,
-				C9194D2A19C09A03004178EB /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		C9194D3B19C09A03004178EB /* SimDirsTests */ = {
-			isa = PBXGroup;
-			children = (
-				C9194D3E19C09A03004178EB /* SimDirsTests.m */,
-				C9194D3C19C09A03004178EB /* Supporting Files */,
-			);
-			path = SimDirsTests;
-			sourceTree = "<group>";
-		};
-		C9194D3C19C09A03004178EB /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				C9194D3D19C09A03004178EB /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		C948814C1CD3EA5500209C09 /* SimDirs2 */ = {
+		C948814C1CD3EA5500209C09 /* SimDirs */ = {
 			isa = PBXGroup;
 			children = (
 				C9ECF8A21CD4CEC800499965 /* Model */,
@@ -180,7 +84,7 @@
 				C9AE59481CD4EAD80090655C /* Main.storyboard */,
 				C94881541CD3EA5500209C09 /* Info.plist */,
 			);
-			path = SimDirs2;
+			path = SimDirs;
 			sourceTree = "<group>";
 		};
 		C9ECF8A21CD4CEC800499965 /* Model */ = {
@@ -226,44 +130,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C9194D2419C09A03004178EB /* SimDirs */ = {
+		C948814A1CD3EA5500209C09 /* SimDirs */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C9194D4219C09A03004178EB /* Build configuration list for PBXNativeTarget "SimDirs" */;
-			buildPhases = (
-				C9194D2119C09A03004178EB /* Sources */,
-				C9194D2219C09A03004178EB /* Frameworks */,
-				C9194D2319C09A03004178EB /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = SimDirs;
-			productName = SimDirs;
-			productReference = C9194D2519C09A03004178EB /* SimDirs.app */;
-			productType = "com.apple.product-type.application";
-		};
-		C9194D3719C09A03004178EB /* SimDirsTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C9194D4519C09A03004178EB /* Build configuration list for PBXNativeTarget "SimDirsTests" */;
-			buildPhases = (
-				C9194D3419C09A03004178EB /* Sources */,
-				C9194D3519C09A03004178EB /* Frameworks */,
-				C9194D3619C09A03004178EB /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C9194D3A19C09A03004178EB /* PBXTargetDependency */,
-			);
-			name = SimDirsTests;
-			productName = SimDirsTests;
-			productReference = C9194D3819C09A03004178EB /* SimDirsTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		C948814A1CD3EA5500209C09 /* SimDirs2 */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C94881571CD3EA5500209C09 /* Build configuration list for PBXNativeTarget "SimDirs2" */;
+			buildConfigurationList = C94881571CD3EA5500209C09 /* Build configuration list for PBXNativeTarget "SimDirs" */;
 			buildPhases = (
 				C94881471CD3EA5500209C09 /* Sources */,
 				C94881481CD3EA5500209C09 /* Frameworks */,
@@ -273,9 +142,9 @@
 			);
 			dependencies = (
 			);
-			name = SimDirs2;
+			name = SimDirs;
 			productName = SimDirs2;
-			productReference = C948814B1CD3EA5500209C09 /* SimDirs2.app */;
+			productReference = C948814B1CD3EA5500209C09 /* SimDirs.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -288,13 +157,6 @@
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "Quiet Spark";
 				TargetAttributes = {
-					C9194D2419C09A03004178EB = {
-						CreatedOnToolsVersion = 6.0;
-					};
-					C9194D3719C09A03004178EB = {
-						CreatedOnToolsVersion = 6.0;
-						TestTargetID = C9194D2419C09A03004178EB;
-					};
 					C948814A1CD3EA5500209C09 = {
 						CreatedOnToolsVersion = 7.3;
 					};
@@ -313,30 +175,12 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C9194D2419C09A03004178EB /* SimDirs */,
-				C948814A1CD3EA5500209C09 /* SimDirs2 */,
-				C9194D3719C09A03004178EB /* SimDirsTests */,
+				C948814A1CD3EA5500209C09 /* SimDirs */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		C9194D2319C09A03004178EB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C9194D3019C09A03004178EB /* Images.xcassets in Resources */,
-				C9194D3319C09A03004178EB /* MainMenu.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C9194D3619C09A03004178EB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C94881491CD3EA5500209C09 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -349,26 +193,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		C9194D2119C09A03004178EB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C9194D2E19C09A03004178EB /* AppDelegate.m in Sources */,
-				C9B707901A03A63E0001CB77 /* QSSimDeviceInfo.m in Sources */,
-				C9B7078A1A03A5C70001CB77 /* QSSimAppInfo.m in Sources */,
-				C9B707931A03B6C30001CB77 /* QSSimViewController.m in Sources */,
-				C9194D2B19C09A03004178EB /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C9194D3419C09A03004178EB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C9194D3F19C09A03004178EB /* SimDirsTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C94881471CD3EA5500209C09 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -388,23 +212,7 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		C9194D3A19C09A03004178EB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C9194D2419C09A03004178EB /* SimDirs */;
-			targetProxy = C9194D3919C09A03004178EB /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
-		C9194D3119C09A03004178EB /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C9194D3219C09A03004178EB /* Base */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
 		C9AE59481CD4EAD80090655C /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -492,64 +300,6 @@
 			};
 			name = Release;
 		};
-		C9194D4319C09A03004178EB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = SimDirs/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		C9194D4419C09A03004178EB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = SimDirs/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		C9194D4619C09A03004178EB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = SimDirsTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimDirs.app/Contents/MacOS/SimDirs";
-			};
-			name = Debug;
-		};
-		C9194D4719C09A03004178EB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = SimDirsTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimDirs.app/Contents/MacOS/SimDirs";
-			};
-			name = Release;
-		};
 		C94881551CD3EA5500209C09 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -563,12 +313,12 @@
 					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = SimDirs2/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/SimDirs/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				PRODUCT_BUNDLE_IDENTIFIER = com.quietspark.SimDirs2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quietspark.SimDirs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "SimDirs2/Support/SimDirs-Bridge.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SimDirs/Support/SimDirs-Bridge.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -585,12 +335,12 @@
 					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = SimDirs2/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/SimDirs/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				PRODUCT_BUNDLE_IDENTIFIER = com.quietspark.SimDirs2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quietspark.SimDirs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "SimDirs2/Support/SimDirs-Bridge.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SimDirs/Support/SimDirs-Bridge.h";
 			};
 			name = Release;
 		};
@@ -606,25 +356,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C9194D4219C09A03004178EB /* Build configuration list for PBXNativeTarget "SimDirs" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C9194D4319C09A03004178EB /* Debug */,
-				C9194D4419C09A03004178EB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C9194D4519C09A03004178EB /* Build configuration list for PBXNativeTarget "SimDirsTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C9194D4619C09A03004178EB /* Debug */,
-				C9194D4719C09A03004178EB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C94881571CD3EA5500209C09 /* Build configuration list for PBXNativeTarget "SimDirs2" */ = {
+		C94881571CD3EA5500209C09 /* Build configuration list for PBXNativeTarget "SimDirs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C94881551CD3EA5500209C09 /* Debug */,
