@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C9188EE01CD65DCB00F0F8B6 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9188EDF1CD65DCB00F0F8B6 /* WindowController.swift */; };
 		C921B3C71CD6219F0091C1AD /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C921B3C51CD6219F0091C1AD /* DetailController.swift */; };
 		C921B3CA1CD629180091C1AD /* DetailTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C921B3C91CD629180091C1AD /* DetailTableView.swift */; };
 		C921B3CC1CD63EF30091C1AD /* ActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C921B3CB1CD63EF30091C1AD /* ActionCell.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C9188EDF1CD65DCB00F0F8B6 /* WindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
 		C921B3C51CD6219F0091C1AD /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		C921B3C91CD629180091C1AD /* DetailTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableView.swift; sourceTree = "<group>"; };
 		C921B3CB1CD63EF30091C1AD /* ActionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCell.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				C921B3C51CD6219F0091C1AD /* DetailController.swift */,
 				C921B3C91CD629180091C1AD /* DetailTableView.swift */,
 				C9AE594B1CD4F1C70090655C /* SourceController.swift */,
+				C9188EDF1CD65DCB00F0F8B6 /* WindowController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -204,6 +207,7 @@
 				C921B3CA1CD629180091C1AD /* DetailTableView.swift in Sources */,
 				C9AE594C1CD4F1C70090655C /* SourceController.swift in Sources */,
 				C9ECF8AA1CD4CF5A00499965 /* SimApp.swift in Sources */,
+				C9188EE01CD65DCB00F0F8B6 /* WindowController.swift in Sources */,
 				C948814E1CD3EA5500209C09 /* AppDelegate.swift in Sources */,
 				C9ECF8A81CD4CF4000499965 /* SimDevice.swift in Sources */,
 				C9ECF8AC1CD4CF8400499965 /* Support.swift in Sources */,
