@@ -8,32 +8,48 @@
 
 import Foundation
 
-class SimDevice: OutlineProvider {
+class SimDevice: OutlineProvider, PropertyProvider {
 	let name			: String
+	let type			: String
 	let udid			: String
 	let baseURL			: NSURL
+	var platformName	= "Unknown"
+	var platformVersion	= ""
+	var platformBuild	= ""
 	var apps			= [SimApp]()
 
-	init(name: String, udid: String, baseURL: NSURL) {
+	init(name: String, type: String, udid: String, baseURL: NSURL) {
 		self.name = name
+		self.type = type
 		self.udid = udid
 		self.baseURL = baseURL
 		
+		self.gatherBuildInfo()
+
 		self.gatherAppInfoFromLastLaunchMap()
 		self.gatherAppInfoFromAppState()
 //		self.gatherAppInfoFromCaches()	obsolete
 		self.gatherAppInfoFromInstallLogs()
 	}
 
-	func completeScan() {
+	func completeScan(platformName: String) {
+		self.platformName = platformName
 		self.apps = self.apps.filter { return $0.hasValidPaths }
 		
 		for app in self.apps {
 			app.completeScan()
 		}
-		self.apps.sortInPlace { $0.name < $1.name }
+		self.apps.sortInPlace { $0.displayName < $1.displayName }
 	}
 	
+	func gatherBuildInfo() {
+		let buildInfoURL	= self.baseURL.URLByAppendingPathComponent("data/Library/MobileInstallation/LastBuildInfo.plist")
+		guard let buildInfo	= NSPropertyListSerialization.propertyListWithURL(buildInfoURL) else { return }
+		
+		self.platformVersion = buildInfo["ProductVersion"] as? String ?? ""
+		self.platformBuild = buildInfo["ProductBuildVersion"] as? String ?? ""
+	}
+
 	// LastLaunchServicesMap.plist seems to be the most reliable location to gather app info
 	func gatherAppInfoFromLastLaunchMap() {
 		let launchMapInfoURL	= self.baseURL.URLByAppendingPathComponent("data/Library/MobileInstallation/LastLaunchServicesMap.plist")
@@ -118,5 +134,18 @@ class SimDevice: OutlineProvider {
 	
 	func childAtIndex(index: Int) -> OutlineProvider? {
 		return self.apps[index]
+	}
+
+	// MARK: - PropertyProvider -
+	var header		: String { return "Device Information" }
+	var image		: NSImage? { return nil }
+	var properties	: [SimProperty] {
+		return [
+			SimProperty(title: "Name", value: .Text(text: self.name)),
+			SimProperty(title: "Simulated Model", value: .Text(text: self.type)),
+			SimProperty(title: self.platformName, value: .Text(text: "\(self.platformVersion) (\(self.platformBuild))")),
+			SimProperty(title: "Identifier", value: .Text(text: self.udid)),
+			SimProperty(title: "Location", value: .Location(url: self.baseURL))
+		]
 	}
 }

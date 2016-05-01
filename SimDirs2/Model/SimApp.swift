@@ -8,11 +8,13 @@
 
 import Foundation
 
-class SimApp: OutlineProvider {
+class SimApp: OutlineProvider, PropertyProvider {
 	let bundleID						: String
-	var name							= ""
+	var bundleName						= ""
+	var displayName						= ""
 	var shortVersion					= ""
 	var version							= ""
+	var minOSVersion					: String?
 	var icon							: NSImage?
 	var hasValidPaths					: Bool { return self.validatedBundlePath != nil || self.validatedSandboxPath != nil }
 	var bundleURL						: NSURL? { return self.validatedBundlePath.map { NSURL(fileURLWithPath: $0) } }
@@ -85,9 +87,15 @@ class SimApp: OutlineProvider {
 		let infoPlistURL		= bundleURL.URLByAppendingPathComponent("Info.plist")
 
 		if let plistInfo = NSPropertyListSerialization.propertyListWithURL(infoPlistURL) {
-			self.name = plistInfo[String(kCFBundleNameKey)] as? String ?? ""
+			self.bundleName = plistInfo[String(kCFBundleNameKey)] as? String ?? ""
+			self.displayName = plistInfo["CFBundleDisplayName"] as? String ?? ""
 			self.shortVersion = plistInfo["CFBundleShortVersionString"] as? String ?? ""
 			self.version = plistInfo[String(kCFBundleVersionKey)] as? String ?? ""
+			self.minOSVersion = plistInfo["MinimumOSVersion"] as? String
+			
+			if self.displayName.isEmpty {
+				self.displayName = self.bundleName
+			}
 			
 			if let bundleIcons = plistInfo["CFBundleIcons"] as? [String : AnyObject] {
 				let primaryIconValue = bundleIcons["CFBundlePrimaryIcon"].flatMap { item -> [String : AnyObject]? in
@@ -160,11 +168,42 @@ class SimApp: OutlineProvider {
 
 	// MARK: - OutlineProvider -
 	
-	var outlineTitle	: String { return self.name }
+	var outlineTitle	: String { return self.displayName }
 	var outlineImage	: NSImage? { return self.icon }
 	var childCount		: Int { return 0 }
 	
 	func childAtIndex(index: Int) -> OutlineProvider? {
 		return nil
+	}
+	
+	// MARK: - PropertyProvider -
+	
+	var header		: String { return "App Information" }
+	var image		: NSImage? { return self.icon }
+	var properties	: [SimProperty] {
+		var version		= self.shortVersion
+		var properties	: [SimProperty]
+		
+		if self.shortVersion != self.version {
+			version += " \((self.version))"
+		}
+		
+		properties = [
+			SimProperty(title: "Display Name", value: .Text(text: self.displayName)),
+			SimProperty(title: "Bundle Name", value: .Text(text: self.bundleName)),
+			SimProperty(title: "Bundle ID", value: .Text(text: self.bundleID)),
+			SimProperty(title: "Version", value: .Text(text: version))
+		]
+		if let minOSVersion = self.minOSVersion {
+			properties.append(SimProperty(title: "Minimum OS Version", value: .Text(text: minOSVersion)))
+		}
+		if let bundleURL = self.bundleURL {
+			properties.append(SimProperty(title: "Bundle", value: .Location(url: bundleURL)))
+		}
+		if let sandboxURL = self.sandboxURL {
+			properties.append(SimProperty(title: "Sandbox", value: .Location(url: sandboxURL)))
+		}
+
+		return properties
 	}
 }

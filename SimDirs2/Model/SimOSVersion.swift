@@ -16,9 +16,9 @@ class SimOSVersion: OutlineProvider {
 		self.name = name
 	}
 	
-	func completeScan() {
+	func completeScan(platformName: String) {
 		for device in self.devices {
-			device.completeScan()
+			device.completeScan(platformName)
 		}
 		self.devices.sortInPlace { $0.name < $1.name }
 	}
@@ -26,9 +26,12 @@ class SimOSVersion: OutlineProvider {
 	func updateWithDeviceInfo(deviceInfo: [String : AnyObject], baseURL: NSURL) {
 		guard let deviceName	= deviceInfo["name"] as? String else { return }
 		guard let deviceUDID	= deviceInfo["UDID"] as? String else { return }
-		let device				= SimDevice(name: deviceName, udid: deviceUDID, baseURL: baseURL)
+		guard var deviceType	= deviceInfo["deviceType"] as? String else { return }
 
-		self.devices.append(device)
+		deviceType = deviceType.stringByReplacingOccurrencesOfString("com.apple.CoreSimulator.SimDeviceType.", withString: "")
+		deviceType = deviceType.stringByReplacingOccurrencesOfString("-", withString: " ")
+
+		self.devices.append(SimDevice(name: deviceName, type: deviceType, udid: deviceUDID, baseURL: baseURL))
 	}
 
 	// MARK: - OutlineProvider -

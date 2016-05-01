@@ -50,7 +50,7 @@ class SimPlatform: OutlineProvider {
 	
 	func completeScan() {
 		for osVersion in self.osVersions {
-			osVersion.completeScan()
+			osVersion.completeScan(self.name)
 		}
 		self.osVersions.sortInPlace { $0.name > $1.name }
 	}

@@ -21,16 +21,13 @@ extension OutlineProvider {
 }
 
 class SourceController: NSViewController, NSOutlineViewDataSource, NSOutlineViewDelegate {
-	var		platforms	= [SimPlatform]()
+	@IBOutlet weak var outlineView	: NSOutlineView!
+	private var platforms			= [SimPlatform]()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		self.rescan()
-	}
-	
-	func rescan() {
-		self.platforms = SimPlatform.scan()
+		self.rescan(nil)
 	}
 	
 	// MARK: - NSOutlineViewDataSource -
@@ -73,39 +70,22 @@ class SourceController: NSViewController, NSOutlineViewDataSource, NSOutlineView
 	}
 	
 	func outlineViewSelectionDidChange(notification: NSNotification) {
-		NSLog("boop")
+		if let thing = (self.parentViewController as? NSSplitViewController)?.splitViewItems[safe: 1]?.viewController as? DetailController {
+			var selectedItem	: AnyObject? = nil
+			let row				= self.outlineView.selectedRow
+			
+			if row != NSNotFound {
+				selectedItem = self.outlineView.itemAtRow(row)
+			}
+			
+			thing.selectedItem = selectedItem
+		}
 	}
 	
-//- (void) outlineViewSelectionDidChange: (NSNotification *) inNotification
-//{
-//	NSInteger	row = [self.locationOutline selectedRow];
-//	BOOL		selectedTab = NO;
-//	
-//	self.selectedDevice = nil;
-//	self.selectedApp = nil;
-//	
-//	if (row != -1) {
-//		id				item = [self.locationOutline itemAtRow: row];
-//		
-//		if ([item isKindOfClass: [QSSimDeviceInfo class]]) {
-//			self.selectedDevice = item;
-//			[self updateDeviceTabWithSelection];
-//			
-//			[self.infoTabView selectTabViewItemWithIdentifier: @"device"];
-//			selectedTab = YES;
-//		}
-//		if ([item isKindOfClass: [QSSimAppInfo class]]) {
-//			self.selectedApp = item;
-//			[self updateAppTabWithSelection];
-//			
-//			[self.infoTabView selectTabViewItemWithIdentifier: @"app"];
-//			selectedTab = YES;
-//		}
-//	}
-//
-//	if (!selectedTab) {
-//		[self.infoTabView selectTabViewItemWithIdentifier: @"empty"];
-//	}
-//}
-//
+	// MARK: - Interaction -
+
+	@IBAction func rescan(sender: AnyObject?) {
+		self.platforms = SimPlatform.scan()
+		self.outlineView.reloadData()
+	}
 }
