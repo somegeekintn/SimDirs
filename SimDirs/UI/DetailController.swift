@@ -10,8 +10,8 @@ import Cocoa
 
 struct SimProperty {
 	enum Value {
-		 case Text(text: String)
-		 case Location(url: NSURL)
+		 case text(text: String)
+		 case location(url: URL)
 	}
 
 	let title		: String
@@ -57,13 +57,13 @@ class DetailController: NSViewController, NSTableViewDataSource, NSTableViewDele
 	
 	// MARK: - NSTableViewDataSource -
 	
-	func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+	func numberOfRows(in tableView: NSTableView) -> Int {
 		return self.selectedProvider.properties.count ?? 0
 	}
 
 	// MARK: - NSTableViewDelegate -
 
-	func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
+	func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
 		let selectedProperty	= self.selectedProvider.properties[row]
 		let columnIdentifier	= tableColumn?.identifier ?? ""
 		let view				: NSView?
@@ -71,19 +71,19 @@ class DetailController: NSViewController, NSTableViewDataSource, NSTableViewDele
 		switch columnIdentifier {
 			case "value":
 				switch selectedProperty.value {
-					case .Text(let text):
-						view = tableView.makeViewWithIdentifier("PropertyValueCell", owner: self)
+					case .text(let text):
+						view = tableView.make(withIdentifier: "PropertyValueCell", owner: self)
 						(view as? NSTableCellView)?.textField?.stringValue = text
 					
-					case .Location(let url):
-						view = tableView.makeViewWithIdentifier("PropertyActionCell", owner: self)
+					case .location(let url):
+						view = tableView.make(withIdentifier: "PropertyActionCell", owner: self)
 						if let actionCell = view as? ActionCell {
-							actionCell.action = { NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([url]) }
+							actionCell.action = { NSWorkspace.shared().activateFileViewerSelecting([url]) }
 						}
 				}
 			
 			default:
-				view = tableView.makeViewWithIdentifier("PropertyTitleCell", owner: self)
+				view = tableView.make(withIdentifier: "PropertyTitleCell", owner: self)
 				(view as? NSTableCellView)?.textField?.stringValue = selectedProperty.title
 		}
 		

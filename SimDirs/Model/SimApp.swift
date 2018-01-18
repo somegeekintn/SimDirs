@@ -17,10 +17,10 @@ class SimApp: OutlineProvider, PropertyProvider {
 	var minOSVersion					: String?
 	var icon							: NSImage?
 	var hasValidPaths					: Bool { return self.validatedBundlePath != nil || self.validatedSandboxPath != nil }
-	var bundleURL						: NSURL? { return self.validatedBundlePath.map { NSURL(fileURLWithPath: $0) } }
-	var sandboxURL						: NSURL? { return self.validatedSandboxPath.map { NSURL(fileURLWithPath: $0) } }
-	private var validatedBundlePath		: String?
-	private var validatedSandboxPath	: String?
+	var bundleURL						: URL? { return self.validatedBundlePath.map { URL(fileURLWithPath: $0) } }
+	var sandboxURL						: URL? { return self.validatedSandboxPath.map { URL(fileURLWithPath: $0) } }
+	fileprivate var validatedBundlePath		: String?
+	fileprivate var validatedSandboxPath	: String?
 	
 	var bundlePath						: String? {
 		get { return self.validatedBundlePath }
@@ -50,12 +50,12 @@ class SimApp: OutlineProvider, PropertyProvider {
 		self.loadInfoPlist()
 	}
 	
-	func updateFromLastLaunchMapInfo(launchBundleInfo: [String : AnyObject]) {
+	func updateFromLastLaunchMapInfo(_ launchBundleInfo: [String : AnyObject]) {
 		self.bundlePath = launchBundleInfo["BundleContainer"] as? String
 		self.sandboxPath = launchBundleInfo["Container"] as? String
 	}
 	
-	func updateFromAppStateInfo(appStateInfo: [String : AnyObject]) {
+	func updateFromAppStateInfo(_ appStateInfo: [String : AnyObject]) {
 		guard let compatInfo = appStateInfo["compatibilityInfo"] as? [String : AnyObject] else { return }
 
 		self.bundlePath = compatInfo["bundlePath"] as? String
@@ -64,19 +64,17 @@ class SimApp: OutlineProvider, PropertyProvider {
 	
 	func refinePaths() {
 		guard let bundleURL		= self.bundleURL else { return }
-		let fileMgr				= NSFileManager.defaultManager()
+		let fileMgr				= FileManager.default
 		
-		if let lastPathComponent = bundleURL.lastPathComponent where !lastPathComponent.containsString(".app") {
-			if let dirEnumerator = fileMgr.enumeratorAtURL(bundleURL, includingPropertiesForKeys: nil, options: [ .SkipsSubdirectoryDescendants, .SkipsHiddenFiles ], errorHandler: nil) {
-				let dirURLs = dirEnumerator.allObjects.flatMap { $0 as? NSURL }
+		if !bundleURL.lastPathComponent.contains(".app") {
+			if let dirEnumerator = fileMgr.enumerator(at: bundleURL, includingPropertiesForKeys: nil, options: [ .skipsSubdirectoryDescendants, .skipsHiddenFiles ], errorHandler: nil) {
+				let dirURLs = dirEnumerator.allObjects.flatMap { $0 as? URL }
 				
 				for appURL in dirURLs {
-					guard let lastPathComponent = appURL.lastPathComponent else { continue }
-					
-					if lastPathComponent.containsString(".app") {
-						self.validatedBundlePath = appURL.path
-						break
-					}
+                    if bundleURL.lastPathComponent.contains(".app") {
+                        self.validatedBundlePath = appURL.path
+                        break
+                    }
 				}
 			}
 		}
@@ -84,9 +82,9 @@ class SimApp: OutlineProvider, PropertyProvider {
 
 	func loadInfoPlist() {
 		guard let bundleURL		= self.bundleURL else { return }
-		let infoPlistURL		= bundleURL.URLByAppendingPathComponent("Info.plist")
+		let infoPlistURL		= bundleURL.appendingPathComponent("Info.plist")
 
-		if let plistInfo = NSPropertyListSerialization.propertyListWithURL(infoPlistURL) {
+		if let plistInfo = PropertyListSerialization.propertyListWithURL(infoPlistURL) {
 			self.bundleName = plistInfo[String(kCFBundleNameKey)] as? String ?? ""
 			self.displayName = plistInfo["CFBundleDisplayName"] as? String ?? ""
 			self.shortVersion = plistInfo["CFBundleShortVersionString"] as? String ?? ""
@@ -101,20 +99,22 @@ class SimApp: OutlineProvider, PropertyProvider {
 				let primaryIconValue = bundleIcons["CFBundlePrimaryIcon"].flatMap { item -> [String : AnyObject]? in
 					switch item {
 						case let dict as [String : AnyObject]:	return dict
-						case let str as String:					return ["CFBundleIconFiles" : [str]]
+						case let str as String:                 return ["CFBundleIconFiles" : [str] as AnyObject]
 						default:								return nil
 					}
 				}
+                
+                
 				
 				if let primaryIcon = primaryIconValue {
 					if let bundleIconFiles = primaryIcon["CFBundleIconFiles"] as? [String] {
 						for iconName in bundleIconFiles {
-							var iconURL		= bundleURL.URLByAppendingPathComponent(iconName)
-							let icon2XURL	= bundleURL.URLByAppendingPathComponent("\(iconName)@2x.png")
-							let missingExt	= iconURL.pathExtension.map({ return $0.isEmpty }) ?? true
+							var iconURL		= bundleURL.appendingPathComponent(iconName)
+							let icon2XURL	= bundleURL.appendingPathComponent("\(iconName)@2x.png")
+							let missingExt	= iconURL.pathExtension.isEmpty
 							
 							if missingExt {
-								iconURL = iconURL.URLByAppendingPathExtension("png")
+								iconURL = iconURL.appendingPathExtension("png")
 							}
 							
 // .car files not yet working :/
@@ -143,13 +143,13 @@ class SimApp: OutlineProvider, PropertyProvider {
 //								}
 //							}
 //							else {
-								if let icon = NSImage(contentsOfURL: iconURL) {
+								if let icon = NSImage(contentsOf: iconURL) {
 									if self.icon?.size.width ?? 0 < icon.size.width {
 										self.icon = icon
 									}
 								}
 								
-								if let icon = NSImage(contentsOfURL: icon2XURL) {
+								if let icon = NSImage(contentsOf: icon2XURL) {
 									if self.icon?.size.width ?? 0 < icon.size.width {
 										self.icon = icon
 									}
@@ -172,7 +172,7 @@ class SimApp: OutlineProvider, PropertyProvider {
 	var outlineImage	: NSImage? { return self.icon }
 	var childCount		: Int { return 0 }
 	
-	func childAtIndex(index: Int) -> OutlineProvider? {
+	func childAtIndex(_ index: Int) -> OutlineProvider? {
 		return nil
 	}
 	
@@ -189,19 +189,19 @@ class SimApp: OutlineProvider, PropertyProvider {
 		}
 		
 		properties = [
-			SimProperty(title: "Display Name", value: .Text(text: self.displayName)),
-			SimProperty(title: "Bundle Name", value: .Text(text: self.bundleName)),
-			SimProperty(title: "Bundle ID", value: .Text(text: self.bundleID)),
-			SimProperty(title: "Version", value: .Text(text: version))
+			SimProperty(title: "Display Name", value: .text(text: self.displayName)),
+			SimProperty(title: "Bundle Name", value: .text(text: self.bundleName)),
+			SimProperty(title: "Bundle ID", value: .text(text: self.bundleID)),
+			SimProperty(title: "Version", value: .text(text: version))
 		]
 		if let minOSVersion = self.minOSVersion {
-			properties.append(SimProperty(title: "Minimum OS Version", value: .Text(text: minOSVersion)))
+			properties.append(SimProperty(title: "Minimum OS Version", value: .text(text: minOSVersion)))
 		}
 		if let bundleURL = self.bundleURL {
-			properties.append(SimProperty(title: "Bundle", value: .Location(url: bundleURL)))
+			properties.append(SimProperty(title: "Bundle", value: .location(url: bundleURL)))
 		}
 		if let sandboxURL = self.sandboxURL {
-			properties.append(SimProperty(title: "Sandbox", value: .Location(url: sandboxURL)))
+			properties.append(SimProperty(title: "Sandbox", value: .location(url: sandboxURL)))
 		}
 
 		return properties

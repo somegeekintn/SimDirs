@@ -12,13 +12,13 @@ class SimDevice: OutlineProvider, PropertyProvider {
 	let name			: String
 	let type			: String
 	let udid			: String
-	let baseURL			: NSURL
+	let baseURL			: URL
 	var platformName	= "Unknown"
 	var platformVersion	= ""
 	var platformBuild	= ""
 	var apps			= [SimApp]()
 
-	init(name: String, type: String, udid: String, baseURL: NSURL) {
+	init(name: String, type: String, udid: String, baseURL: URL) {
 		self.name = name
 		self.type = type
 		self.udid = udid
@@ -32,19 +32,19 @@ class SimDevice: OutlineProvider, PropertyProvider {
 		self.gatherAppInfoFromInstallLogs()
 	}
 
-	func completeScan(platformName: String) {
+	func completeScan(_ platformName: String) {
 		self.platformName = platformName
 		self.apps = self.apps.filter { return $0.hasValidPaths }
 		
 		for app in self.apps {
 			app.completeScan()
 		}
-		self.apps.sortInPlace { $0.displayName < $1.displayName }
+		self.apps.sort { $0.displayName < $1.displayName }
 	}
 	
 	func gatherBuildInfo() {
-		let buildInfoURL	= self.baseURL.URLByAppendingPathComponent("data/Library/MobileInstallation/LastBuildInfo.plist")
-		guard let buildInfo	= NSPropertyListSerialization.propertyListWithURL(buildInfoURL) else { return }
+		let buildInfoURL	= self.baseURL.appendingPathComponent("data/Library/MobileInstallation/LastBuildInfo.plist")
+		guard let buildInfo	= PropertyListSerialization.propertyListWithURL(buildInfoURL) else { return }
 		
 		self.platformVersion = buildInfo["ProductVersion"] as? String ?? ""
 		self.platformBuild = buildInfo["ProductBuildVersion"] as? String ?? ""
@@ -52,8 +52,8 @@ class SimDevice: OutlineProvider, PropertyProvider {
 
 	// LastLaunchServicesMap.plist seems to be the most reliable location to gather app info
 	func gatherAppInfoFromLastLaunchMap() {
-		let launchMapInfoURL	= self.baseURL.URLByAppendingPathComponent("data/Library/MobileInstallation/LastLaunchServicesMap.plist")
-		guard let launchInfo	= NSPropertyListSerialization.propertyListWithURL(launchMapInfoURL) else { return }
+		let launchMapInfoURL	= self.baseURL.appendingPathComponent("data/Library/MobileInstallation/LastLaunchServicesMap.plist")
+		guard let launchInfo	= PropertyListSerialization.propertyListWithURL(launchMapInfoURL) else { return }
 		guard let userInfo		= launchInfo["User"] as? [String : AnyObject] else { return }
 
 		for (bundleID, bundleInfo) in userInfo {
@@ -67,11 +67,11 @@ class SimDevice: OutlineProvider, PropertyProvider {
 	// applicationState.plist sometimes has info that LastLaunchServicesMap.plist doesn't
 	func gatherAppInfoFromAppState() {
 		for pathComponent in ["data/Library/FrontBoard/applicationState.plist", "data/Library/BackBoard/applicationState.plist"] {
-			let appStateInfoURL		= self.baseURL.URLByAppendingPathComponent(pathComponent)
-			guard let stateInfo		= NSPropertyListSerialization.propertyListWithURL(appStateInfoURL) else { continue }
+			let appStateInfoURL		= self.baseURL.appendingPathComponent(pathComponent)
+			guard let stateInfo		= PropertyListSerialization.propertyListWithURL(appStateInfoURL) else { continue }
 
 			for (bundleID, bundleInfo) in stateInfo {
-				if !bundleID.containsString("com.apple") {
+				if !bundleID.contains("com.apple") {
 					guard let bundleInfo	= bundleInfo as? [String : AnyObject] else { continue }
 					let simApp				= self.apps.match({ $0.bundleID == bundleID }, orMake: { SimApp(bundleID: bundleID) })
 
@@ -84,17 +84,17 @@ class SimDevice: OutlineProvider, PropertyProvider {
 	// mobile_installation.log.0 is my least favorite, most fragile way to scan for app installations
 	// try this after everything else
 	func gatherAppInfoFromInstallLogs() {
-		let installLogURL	= self.baseURL.URLByAppendingPathComponent("data/Library/Logs/MobileInstallation/mobile_installation.log.0")
+		let installLogURL	= self.baseURL.appendingPathComponent("data/Library/Logs/MobileInstallation/mobile_installation.log.0")
 		
-		if let installLog = try? String(contentsOfURL: installLogURL) {
-			let lines	= installLog.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
+		if let installLog = try? String(contentsOf: installLogURL) {
+			let lines	= installLog.components(separatedBy: CharacterSet.newlines)
 			
-			for line in lines.reverse() {
-				if !line.containsString("com.apple") {
-					if line.containsString("makeContainerLiveReplacingContainer") {
+			for line in lines.reversed() {
+				if !line.contains("com.apple") {
+					if line.contains("makeContainerLiveReplacingContainer") {
 						self.extractBundleLocationFromLogEntry(line)
 					}
-					if line.containsString("_refreshUUIDForContainer") {
+					if line.contains("_refreshUUIDForContainer") {
 						self.extractSandboxLocationFromLogEntry(line)
 					}
 				}
@@ -102,8 +102,8 @@ class SimDevice: OutlineProvider, PropertyProvider {
 		}
 	}
 	
-	func extractBundleLocationFromLogEntry(line: String) {
-		let logComponents = line.componentsSeparatedByString(" ")
+	func extractBundleLocationFromLogEntry(_ line: String) {
+		let logComponents = line.components(separatedBy: " ")
 		
 		if let bundlePath = logComponents.last {
 			if let bundleID = logComponents[safe: logComponents.count - 3] {
@@ -114,8 +114,8 @@ class SimDevice: OutlineProvider, PropertyProvider {
 		}
 	}
 	
-	func extractSandboxLocationFromLogEntry(line: String) {
-		let logComponents = line.componentsSeparatedByString(" ")
+	func extractSandboxLocationFromLogEntry(_ line: String) {
+		let logComponents = line.components(separatedBy: " ")
 		
 		if let sandboxPath = logComponents.last {
 			if let bundleID = logComponents[safe: logComponents.count - 5] {
@@ -132,7 +132,7 @@ class SimDevice: OutlineProvider, PropertyProvider {
 	var outlineImage	: NSImage? { return nil }
 	var childCount		: Int { return self.apps.count  }
 	
-	func childAtIndex(index: Int) -> OutlineProvider? {
+	func childAtIndex(_ index: Int) -> OutlineProvider? {
 		return self.apps[index]
 	}
 
@@ -141,11 +141,11 @@ class SimDevice: OutlineProvider, PropertyProvider {
 	var image		: NSImage? { return nil }
 	var properties	: [SimProperty] {
 		return [
-			SimProperty(title: "Name", value: .Text(text: self.name)),
-			SimProperty(title: "Simulated Model", value: .Text(text: self.type)),
-			SimProperty(title: self.platformName, value: .Text(text: "\(self.platformVersion) (\(self.platformBuild))")),
-			SimProperty(title: "Identifier", value: .Text(text: self.udid)),
-			SimProperty(title: "Location", value: .Location(url: self.baseURL))
+			SimProperty(title: "Name", value: .text(text: self.name)),
+			SimProperty(title: "Simulated Model", value: .text(text: self.type)),
+			SimProperty(title: self.platformName, value: .text(text: "\(self.platformVersion) (\(self.platformBuild))")),
+			SimProperty(title: "Identifier", value: .text(text: self.udid)),
+			SimProperty(title: "Location", value: .location(url: self.baseURL))
 		]
 	}
 }

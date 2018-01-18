@@ -162,6 +162,7 @@
 				TargetAttributes = {
 					C948814A1CD3EA5500209C09 = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0820;
 					};
 				};
 			};
@@ -324,6 +325,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SimDirs/Support/SimDirs-Bridge.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -345,6 +347,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.quietspark.SimDirs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SimDirs/Support/SimDirs-Bridge.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

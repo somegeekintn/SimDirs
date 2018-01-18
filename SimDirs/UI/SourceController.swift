@@ -13,7 +13,7 @@ protocol OutlineProvider: AnyObject {
 	var outlineImage	: NSImage? { get }
 	var childCount		: Int { get }
 	
-	func childAtIndex(index: Int) -> OutlineProvider?
+	func childAtIndex(_ index: Int) -> OutlineProvider?
 }
 
 extension OutlineProvider {
@@ -22,7 +22,7 @@ extension OutlineProvider {
 
 class SourceController: NSViewController, NSOutlineViewDataSource, NSOutlineViewDelegate {
 	@IBOutlet weak var outlineView	: NSOutlineView!
-	private var platforms			= [SimPlatform]()
+	fileprivate var platforms			= [SimPlatform]()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -32,21 +32,21 @@ class SourceController: NSViewController, NSOutlineViewDataSource, NSOutlineView
 	
 	// MARK: - NSOutlineViewDataSource -
 	
-	func outlineView(outlineView: NSOutlineView, numberOfChildrenOfItem item: AnyObject?) -> Int {
+	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
 		return (item as? OutlineProvider)?.childCount ?? self.platforms.count
 	}
 	
-	func outlineView(outlineView: NSOutlineView, child index: Int, ofItem item: AnyObject?) -> AnyObject {
+	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
 		return (item as? OutlineProvider)?.childAtIndex(index) ?? self.platforms[index]
 	}
 	
-	func outlineView(outlineView: NSOutlineView, isItemExpandable item: AnyObject) -> Bool {
+	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
 		return (item as? OutlineProvider)?.expandable ?? (self.platforms.count > 0)
 	}
 	
 	// MARK: - NSOutlineViewDelegate -
 	
-	func outlineView(outlineView: NSOutlineView, viewForTableColumn tableColumn: NSTableColumn?, item: AnyObject) -> NSView? {
+	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
 		var view	: NSTableCellView? = nil
 		var title	= ""
 		var image	: NSImage? = nil
@@ -56,7 +56,7 @@ class SourceController: NSViewController, NSOutlineViewDataSource, NSOutlineView
 			image = outlineProvider.outlineImage
 		}
 		
-		if let outlineCell = outlineView.makeViewWithIdentifier(image != nil ? "ImageCell" : "TextCell", owner: self) as? NSTableCellView {
+		if let outlineCell = outlineView.make(withIdentifier: image != nil ? "ImageCell" : "TextCell", owner: self) as? NSTableCellView {
 			outlineCell.textField?.stringValue = title
 			outlineCell.imageView?.image = image
 			view = outlineCell
@@ -65,17 +65,17 @@ class SourceController: NSViewController, NSOutlineViewDataSource, NSOutlineView
 		return view
 	}
 	
-	func outlineView(outlineView: NSOutlineView, heightOfRowByItem item: AnyObject) -> CGFloat {
+	func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
 		return (item as? OutlineProvider)?.outlineImage != nil ? 24.0 : 20.0
 	}
 	
-	func outlineViewSelectionDidChange(notification: NSNotification) {
-		if let thing = (self.parentViewController as? NSSplitViewController)?.splitViewItems[safe: 1]?.viewController as? DetailController {
+	func outlineViewSelectionDidChange(_ notification: Notification) {
+		if let thing = (self.parent as? NSSplitViewController)?.splitViewItems[safe: 1]?.viewController as? DetailController {
 			var selectedItem	: AnyObject? = nil
 			let row				= self.outlineView.selectedRow
 			
 			if row != NSNotFound {
-				selectedItem = self.outlineView.itemAtRow(row)
+				selectedItem = self.outlineView.item(atRow: row) as AnyObject?
 			}
 			
 			thing.selectedItem = selectedItem
@@ -84,7 +84,7 @@ class SourceController: NSViewController, NSOutlineViewDataSource, NSOutlineView
 	
 	// MARK: - Interaction -
 
-	@IBAction func rescan(sender: AnyObject?) {
+	@IBAction func rescan(_ sender: AnyObject?) {
 		self.platforms = SimPlatform.scan()
 		self.outlineView.reloadData()
 	}

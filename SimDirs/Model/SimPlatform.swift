@@ -13,20 +13,20 @@ class SimPlatform: OutlineProvider {
 	var osVersions		= [SimOSVersion]()
 	
 	class func scan() -> [SimPlatform] {
-		let fileMgr		= NSFileManager.defaultManager()
+		let fileMgr		= FileManager.default
 		var platforms	= [SimPlatform]()
 		
-		if let libraryURL = fileMgr.URLsForDirectory(.LibraryDirectory, inDomains: .UserDomainMask).first {
-			let deviceURL = libraryURL.URLByAppendingPathComponent("Developer/CoreSimulator/Devices")
+		if let libraryURL = fileMgr.urls(for: .libraryDirectory, in: .userDomainMask).first {
+			let deviceURL = libraryURL.appendingPathComponent("Developer/CoreSimulator/Devices")
 			
-			if let dirEnumerator = fileMgr.enumeratorAtURL(deviceURL, includingPropertiesForKeys: nil, options: [ .SkipsSubdirectoryDescendants, .SkipsHiddenFiles ], errorHandler: nil) {
-				let dirURLs = dirEnumerator.allObjects.flatMap { $0 as? NSURL }
+			if let dirEnumerator = fileMgr.enumerator(at: deviceURL, includingPropertiesForKeys: nil, options: [ .skipsSubdirectoryDescendants, .skipsHiddenFiles ], errorHandler: nil) {
+				let dirURLs = dirEnumerator.allObjects.flatMap { $0 as? URL }
 				
 				for baseURL in dirURLs {
-					let deviceURL			= baseURL.URLByAppendingPathComponent("device.plist")
-					guard let deviceInfo	= NSPropertyListSerialization.propertyListWithURL(deviceURL) else { continue }
+					let deviceURL			= baseURL.appendingPathComponent("device.plist")
+					guard let deviceInfo	= PropertyListSerialization.propertyListWithURL(deviceURL) else { continue }
 					guard let runtime		= deviceInfo["runtime"] as? String else { continue }
-					let runtimeComponents	= runtime.stringByReplacingOccurrencesOfString("com.apple.CoreSimulator.SimRuntime.", withString: "").componentsSeparatedByString("-")
+					let runtimeComponents	= runtime.replacingOccurrences(of: "com.apple.CoreSimulator.SimRuntime.", with: "").components(separatedBy: "-")
 
 					if let platformName = runtimeComponents.first {
 						let platform	= platforms.match({ $0.name == platformName }, orMake: { SimPlatform(runtimeComponents: runtimeComponents, deviceInfo: deviceInfo) })
@@ -41,7 +41,7 @@ class SimPlatform: OutlineProvider {
 			platform.completeScan()
 		}
 		
-		return platforms.sort { $0.name < $1.name }
+		return platforms.sorted { $0.name < $1.name }
 	}
 	
 	init(runtimeComponents: [String], deviceInfo: [String : AnyObject]) {
@@ -52,10 +52,10 @@ class SimPlatform: OutlineProvider {
 		for osVersion in self.osVersions {
 			osVersion.completeScan(self.name)
 		}
-		self.osVersions.sortInPlace { $0.name > $1.name }
+		self.osVersions.sort { $0.name > $1.name }
 	}
 	
-	func updateWith(runtimeComponents: [String], deviceInfo: [String : AnyObject], baseURL: NSURL) {
+	func updateWith(_ runtimeComponents: [String], deviceInfo: [String : AnyObject], baseURL: URL) {
 		let versionID	= "\(runtimeComponents[safe: 1] ?? "0").\(runtimeComponents[safe: 2] ?? "0")"
 		let osVersion	= self.osVersions.match({ $0.name == versionID }, orMake: { SimOSVersion(name: versionID, deviceInfo: deviceInfo) })
 		
@@ -68,7 +68,7 @@ class SimPlatform: OutlineProvider {
 	var outlineImage	: NSImage? { return nil }
 	var childCount		: Int { return self.osVersions.count }
 	
-	func childAtIndex(index: Int) -> OutlineProvider? {
+	func childAtIndex(_ index: Int) -> OutlineProvider? {
 		return self.osVersions[index]
 	}
 }

@@ -10,10 +10,10 @@
 import Foundation
 
 extension Array {
-	mutating func match(predicate: (Element) -> Bool, orMake: () -> Element) -> Element {
+	mutating func match(_ predicate: (Element) -> Bool, orMake: () -> Element) -> Element {
 		let element	: Element
 		
-		if let index = self.indexOf(predicate) {
+		if let index = self.index(where: predicate) {
 			element = self[index]
 		}
 		else {
@@ -25,27 +25,27 @@ extension Array {
 	}
 }
 
-extension CollectionType {
-    subscript (safe index: Index) -> Generator.Element? {
-        return indices.contains(index) ? self[index] : nil
+extension Collection {
+    subscript (safe index: Index) -> Iterator.Element? {
+        return self[index]
     }
 }
 
 extension String {
-	var validPath	: Bool { return NSFileManager.defaultManager().fileExistsAtPath(self) }
+	var validPath	: Bool { return FileManager.default.fileExists(atPath: self) }
 }
 
-extension NSURL {
-	var validPath	: Bool { return self.path.map { NSFileManager.defaultManager().fileExistsAtPath($0) } ?? false  }
+extension URL {
+    var validPath	: Bool { return FileManager.default.fileExists(atPath: self.path) }
 }
 
-extension NSPropertyListSerialization {
-	class func propertyListWithURL(url: NSURL) -> [String : AnyObject]? {
-		guard let plistData	= NSData(contentsOfURL: url) else { return nil }
+extension PropertyListSerialization {
+	class func propertyListWithURL(_ url: URL) -> [String : AnyObject]? {
+		guard let plistData	= try? Data(contentsOf: url) else { return nil }
 		let plist			: [String : AnyObject]?
 		
 		do {
-			plist = try NSPropertyListSerialization.propertyListWithData(plistData, options: .Immutable, format: nil) as? [String : AnyObject]
+			plist = try PropertyListSerialization.propertyList(from: plistData, options: PropertyListSerialization.MutabilityOptions(), format: nil) as? [String : AnyObject]
 		} catch {
 			plist = nil
 		}
