@@ -12,7 +12,7 @@ class ActionCell: NSView {
 	@IBOutlet weak var actionButton	: NSButton!
 	var action						: (() -> ())?
 	
-	@IBAction func executeAction(sender: AnyObject) {
+    @IBAction func executeAction(_ sender: Any) {
 		action?()
 	}
 }
