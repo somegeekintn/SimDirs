@@ -11,7 +11,7 @@ import Cocoa
 struct SimProperty {
 	enum Value {
 		 case Text(text: String)
-		 case Location(url: NSURL)
+		 case Location(url: URL)
 	}
 
 	let title		: String
@@ -40,7 +40,7 @@ class DetailController: NSViewController, NSTableViewDataSource, NSTableViewDele
 	@IBOutlet weak var imageView		: NSImageView!
 	@IBOutlet weak var propertyTable	: NSTableView!
 	let emptyProvider					= EmptyProvider()
-	var selectedItem					: AnyObject? { didSet { self.reload() } }
+	var selectedItem					: Any? { didSet { self.reload() } }
 	var selectedProvider				: PropertyProvider { return (self.selectedItem as? PropertyProvider) ?? self.emptyProvider }
 
 	override func viewDidLoad() {
@@ -57,33 +57,33 @@ class DetailController: NSViewController, NSTableViewDataSource, NSTableViewDele
 	
 	// MARK: - NSTableViewDataSource -
 	
-	func numberOfRowsInTableView(tableView: NSTableView) -> Int {
-		return self.selectedProvider.properties.count ?? 0
+    func numberOfRows(in tableView: NSTableView) -> Int {
+		return self.selectedProvider.properties.count
 	}
 
 	// MARK: - NSTableViewDelegate -
 
-	func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
+	func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
 		let selectedProperty	= self.selectedProvider.properties[row]
-		let columnIdentifier	= tableColumn?.identifier ?? ""
+		let columnIdentifier	= tableColumn?.identifier ?? NSUserInterfaceItemIdentifier("")
 		let view				: NSView?
 		
-		switch columnIdentifier {
+		switch columnIdentifier.rawValue {
 			case "value":
 				switch selectedProperty.value {
 					case .Text(let text):
-						view = tableView.makeViewWithIdentifier("PropertyValueCell", owner: self)
+                        view = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("PropertyValueCell"), owner: self)
 						(view as? NSTableCellView)?.textField?.stringValue = text
 					
 					case .Location(let url):
-						view = tableView.makeViewWithIdentifier("PropertyActionCell", owner: self)
+						view = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("PropertyActionCell"), owner: self)
 						if let actionCell = view as? ActionCell {
-							actionCell.action = { NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([url]) }
+                            actionCell.action = { NSWorkspace.shared.activateFileViewerSelecting([url]) }
 						}
 				}
 			
 			default:
-				view = tableView.makeViewWithIdentifier("PropertyTitleCell", owner: self)
+				view = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("PropertyTitleCell"), owner: self)
 				(view as? NSTableCellView)?.textField?.stringValue = selectedProperty.title
 		}
 		

@@ -17,8 +17,8 @@ class SimApp: OutlineProvider, PropertyProvider {
 	var minOSVersion					: String?
 	var icon							: NSImage?
 	var hasValidPaths					: Bool { return self.validatedBundlePath != nil || self.validatedSandboxPath != nil }
-	var bundleURL						: NSURL? { return self.validatedBundlePath.map { NSURL(fileURLWithPath: $0) } }
-	var sandboxURL						: NSURL? { return self.validatedSandboxPath.map { NSURL(fileURLWithPath: $0) } }
+	var bundleURL						: URL? { return self.validatedBundlePath.map { URL(fileURLWithPath: $0) } }
+	var sandboxURL						: URL? { return self.validatedSandboxPath.map { URL(fileURLWithPath: $0) } }
 	private var validatedBundlePath		: String?
 	private var validatedSandboxPath	: String?
 	
@@ -50,12 +50,12 @@ class SimApp: OutlineProvider, PropertyProvider {
 		self.loadInfoPlist()
 	}
 	
-	func updateFromLastLaunchMapInfo(launchBundleInfo: [String : AnyObject]) {
+	func updateFrom(launchBundleInfo: [String : AnyObject]) {
 		self.bundlePath = launchBundleInfo["BundleContainer"] as? String
 		self.sandboxPath = launchBundleInfo["Container"] as? String
 	}
 	
-	func updateFromAppStateInfo(appStateInfo: [String : AnyObject]) {
+	func updateFrom(appStateInfo: [String : AnyObject]) {
 		guard let compatInfo = appStateInfo["compatibilityInfo"] as? [String : AnyObject] else { return }
 
 		self.bundlePath = compatInfo["bundlePath"] as? String
@@ -64,16 +64,13 @@ class SimApp: OutlineProvider, PropertyProvider {
 	
 	func refinePaths() {
 		guard let bundleURL		= self.bundleURL else { return }
-		let fileMgr				= NSFileManager.defaultManager()
+        let fileMgr				= FileManager.default
 		
-		if let lastPathComponent = bundleURL.lastPathComponent where !lastPathComponent.containsString(".app") {
-			if let dirEnumerator = fileMgr.enumeratorAtURL(bundleURL, includingPropertiesForKeys: nil, options: [ .SkipsSubdirectoryDescendants, .SkipsHiddenFiles ], errorHandler: nil) {
-				let dirURLs = dirEnumerator.allObjects.flatMap { $0 as? NSURL }
-				
-				for appURL in dirURLs {
-					guard let lastPathComponent = appURL.lastPathComponent else { continue }
-					
-					if lastPathComponent.containsString(".app") {
+		if bundleURL.lastPathComponent.contains("app") == true {
+			if let dirEnumerator = fileMgr.enumerator(at: bundleURL, includingPropertiesForKeys: nil, options: [ .skipsSubdirectoryDescendants, .skipsHiddenFiles ]) {
+
+				for appURL in dirEnumerator.allObjects.compactMap({ $0 as? URL}) {
+					if appURL.lastPathComponent.contains(".app") {
 						self.validatedBundlePath = appURL.path
 						break
 					}
@@ -84,9 +81,9 @@ class SimApp: OutlineProvider, PropertyProvider {
 
 	func loadInfoPlist() {
 		guard let bundleURL		= self.bundleURL else { return }
-		let infoPlistURL		= bundleURL.URLByAppendingPathComponent("Info.plist")
+		let infoPlistURL		= bundleURL.appendingPathComponent("Info.plist")
 
-		if let plistInfo = NSPropertyListSerialization.propertyListWithURL(infoPlistURL) {
+		if let plistInfo = PropertyListSerialization.propertyListWithURL(infoPlistURL) {
 			self.bundleName = plistInfo[String(kCFBundleNameKey)] as? String ?? ""
 			self.displayName = plistInfo["CFBundleDisplayName"] as? String ?? ""
 			self.shortVersion = plistInfo["CFBundleShortVersionString"] as? String ?? ""
@@ -101,7 +98,7 @@ class SimApp: OutlineProvider, PropertyProvider {
 				let primaryIconValue = bundleIcons["CFBundlePrimaryIcon"].flatMap { item -> [String : AnyObject]? in
 					switch item {
 						case let dict as [String : AnyObject]:	return dict
-						case let str as String:					return ["CFBundleIconFiles" : [str]]
+						case let str as String:					return ["CFBundleIconFiles" : [str]] as [String : AnyObject]
 						default:								return nil
 					}
 				}
@@ -109,12 +106,11 @@ class SimApp: OutlineProvider, PropertyProvider {
 				if let primaryIcon = primaryIconValue {
 					if let bundleIconFiles = primaryIcon["CFBundleIconFiles"] as? [String] {
 						for iconName in bundleIconFiles {
-							var iconURL		= bundleURL.URLByAppendingPathComponent(iconName)
-							let icon2XURL	= bundleURL.URLByAppendingPathComponent("\(iconName)@2x.png")
-							let missingExt	= iconURL.pathExtension.map({ return $0.isEmpty }) ?? true
+							var iconURL		= bundleURL.appendingPathComponent(iconName)
+							let icon2XURL	= bundleURL.appendingPathComponent("\(iconName)@2x.png")
 							
-							if missingExt {
-								iconURL = iconURL.URLByAppendingPathExtension("png")
+							if iconURL.pathExtension.isEmpty {
+								iconURL = iconURL.appendingPathComponent("png")
 							}
 							
 // .car files not yet working :/
@@ -143,13 +139,13 @@ class SimApp: OutlineProvider, PropertyProvider {
 //								}
 //							}
 //							else {
-								if let icon = NSImage(contentsOfURL: iconURL) {
+								if let icon = NSImage(contentsOf: iconURL) {
 									if self.icon?.size.width ?? 0 < icon.size.width {
 										self.icon = icon
 									}
 								}
 								
-								if let icon = NSImage(contentsOfURL: icon2XURL) {
+								if let icon = NSImage(contentsOf: icon2XURL) {
 									if self.icon?.size.width ?? 0 < icon.size.width {
 										self.icon = icon
 									}
@@ -172,7 +168,7 @@ class SimApp: OutlineProvider, PropertyProvider {
 	var outlineImage	: NSImage? { return self.icon }
 	var childCount		: Int { return 0 }
 	
-	func childAtIndex(index: Int) -> OutlineProvider? {
+	func childAt(index: Int) -> OutlineProvider? {
 		return nil
 	}
 	

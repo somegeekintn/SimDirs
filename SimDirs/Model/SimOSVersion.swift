@@ -18,18 +18,18 @@ class SimOSVersion: OutlineProvider {
 	
 	func completeScan(platformName: String) {
 		for device in self.devices {
-			device.completeScan(platformName)
+            device.completeScan(platformName: platformName)
 		}
-		self.devices.sortInPlace { $0.name < $1.name }
+		self.devices.sort(by: { $0.name < $1.name })
 	}
 	
-	func updateWithDeviceInfo(deviceInfo: [String : AnyObject], baseURL: NSURL) {
+	func updateWith(deviceInfo: [String : AnyObject], baseURL: URL) {
 		guard let deviceName	= deviceInfo["name"] as? String else { return }
 		guard let deviceUDID	= deviceInfo["UDID"] as? String else { return }
 		guard var deviceType	= deviceInfo["deviceType"] as? String else { return }
 
-		deviceType = deviceType.stringByReplacingOccurrencesOfString("com.apple.CoreSimulator.SimDeviceType.", withString: "")
-		deviceType = deviceType.stringByReplacingOccurrencesOfString("-", withString: " ")
+		deviceType = deviceType.replacingOccurrences(of: "com.apple.CoreSimulator.SimDeviceType.", with: "")
+		deviceType = deviceType.replacingOccurrences(of: "-", with: " ")
 
 		self.devices.append(SimDevice(name: deviceName, type: deviceType, udid: deviceUDID, baseURL: baseURL))
 	}
@@ -40,7 +40,7 @@ class SimOSVersion: OutlineProvider {
 	var outlineImage	: NSImage? { return nil }
 	var childCount		: Int { return self.devices.count }
 	
-	func childAtIndex(index: Int) -> OutlineProvider? {
+	func childAt(index: Int) -> OutlineProvider? {
 		return self.devices[index]
 	}
 }
