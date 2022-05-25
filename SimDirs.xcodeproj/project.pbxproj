@@ -3,376 +3,399 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C9188EE01CD65DCB00F0F8B6 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9188EDF1CD65DCB00F0F8B6 /* WindowController.swift */; };
-		C921B3C71CD6219F0091C1AD /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C921B3C51CD6219F0091C1AD /* DetailController.swift */; };
-		C921B3CA1CD629180091C1AD /* DetailTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C921B3C91CD629180091C1AD /* DetailTableView.swift */; };
-		C921B3CC1CD63EF30091C1AD /* ActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C921B3CB1CD63EF30091C1AD /* ActionCell.swift */; };
-		C948814E1CD3EA5500209C09 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C948814D1CD3EA5500209C09 /* AppDelegate.swift */; };
-		C94881501CD3EA5500209C09 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C948814F1CD3EA5500209C09 /* Assets.xcassets */; };
-		C9AE594A1CD4EAD80090655C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9AE59481CD4EAD80090655C /* Main.storyboard */; };
-		C9AE594C1CD4F1C70090655C /* SourceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AE594B1CD4F1C70090655C /* SourceController.swift */; };
-		C9ECF8A41CD4CEE300499965 /* SimPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ECF8A31CD4CEE300499965 /* SimPlatform.swift */; };
-		C9ECF8A61CD4CF1600499965 /* SimOSVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ECF8A51CD4CF1600499965 /* SimOSVersion.swift */; };
-		C9ECF8A81CD4CF4000499965 /* SimDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ECF8A71CD4CF4000499965 /* SimDevice.swift */; };
-		C9ECF8AA1CD4CF5A00499965 /* SimApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ECF8A91CD4CF5A00499965 /* SimApp.swift */; };
-		C9ECF8AC1CD4CF8400499965 /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ECF8AB1CD4CF8400499965 /* Support.swift */; };
-		C9ECF8B21CD4E26300499965 /* CoreUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9ECF8B11CD4E26300499965 /* CoreUI.framework */; };
+		C982F859283B9F9000D491F4 /* SimDirsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F858283B9F9000D491F4 /* SimDirsApp.swift */; };
+		C982F85B283B9F9000D491F4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F85A283B9F9000D491F4 /* ContentView.swift */; };
+		C982F85D283B9F9200D491F4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C982F85C283B9F9200D491F4 /* Assets.xcassets */; };
+		C982F860283B9F9200D491F4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C982F85F283B9F9200D491F4 /* Preview Assets.xcassets */; };
+		C982F86B283BA22100D491F4 /* SimPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F86A283BA22100D491F4 /* SimPlatform.swift */; };
+		C982F871283CE7B800D491F4 /* SimRuntime.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F870283CE7B800D491F4 /* SimRuntime.swift */; };
+		C982F873283CE9AD00D491F4 /* SimDeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F872283CE9AD00D491F4 /* SimDeviceType.swift */; };
+		C982F875283CEEBB00D491F4 /* SimDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F874283CEEBB00D491F4 /* SimDevice.swift */; };
+		C982F877283D020C00D491F4 /* SimProductFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F876283D020C00D491F4 /* SimProductFamily.swift */; };
+		C982F879283D042E00D491F4 /* SimModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F878283D042E00D491F4 /* SimModel.swift */; };
+		C982F87B283E40C800D491F4 /* SimCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F87A283E40C800D491F4 /* SimCtl.swift */; };
+		C982F87E283E57B200D491F4 /* PresentableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F87D283E57B200D491F4 /* PresentableModel.swift */; };
+		C982F880283E57E600D491F4 /* PresentationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F87F283E57E600D491F4 /* PresentationItem.swift */; };
+		C982F883283E813F00D491F4 /* DeviceTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F882283E813F00D491F4 /* DeviceTypeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C9188EDF1CD65DCB00F0F8B6 /* WindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
-		C921B3C51CD6219F0091C1AD /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
-		C921B3C91CD629180091C1AD /* DetailTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableView.swift; sourceTree = "<group>"; };
-		C921B3CB1CD63EF30091C1AD /* ActionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCell.swift; sourceTree = "<group>"; };
-		C948814B1CD3EA5500209C09 /* SimDirs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimDirs.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C948814D1CD3EA5500209C09 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C948814F1CD3EA5500209C09 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C94881541CD3EA5500209C09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C9AE59491CD4EAD80090655C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		C9AE594B1CD4F1C70090655C /* SourceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceController.swift; sourceTree = "<group>"; };
-		C9AE594D1CD503850090655C /* CUINamedLayerStack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CUINamedLayerStack.h; sourceTree = "<group>"; };
-		C9ECF8A31CD4CEE300499965 /* SimPlatform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimPlatform.swift; sourceTree = "<group>"; };
-		C9ECF8A51CD4CF1600499965 /* SimOSVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimOSVersion.swift; sourceTree = "<group>"; };
-		C9ECF8A71CD4CF4000499965 /* SimDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimDevice.swift; sourceTree = "<group>"; };
-		C9ECF8A91CD4CF5A00499965 /* SimApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimApp.swift; sourceTree = "<group>"; };
-		C9ECF8AB1CD4CF8400499965 /* Support.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Support.swift; sourceTree = "<group>"; };
-		C9ECF8AF1CD4E13500499965 /* CUICatalog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CUICatalog.h; sourceTree = "<group>"; };
-		C9ECF8B01CD4E14C00499965 /* SimDirs-Bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SimDirs-Bridge.h"; sourceTree = "<group>"; };
-		C9ECF8B11CD4E26300499965 /* CoreUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreUI.framework; path = /System/Library/PrivateFrameworks/CoreUI.framework; sourceTree = "<absolute>"; };
+		C982F855283B9F9000D491F4 /* SimDirs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimDirs.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C982F858283B9F9000D491F4 /* SimDirsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimDirsApp.swift; sourceTree = "<group>"; };
+		C982F85A283B9F9000D491F4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C982F85C283B9F9200D491F4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C982F85F283B9F9200D491F4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C982F861283B9F9200D491F4 /* SimDirs.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimDirs.entitlements; sourceTree = "<group>"; };
+		C982F86A283BA22100D491F4 /* SimPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimPlatform.swift; sourceTree = "<group>"; };
+		C982F870283CE7B800D491F4 /* SimRuntime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimRuntime.swift; sourceTree = "<group>"; };
+		C982F872283CE9AD00D491F4 /* SimDeviceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimDeviceType.swift; sourceTree = "<group>"; };
+		C982F874283CEEBB00D491F4 /* SimDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimDevice.swift; sourceTree = "<group>"; };
+		C982F876283D020C00D491F4 /* SimProductFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimProductFamily.swift; sourceTree = "<group>"; };
+		C982F878283D042E00D491F4 /* SimModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimModel.swift; sourceTree = "<group>"; };
+		C982F87A283E40C800D491F4 /* SimCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimCtl.swift; sourceTree = "<group>"; };
+		C982F87D283E57B200D491F4 /* PresentableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableModel.swift; sourceTree = "<group>"; };
+		C982F87F283E57E600D491F4 /* PresentationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationItem.swift; sourceTree = "<group>"; };
+		C982F882283E813F00D491F4 /* DeviceTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTypeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		C94881481CD3EA5500209C09 /* Frameworks */ = {
+		C982F852283B9F9000D491F4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9ECF8B21CD4E26300499965 /* CoreUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C9194D1C19C09A03004178EB = {
+		C982F84C283B9F9000D491F4 = {
 			isa = PBXGroup;
 			children = (
-				C948814C1CD3EA5500209C09 /* SimDirs */,
-				C9ECF8B31CD4E27B00499965 /* Frameworks */,
-				C9194D2619C09A03004178EB /* Products */,
+				C982F857283B9F9000D491F4 /* SimDirs */,
+				C982F856283B9F9000D491F4 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		C9194D2619C09A03004178EB /* Products */ = {
+		C982F856283B9F9000D491F4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C948814B1CD3EA5500209C09 /* SimDirs.app */,
+				C982F855283B9F9000D491F4 /* SimDirs.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C948814C1CD3EA5500209C09 /* SimDirs */ = {
+		C982F857283B9F9000D491F4 /* SimDirs */ = {
 			isa = PBXGroup;
 			children = (
-				C9ECF8A21CD4CEC800499965 /* Model */,
-				C9ECF8AE1CD4E13500499965 /* Support */,
-				C9ECF8B41CD4E96A00499965 /* UI */,
-				C948814D1CD3EA5500209C09 /* AppDelegate.swift */,
-				C9ECF8AB1CD4CF8400499965 /* Support.swift */,
-				C948814F1CD3EA5500209C09 /* Assets.xcassets */,
-				C9AE59481CD4EAD80090655C /* Main.storyboard */,
-				C94881541CD3EA5500209C09 /* Info.plist */,
+				C982F858283B9F9000D491F4 /* SimDirsApp.swift */,
+				C982F85A283B9F9000D491F4 /* ContentView.swift */,
+				C982F867283BA09B00D491F4 /* Model */,
+				C982F881283E7F0400D491F4 /* Views */,
+				C982F85C283B9F9200D491F4 /* Assets.xcassets */,
+				C982F861283B9F9200D491F4 /* SimDirs.entitlements */,
+				C982F85E283B9F9200D491F4 /* Preview Content */,
 			);
 			path = SimDirs;
 			sourceTree = "<group>";
 		};
-		C9ECF8A21CD4CEC800499965 /* Model */ = {
+		C982F85E283B9F9200D491F4 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				C9ECF8A91CD4CF5A00499965 /* SimApp.swift */,
-				C9ECF8A71CD4CF4000499965 /* SimDevice.swift */,
-				C9ECF8A51CD4CF1600499965 /* SimOSVersion.swift */,
-				C9ECF8A31CD4CEE300499965 /* SimPlatform.swift */,
+				C982F85F283B9F9200D491F4 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C982F867283BA09B00D491F4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C982F87C283E579900D491F4 /* Presentation */,
+				C982F87A283E40C800D491F4 /* SimCtl.swift */,
+				C982F878283D042E00D491F4 /* SimModel.swift */,
+				C982F874283CEEBB00D491F4 /* SimDevice.swift */,
+				C982F872283CE9AD00D491F4 /* SimDeviceType.swift */,
+				C982F86A283BA22100D491F4 /* SimPlatform.swift */,
+				C982F876283D020C00D491F4 /* SimProductFamily.swift */,
+				C982F870283CE7B800D491F4 /* SimRuntime.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
 		};
-		C9ECF8AE1CD4E13500499965 /* Support */ = {
+		C982F87C283E579900D491F4 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				C9ECF8AF1CD4E13500499965 /* CUICatalog.h */,
-				C9AE594D1CD503850090655C /* CUINamedLayerStack.h */,
-				C9ECF8B01CD4E14C00499965 /* SimDirs-Bridge.h */,
+				C982F87D283E57B200D491F4 /* PresentableModel.swift */,
+				C982F87F283E57E600D491F4 /* PresentationItem.swift */,
 			);
-			path = Support;
+			path = Presentation;
 			sourceTree = "<group>";
 		};
-		C9ECF8B31CD4E27B00499965 /* Frameworks */ = {
+		C982F881283E7F0400D491F4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C9ECF8B11CD4E26300499965 /* CoreUI.framework */,
+				C982F882283E813F00D491F4 /* DeviceTypeView.swift */,
 			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		C9ECF8B41CD4E96A00499965 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				C921B3CB1CD63EF30091C1AD /* ActionCell.swift */,
-				C921B3C51CD6219F0091C1AD /* DetailController.swift */,
-				C921B3C91CD629180091C1AD /* DetailTableView.swift */,
-				C9AE594B1CD4F1C70090655C /* SourceController.swift */,
-				C9188EDF1CD65DCB00F0F8B6 /* WindowController.swift */,
-			);
-			path = UI;
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C948814A1CD3EA5500209C09 /* SimDirs */ = {
+		C982F854283B9F9000D491F4 /* SimDirs */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C94881571CD3EA5500209C09 /* Build configuration list for PBXNativeTarget "SimDirs" */;
+			buildConfigurationList = C982F864283B9F9200D491F4 /* Build configuration list for PBXNativeTarget "SimDirs" */;
 			buildPhases = (
-				C94881471CD3EA5500209C09 /* Sources */,
-				C94881481CD3EA5500209C09 /* Frameworks */,
-				C94881491CD3EA5500209C09 /* Resources */,
+				C982F851283B9F9000D491F4 /* Sources */,
+				C982F852283B9F9000D491F4 /* Frameworks */,
+				C982F853283B9F9000D491F4 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = SimDirs;
-			productName = SimDirs2;
-			productReference = C948814B1CD3EA5500209C09 /* SimDirs.app */;
+			productName = SimDirs;
+			productReference = C982F855283B9F9000D491F4 /* SimDirs.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		C9194D1D19C09A03004178EB /* Project object */ = {
+		C982F84D283B9F9000D491F4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0600;
-				ORGANIZATIONNAME = "Quiet Spark";
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1340;
+				LastUpgradeCheck = 1340;
 				TargetAttributes = {
-					C948814A1CD3EA5500209C09 = {
-						CreatedOnToolsVersion = 7.3;
+					C982F854283B9F9000D491F4 = {
+						CreatedOnToolsVersion = 13.4;
 					};
 				};
 			};
-			buildConfigurationList = C9194D2019C09A03004178EB /* Build configuration list for PBXProject "SimDirs" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			buildConfigurationList = C982F850283B9F9000D491F4 /* Build configuration list for PBXProject "SimDirs" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
-			mainGroup = C9194D1C19C09A03004178EB;
-			productRefGroup = C9194D2619C09A03004178EB /* Products */;
+			mainGroup = C982F84C283B9F9000D491F4;
+			productRefGroup = C982F856283B9F9000D491F4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C948814A1CD3EA5500209C09 /* SimDirs */,
+				C982F854283B9F9000D491F4 /* SimDirs */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		C94881491CD3EA5500209C09 /* Resources */ = {
+		C982F853283B9F9000D491F4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9AE594A1CD4EAD80090655C /* Main.storyboard in Resources */,
-				C94881501CD3EA5500209C09 /* Assets.xcassets in Resources */,
+				C982F860283B9F9200D491F4 /* Preview Assets.xcassets in Resources */,
+				C982F85D283B9F9200D491F4 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		C94881471CD3EA5500209C09 /* Sources */ = {
+		C982F851283B9F9000D491F4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C921B3C71CD6219F0091C1AD /* DetailController.swift in Sources */,
-				C921B3CC1CD63EF30091C1AD /* ActionCell.swift in Sources */,
-				C9ECF8A41CD4CEE300499965 /* SimPlatform.swift in Sources */,
-				C9ECF8A61CD4CF1600499965 /* SimOSVersion.swift in Sources */,
-				C921B3CA1CD629180091C1AD /* DetailTableView.swift in Sources */,
-				C9AE594C1CD4F1C70090655C /* SourceController.swift in Sources */,
-				C9ECF8AA1CD4CF5A00499965 /* SimApp.swift in Sources */,
-				C9188EE01CD65DCB00F0F8B6 /* WindowController.swift in Sources */,
-				C948814E1CD3EA5500209C09 /* AppDelegate.swift in Sources */,
-				C9ECF8A81CD4CF4000499965 /* SimDevice.swift in Sources */,
-				C9ECF8AC1CD4CF8400499965 /* Support.swift in Sources */,
+				C982F883283E813F00D491F4 /* DeviceTypeView.swift in Sources */,
+				C982F85B283B9F9000D491F4 /* ContentView.swift in Sources */,
+				C982F875283CEEBB00D491F4 /* SimDevice.swift in Sources */,
+				C982F873283CE9AD00D491F4 /* SimDeviceType.swift in Sources */,
+				C982F877283D020C00D491F4 /* SimProductFamily.swift in Sources */,
+				C982F859283B9F9000D491F4 /* SimDirsApp.swift in Sources */,
+				C982F871283CE7B800D491F4 /* SimRuntime.swift in Sources */,
+				C982F86B283BA22100D491F4 /* SimPlatform.swift in Sources */,
+				C982F87E283E57B200D491F4 /* PresentableModel.swift in Sources */,
+				C982F880283E57E600D491F4 /* PresentationItem.swift in Sources */,
+				C982F879283D042E00D491F4 /* SimModel.swift in Sources */,
+				C982F87B283E40C800D491F4 /* SimCtl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		C9AE59481CD4EAD80090655C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C9AE59491CD4EAD80090655C /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
-		C9194D4019C09A03004178EB /* Debug */ = {
+		C982F862283B9F9200D491F4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MTL_ENABLE_DEBUG_INFO = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		C9194D4119C09A03004178EB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = macosx;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		C94881551CD3EA5500209C09 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ANALYZER_NONNULL = YES;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
-				);
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/SimDirs/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				PRODUCT_BUNDLE_IDENTIFIER = com.quietspark.SimDirs;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "SimDirs/Support/SimDirs-Bridge.h";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		C94881561CD3EA5500209C09 /* Release */ = {
+		C982F863283B9F9200D491F4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		C982F865283B9F9200D491F4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ANALYZER_NONNULL = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SimDirs/SimDirs.entitlements;
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SimDirs/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+					"@executable_path/../Frameworks",
 				);
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/SimDirs/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				PRODUCT_BUNDLE_IDENTIFIER = com.quietspark.SimDirs;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sgntn.SimDirs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "SimDirs/Support/SimDirs-Bridge.h";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		C982F866283B9F9200D491F4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SimDirs/SimDirs.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SimDirs/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sgntn.SimDirs;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C9194D2019C09A03004178EB /* Build configuration list for PBXProject "SimDirs" */ = {
+		C982F850283B9F9000D491F4 /* Build configuration list for PBXProject "SimDirs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C9194D4019C09A03004178EB /* Debug */,
-				C9194D4119C09A03004178EB /* Release */,
+				C982F862283B9F9200D491F4 /* Debug */,
+				C982F863283B9F9200D491F4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C94881571CD3EA5500209C09 /* Build configuration list for PBXNativeTarget "SimDirs" */ = {
+		C982F864283B9F9200D491F4 /* Build configuration list for PBXNativeTarget "SimDirs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C94881551CD3EA5500209C09 /* Debug */,
-				C94881561CD3EA5500209C09 /* Release */,
+				C982F865283B9F9200D491F4 /* Debug */,
+				C982F866283B9F9200D491F4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = C9194D1D19C09A03004178EB /* Project object */;
+	rootObject = C982F84D283B9F9000D491F4 /* Project object */;
 }
