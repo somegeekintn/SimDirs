@@ -24,10 +24,15 @@ struct RuntimeView: View {
             let items = runtime.supportedDeviceTypes.map({ UniqueItem(name: $0.name) })
 
             Group {
-                Text("Build Version: \(runtime.buildversion)")
-                HStack {
-                    Text("Bundle Path: \(runtime.bundlePath)")
-                    RuntimeActionGroup(runtime: runtime)
+                if !runtime.buildversion.isEmpty {
+                    Text("Build Version: \(runtime.buildversion)")
+                }
+                
+                if !runtime.bundlePath.isEmpty {
+                    HStack {
+                        Text("Bundle Path: \(runtime.bundlePath)")
+                        RuntimeActionGroup(runtime: runtime)
+                    }
                 }
                 Text(runtime.isAvailable ? "Available" : "Unavailable")
                     .foregroundColor(runtime.isAvailable ? .green : .red)
