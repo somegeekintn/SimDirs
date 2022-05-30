@@ -5,7 +5,7 @@
 //  Created by Casey Fleser on 5/24/22.
 //
 
-import Foundation
+import SwiftUI
 
 struct SimRuntime: Comparable, Decodable {
     enum CodingKeys: String, CodingKey {
@@ -117,6 +117,7 @@ extension SimRuntime: PresentableItem {
     var title       : String { return name }
     var id          : String { return identifier }
     var imageName   : String { return "v.circle" }
+    var imageColor  : Color? { return isAvailable ? .green : .red }
 }
 
 extension Array where Element == SimRuntime {

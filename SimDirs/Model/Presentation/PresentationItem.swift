@@ -11,16 +11,13 @@ protocol PresentableItem {
     var title       : String { get }
     var id          : String { get }
     var imageName   : String { get }
+    var imageColor  : Color? { get }
+    var contentView : AnyView? { get }
 }
 
-protocol PresentableContent {
-    associatedtype Content : View
-    
-    var view          : Content { get }
-}
-
-struct PresentationContent<T: PresentableContent> {
-    let underlying  : T
+extension PresentableItem {
+    var imageColor  : Color? { return nil }
+    var contentView : AnyView? { return nil }
 }
 
 struct PresentationItem: Identifiable {
@@ -31,6 +28,8 @@ struct PresentationItem: Identifiable {
     
     var title       : String { return underlying.title }
     var imageName   : String { return customImage ?? underlying.imageName }
+    var imageColor  : Color { return underlying.imageColor ?? .white }
+    var contentView : AnyView { return underlying.contentView ?? AnyView(Text(title)) }
     
     init(_ presentable: PresentableItem, image: String? = nil, identifier: String? = nil) {
         underlying = presentable
