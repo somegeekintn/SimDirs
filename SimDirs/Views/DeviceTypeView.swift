@@ -22,7 +22,11 @@ struct DeviceTypeView: View {
                 Text("Identifier: \(deviceType.identifier)")
                 Text("Min Runtime: \(deviceType.minRuntimeVersionString)")
                 Text("Max Runtime: \(UInt32.max == deviceType.maxRuntimeVersion ? "-" : deviceType.maxRuntimeVersionString)")
-                Text("Bundle Path: \(deviceType.bundlePath)")
+                HStack {
+                    Text("Bundle Path: \(deviceType.bundlePath)")
+                        .lineLimit(1)
+                    PathActions(path: deviceType.bundlePath)
+                }
             }
             .font(.subheadline)
             .textSelection(.enabled)

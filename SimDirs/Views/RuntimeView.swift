@@ -11,17 +11,19 @@ extension SimRuntime {
     var contentView : AnyView? { return AnyView(RuntimeView(runtime: self)) }
 }
 
-struct UniqueItem: Identifiable {
-    let name    : String
-    var id      : String { return name }
-}
-
 struct RuntimeView: View {
-    var runtime  : SimRuntime
+    struct SupportedItem: Identifiable {
+        let name    : String
+        var id      : String { return name }
+    }
+
+    @Environment(\.scenePhase) private var scenePhase
+    
+    var runtime         : SimRuntime
     
     var body: some View {
         VStack(alignment: .leading, spacing: 2.0) {
-            let items = runtime.supportedDeviceTypes.map({ UniqueItem(name: $0.name) })
+            let items = runtime.supportedDeviceTypes.map({ SupportedItem(name: $0.name) })
 
             Group {
                 if !runtime.buildversion.isEmpty {
@@ -31,9 +33,10 @@ struct RuntimeView: View {
                 if !runtime.bundlePath.isEmpty {
                     HStack {
                         Text("Bundle Path: \(runtime.bundlePath)")
-                        RuntimeActionGroup(runtime: runtime)
+                        PathActions(path: runtime.bundlePath)
                     }
                 }
+                
                 Text(runtime.isAvailable ? "Available" : "Unavailable")
                     .foregroundColor(runtime.isAvailable ? .green : .red)
                 if !runtime.isAvailable {
@@ -65,36 +68,3 @@ struct RuntimeView_Previews: PreviewProvider {
         RuntimeView(runtime: model.runtimes[0])
     }
 }
-
-struct RuntimeActionGroup: View {
-    var runtime  : SimRuntime
-
-    var body: some View {
-        // ControlGroup almost but not quite what we want
-        HStack {
-            Button(action: { print("Go!") }) {
-                Image(systemName: "doc.on.doc")
-            }
-            Divider()
-                .frame(height: 16.0)
-            Button(action: { print("Copy") }) {
-                Image(systemName: "arrow.right.circle.fill")
-            }
-        }
-        .buttonStyle(.borderless)
-        .padding(.vertical, 4.0)
-        .padding(.horizontal, 8.0)
-        .background(.black.opacity(0.4))
-        .font(.headline)
-        .cornerRadius(6.0)
-    }
-}
-
-struct RuntimeActionGroup_Previews: PreviewProvider {
-    static let model = SimModel()
-    
-    static var previews: some View {
-        RuntimeActionGroup(runtime: model.runtimes[0])
-    }
-}
-

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C927A0D92846414900533D66 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C927A0D82846414900533D66 /* Helpers.swift */; };
+		C927A0DB2846502300533D66 /* PathActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C927A0DA2846502300533D66 /* PathActions.swift */; };
 		C94C52C52844E7D400E2129E /* SimItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C52C42844E7D400E2129E /* SimItemList.swift */; };
 		C94C52C72844E80A00E2129E /* SimItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C52C62844E80A00E2129E /* SimItemRow.swift */; };
 		C94C52C92844E99B00E2129E /* SimItemContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C52C82844E99B00E2129E /* SimItemContent.swift */; };
@@ -28,6 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C927A0D82846414900533D66 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		C927A0DA2846502300533D66 /* PathActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathActions.swift; sourceTree = "<group>"; };
 		C94C52C42844E7D400E2129E /* SimItemList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimItemList.swift; sourceTree = "<group>"; };
 		C94C52C62844E80A00E2129E /* SimItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimItemRow.swift; sourceTree = "<group>"; };
 		C94C52C82844E99B00E2129E /* SimItemContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimItemContent.swift; sourceTree = "<group>"; };
@@ -82,6 +86,7 @@
 			children = (
 				C982F858283B9F9000D491F4 /* SimDirsApp.swift */,
 				C982F85A283B9F9000D491F4 /* ContentView.swift */,
+				C927A0D82846414900533D66 /* Helpers.swift */,
 				C982F867283BA09B00D491F4 /* Model */,
 				C982F881283E7F0400D491F4 /* Views */,
 				C982F85C283B9F9200D491F4 /* Assets.xcassets */,
@@ -127,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				C982F882283E813F00D491F4 /* DeviceTypeView.swift */,
+				C927A0DA2846502300533D66 /* PathActions.swift */,
 				C94C52CA2844EAAC00E2129E /* RuntimeView.swift */,
 				C94C52C82844E99B00E2129E /* SimItemContent.swift */,
 				C94C52C42844E7D400E2129E /* SimItemList.swift */,
@@ -207,6 +213,7 @@
 			files = (
 				C982F883283E813F00D491F4 /* DeviceTypeView.swift in Sources */,
 				C94C52C92844E99B00E2129E /* SimItemContent.swift in Sources */,
+				C927A0DB2846502300533D66 /* PathActions.swift in Sources */,
 				C982F85B283B9F9000D491F4 /* ContentView.swift in Sources */,
 				C982F875283CEEBB00D491F4 /* SimDevice.swift in Sources */,
 				C982F873283CE9AD00D491F4 /* SimDeviceType.swift in Sources */,
@@ -215,6 +222,7 @@
 				C982F871283CE7B800D491F4 /* SimRuntime.swift in Sources */,
 				C94C52C72844E80A00E2129E /* SimItemRow.swift in Sources */,
 				C982F86B283BA22100D491F4 /* SimPlatform.swift in Sources */,
+				C927A0D92846414900533D66 /* Helpers.swift in Sources */,
 				C982F87E283E57B200D491F4 /* PresentableModel.swift in Sources */,
 				C94C52CB2844EAAC00E2129E /* RuntimeView.swift in Sources */,
 				C982F880283E57E600D491F4 /* PresentationItem.swift in Sources */,
