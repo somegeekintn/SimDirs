@@ -10,6 +10,7 @@ import SwiftUI
 protocol PresentableItem {
     var title       : String { get }
     var id          : String { get }
+    var icon        : NSImage? { get }
     var imageName   : String { get }
     var imageColor  : Color? { get }
     var contentView : AnyView? { get }
@@ -17,6 +18,7 @@ protocol PresentableItem {
 
 extension PresentableItem {
     var imageColor  : Color? { return nil }
+    var icon        : NSImage? { return nil }
     var contentView : AnyView? { return nil }
 }
 
@@ -27,6 +29,7 @@ struct PresentationItem: Identifiable {
     var customImage : String?
     
     var title       : String { return underlying.title }
+    var icon        : NSImage? { return underlying.icon }
     var imageName   : String { return customImage ?? underlying.imageName }
     var imageColor  : Color { return underlying.imageColor ?? .white }
     var contentView : AnyView { return underlying.contentView ?? AnyView(Text(title)) }

@@ -21,3 +21,11 @@ extension NSWorkspace {
         shared.activateFileViewerSelecting([filepathURL])
     }
 }
+
+extension PropertyListSerialization {
+	class func propertyList(from url: URL) -> [String : AnyObject]? {
+        guard let plistData	= try? Data(contentsOf: url) else { return nil }
+
+        return try? PropertyListSerialization.propertyList(from: plistData, options: [], format: nil) as? [String : AnyObject]
+	}
+}

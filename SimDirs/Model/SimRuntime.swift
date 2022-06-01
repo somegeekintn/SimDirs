@@ -97,7 +97,7 @@ struct SimRuntime: Comparable, Decodable {
     }
     
     mutating func setDevices(_ devices: [SimDevice], from devTypes: [SimDeviceType]) {
-        self.devices = devices
+        self.devices = devices.map { $0.scannedDevice }
         
         // If this runtime is a placeholder it will be missing supported device types
         // create device type stubs based on the devices being added using supplied

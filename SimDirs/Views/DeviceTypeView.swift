@@ -19,17 +19,14 @@ struct DeviceTypeView: View {
             Group {
                 Text("Product Family: \(deviceType.productFamily.title)")
                 Text("Model ID: \(deviceType.modelIdentifier)")
-                Text("Identifier: \(deviceType.identifier)")
                 Text("Min Runtime: \(deviceType.minRuntimeVersionString)")
                 Text("Max Runtime: \(UInt32.max == deviceType.maxRuntimeVersion ? "-" : deviceType.maxRuntimeVersionString)")
-                HStack {
-                    Text("Bundle Path: \(deviceType.bundlePath)")
-                        .lineLimit(1)
-                    PathActions(path: deviceType.bundlePath)
-                }
+                Text("Identifier: \(deviceType.identifier)")
+                PathRow(title: "Bundle Path", path: deviceType.bundlePath)
             }
             .font(.subheadline)
             .textSelection(.enabled)
+            .lineLimit(1)
         }
     }
 }

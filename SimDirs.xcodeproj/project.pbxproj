@@ -27,6 +27,9 @@
 		C982F87E283E57B200D491F4 /* PresentableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F87D283E57B200D491F4 /* PresentableModel.swift */; };
 		C982F880283E57E600D491F4 /* PresentationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F87F283E57E600D491F4 /* PresentationItem.swift */; };
 		C982F883283E813F00D491F4 /* DeviceTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F882283E813F00D491F4 /* DeviceTypeView.swift */; };
+		C9D729F128478AB00064152D /* DeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D729F028478AB00064152D /* DeviceView.swift */; };
+		C9EE0CD228478FDB00E9B97A /* PathRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EE0CD128478FDB00E9B97A /* PathRow.swift */; };
+		C9EE0CD42847B79E00E9B97A /* SimApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EE0CD32847B79E00E9B97A /* SimApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +55,9 @@
 		C982F87D283E57B200D491F4 /* PresentableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableModel.swift; sourceTree = "<group>"; };
 		C982F87F283E57E600D491F4 /* PresentationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationItem.swift; sourceTree = "<group>"; };
 		C982F882283E813F00D491F4 /* DeviceTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTypeView.swift; sourceTree = "<group>"; };
+		C9D729F028478AB00064152D /* DeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceView.swift; sourceTree = "<group>"; };
+		C9EE0CD128478FDB00E9B97A /* PathRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathRow.swift; sourceTree = "<group>"; };
+		C9EE0CD32847B79E00E9B97A /* SimApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +116,7 @@
 				C982F87C283E579900D491F4 /* Presentation */,
 				C982F87A283E40C800D491F4 /* SimCtl.swift */,
 				C982F878283D042E00D491F4 /* SimModel.swift */,
+				C9EE0CD32847B79E00E9B97A /* SimApp.swift */,
 				C982F874283CEEBB00D491F4 /* SimDevice.swift */,
 				C982F872283CE9AD00D491F4 /* SimDeviceType.swift */,
 				C982F86A283BA22100D491F4 /* SimPlatform.swift */,
@@ -132,7 +139,9 @@
 			isa = PBXGroup;
 			children = (
 				C982F882283E813F00D491F4 /* DeviceTypeView.swift */,
+				C9D729F028478AB00064152D /* DeviceView.swift */,
 				C927A0DA2846502300533D66 /* PathActions.swift */,
+				C9EE0CD128478FDB00E9B97A /* PathRow.swift */,
 				C94C52CA2844EAAC00E2129E /* RuntimeView.swift */,
 				C94C52C82844E99B00E2129E /* SimItemContent.swift */,
 				C94C52C42844E7D400E2129E /* SimItemList.swift */,
@@ -214,12 +223,14 @@
 				C982F883283E813F00D491F4 /* DeviceTypeView.swift in Sources */,
 				C94C52C92844E99B00E2129E /* SimItemContent.swift in Sources */,
 				C927A0DB2846502300533D66 /* PathActions.swift in Sources */,
+				C9EE0CD42847B79E00E9B97A /* SimApp.swift in Sources */,
 				C982F85B283B9F9000D491F4 /* ContentView.swift in Sources */,
 				C982F875283CEEBB00D491F4 /* SimDevice.swift in Sources */,
 				C982F873283CE9AD00D491F4 /* SimDeviceType.swift in Sources */,
 				C982F877283D020C00D491F4 /* SimProductFamily.swift in Sources */,
 				C982F859283B9F9000D491F4 /* SimDirsApp.swift in Sources */,
 				C982F871283CE7B800D491F4 /* SimRuntime.swift in Sources */,
+				C9EE0CD228478FDB00E9B97A /* PathRow.swift in Sources */,
 				C94C52C72844E80A00E2129E /* SimItemRow.swift in Sources */,
 				C982F86B283BA22100D491F4 /* SimPlatform.swift in Sources */,
 				C927A0D92846414900533D66 /* Helpers.swift in Sources */,
@@ -227,6 +238,7 @@
 				C94C52CB2844EAAC00E2129E /* RuntimeView.swift in Sources */,
 				C982F880283E57E600D491F4 /* PresentationItem.swift in Sources */,
 				C982F879283D042E00D491F4 /* SimModel.swift in Sources */,
+				C9D729F128478AB00064152D /* DeviceView.swift in Sources */,
 				C94C52C52844E7D400E2129E /* SimItemList.swift in Sources */,
 				C982F87B283E40C800D491F4 /* SimCtl.swift in Sources */,
 			);

@@ -26,17 +26,6 @@ struct RuntimeView: View {
             let items = runtime.supportedDeviceTypes.map({ SupportedItem(name: $0.name) })
 
             Group {
-                if !runtime.buildversion.isEmpty {
-                    Text("Build Version: \(runtime.buildversion)")
-                }
-                
-                if !runtime.bundlePath.isEmpty {
-                    HStack {
-                        Text("Bundle Path: \(runtime.bundlePath)")
-                        PathActions(path: runtime.bundlePath)
-                    }
-                }
-                
                 Text(runtime.isAvailable ? "Available" : "Unavailable")
                     .foregroundColor(runtime.isAvailable ? .green : .red)
                 if !runtime.isAvailable {
@@ -46,10 +35,18 @@ struct RuntimeView: View {
                         .foregroundColor(.red)
                         .padding(.leading)
                 }
+
+                if !runtime.buildversion.isEmpty {
+                    Text("Build Version: \(runtime.buildversion)")
+                }
+                
+                if !runtime.bundlePath.isEmpty {
+                    PathRow(title: "Bundle Path", path: runtime.bundlePath)
+                }
                 
                 Divider()
                     .padding(.vertical, 4.0)
-                Text("Supports\(runtime.isPlaceholder ? " (partial list)" : "")")
+                Text("Supported Devices\(runtime.isPlaceholder ? " (partial list)" : "")")
                 ForEach(items) { item in
                     Text("• \(item.name)")
                 }

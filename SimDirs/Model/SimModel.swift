@@ -9,6 +9,7 @@ import Foundation
 
 enum SimError: Error {
     case deviceParsingFailure
+    case invalidApp
 }
 
 struct SimModel {

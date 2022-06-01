@@ -12,9 +12,17 @@ struct SimItemRow: View {
 
     var body: some View {
         HStack {
-            Image(systemName: item.imageName)
-                .foregroundColor(item.imageColor)
-                .symbolRenderingMode(.hierarchical)
+            if let icon = item.icon {
+                Image(nsImage: icon)
+                    .resizable()
+                    .frame(maxWidth: 20.0, maxHeight: 20.0)
+                    .cornerRadius(4.0)
+            }
+            else {
+                Image(systemName: item.imageName)
+                    .foregroundColor(item.imageColor)
+                    .symbolRenderingMode(.hierarchical)
+            }
             Text(item.title)
         }
     }

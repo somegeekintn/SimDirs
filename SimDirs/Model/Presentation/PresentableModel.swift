@@ -14,7 +14,7 @@ class PresentableModel: ObservableObject {
     }
 
     var baseModel   = SimModel()
-    var style       = Style.byDevice
+    var style       = Style.byRuntime
     var items       = [PresentationItem]()
     
     init() {
@@ -37,7 +37,16 @@ class PresentableModel: ObservableObject {
                 var deviceTypeItem      = PresentationItem(deviceType, identifier: deviceType.id)
                 let deviceTypeChildren  : [PresentationItem] = baseModel.runtimes.filter({ $0.supports(deviceType: deviceType) }).map { runtime in
                     var runtimeItem         = PresentationItem(runtime, identifier: "\(deviceType.id) - \(runtime.id)")
-                    let runtimeItemChildren = runtime.devices.filter({ $0.isDeviceOfType(deviceType) }).map { PresentationItem($0, image: family.imageName) }
+                    let runtimeItemChildren = runtime.devices.filter({ $0.isDeviceOfType(deviceType) }).map { device -> PresentationItem in
+                        var deviceItem          = PresentationItem(device, image: family.imageName)
+                        let deviceItemChildren  = device.apps.map { PresentationItem($0) }
+                        
+                        if !deviceItemChildren.isEmpty {
+                            deviceItem.children = deviceItemChildren
+                        }
+                        
+                        return deviceItem
+                    }
 
                     if !runtimeItemChildren.isEmpty {
                         runtimeItem.children = runtimeItemChildren
@@ -65,7 +74,16 @@ class PresentableModel: ObservableObject {
                 var runtimeItem         = PresentationItem(runtime)
                 let runtimeItemChildren : [PresentationItem] = baseModel.deviceTypes.filter({ $0.supports(runtime: runtime) }).map { deviceType in
                     var deviceTypeItem      = PresentationItem(deviceType, identifier: "\(runtime.id) - \(deviceType.id)")
-                    let deviceTypeChildren  = runtime.devices.filter({ $0.isDeviceOfType(deviceType) }).map { PresentationItem($0, image: deviceType.imageName) }
+                    let deviceTypeChildren  = runtime.devices.filter({ $0.isDeviceOfType(deviceType) }).map { device -> PresentationItem in
+                        var deviceItem          = PresentationItem(device, image: deviceType.imageName)
+                        let deviceItemChildren  = device.apps.map { PresentationItem($0) }
+                        
+                        if !deviceItemChildren.isEmpty {
+                            deviceItem.children = deviceItemChildren
+                        }
+                        
+                        return deviceItem
+                    }
 
                     if !deviceTypeChildren.isEmpty {
                         deviceTypeItem.children = deviceTypeChildren
