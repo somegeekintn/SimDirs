@@ -39,4 +39,27 @@ struct PresentationItem: Identifiable {
         id = identifier ?? underlying.id
         customImage = image
     }
+    
+    func filtered(_ filter: PresentationFilter) -> Self {
+        guard var childItems    = self.children, !filter.isEmpty else { return self }
+        var filteredItem        = self
+        
+        if filter.contains(.withApps) {
+            childItems = childItems.filter { $0.containsType(SimApp.self) }
+        }
+        if filter.contains(.runtimeInstalled) {
+            childItems = childItems.filter {
+                guard let runtime = $0.underlying as? SimRuntime else { return true }
+                
+                return runtime.isAvailable
+            }
+        }
+        filteredItem.children = childItems.isEmpty ? nil : childItems.map { $0.filtered(filter)}
+        
+        return filteredItem
+    }
+        
+    func containsType<T> (_ type: T.Type) -> Bool {
+        return underlying is T || children?.contains(where: { $0.containsType(type)}) ?? false
+    }
 }

@@ -7,12 +7,21 @@
 
 import Foundation
 
+struct PresentationFilter: OptionSet, CaseIterable {
+    let rawValue:   Int
+    
+    static let withApps         = PresentationFilter(rawValue: 1 << 0)
+    static let runtimeInstalled = PresentationFilter(rawValue: 1 << 1)
+
+    static var allCases         : [PresentationFilter] = [.withApps, .runtimeInstalled]
+}
+    
 class PresentableModel: ObservableObject {
     enum Style {
         case byDevice
         case byRuntime
     }
-
+    
     var baseModel   = SimModel()
     var style       = Style.byRuntime
     var items       = [PresentationItem]()
@@ -20,6 +29,10 @@ class PresentableModel: ObservableObject {
     init() {
         rebuildPresentation()
 //        dumpPresentationItems(items)
+    }
+    
+    func filteredItems(filter: PresentationFilter) -> [PresentationItem] {
+        return items.map { $0.filtered(filter) }
     }
     
     func rebuildPresentation() {

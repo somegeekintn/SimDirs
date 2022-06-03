@@ -9,39 +9,50 @@ import SwiftUI
 
 struct SimItemList: View {
     @EnvironmentObject var modelData    : PresentableModel
-    @State private var toggleVal        = false
+    @State private var withApps         = false
+    @State private var withRuntimes     = false
+
+    var filteredItems                   : [PresentationItem] {
+        var filter = PresentationFilter()
+        
+        if withApps { filter.update(with: .withApps) }
+        if withRuntimes { filter.update(with: .runtimeInstalled) }
+        
+        return modelData.filteredItems(filter: filter)
+    }
 
     var body: some View {
         NavigationView {
-            List {
-                OutlineGroup(modelData.items, children: \.children) { item in
-                    NavigationLink {
-                        SimItemContent(item: item)
-                    } label: {
-                        SimItemRow(item: item)
-                    }
-                }
-                .padding(.leading, 2.0)
-            }
-            .frame(minWidth: 200)
-            .toolbar {
-                ToolbarItem {
-                    Menu {
-//                        Picker("Category", selection: $filter) {
-//                            ForEach(FilterCategory.allCases) { category in
-//                                Text(category.rawValue).tag(category)
-//                            }
-//                        }
-//                        .pickerStyle(.inline)
-                        Toggle(isOn: $toggleVal) {
-                            Label("Toggle", systemImage: "star.fill")
+            VStack {
+                List {
+                    OutlineGroup(filteredItems, children: \.children) { item in
+                        NavigationLink {
+                            SimItemContent(item: item)
+                        } label: {
+                            SimItemRow(item: item)
                         }
-                    } label: {
-                        Label("Filter", systemImage: "slider.horizontal.3")
+                    }
+                    .padding(.leading, 2.0)
+                }
+                .frame(minWidth: 200)
+                .toolbar {
+                    ToolbarItem {
+                        Menu {
+                            Toggle(isOn: $withApps) {
+                                Label("With Apps", systemImage: "app.fill")
+                            }
+                            Toggle(isOn: $withRuntimes) {
+                                Label("Installed Runtimes", systemImage: "cpu.fill")
+                            }
+                        } label: {
+                            Label("Filter", systemImage: "slider.horizontal.3")
+                        }
                     }
                 }
+                Text("Search")
+                    .padding(.bottom, 4.0)
             }
-            Text("SimDirs")    // If this isn't here things looks weird
+            Text("SimDirs")
         }
     }
 }

@@ -75,6 +75,6 @@ extension SimApp: PresentableItem {
     var title       : String { return displayName }
     var id          : String { return identifier }
 
-    var imageName   : String { return "shippingbox" }
+    var imageName   : String { return "questionmark.app.dashed" }
     var icon        : NSImage? { return nsIcon }
 }

@@ -32,6 +32,8 @@ struct SimItemRow_Previews: PreviewProvider {
     static var model   = PresentableModel()
     
     static var previews: some View {
-        SimItemRow(item: model.items[0])
+        Group {
+            SimItemRow(item: model.items[0])
+        }
     }
 }
