@@ -29,10 +29,23 @@ struct PresentationItem: Identifiable {
     var customImage : String?
     
     var title       : String { return underlying.title }
+    var navTitle    : String { return "\(typeName): \(underlying.title)" }
     var icon        : NSImage? { return underlying.icon }
     var imageName   : String { return customImage ?? underlying.imageName }
     var imageColor  : Color { return underlying.imageColor ?? .white }
     var contentView : AnyView { return underlying.contentView ?? AnyView(Text(title)) }
+    var flattened   : [PresentationItem] { return [self] + (self.children?.flatMap { $0.flattened } ?? []) }
+    var typeName    : String {
+        switch underlying {
+            case is SimPlatform:        return "Platform"
+            case is SimProductFamily:   return "Product Family"
+            case is SimRuntime:         return "Runtime"
+            case is SimDeviceType:      return "Device Type"
+            case is SimDevice:          return "Device"
+            case is SimApp:             return "App"
+            default:                    return "Item"
+        }
+    }
     
     init(_ presentable: PresentableItem, image: String? = nil, identifier: String? = nil) {
         underlying = presentable

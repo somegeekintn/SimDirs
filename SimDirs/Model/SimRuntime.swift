@@ -113,7 +113,7 @@ struct SimRuntime: Comparable, Decodable {
     }
 }
 
-extension SimRuntime: PresentableItem {
+extension SimRuntime: PresentableItem, Identifiable {
     var title       : String { return name }
     var id          : String { return identifier }
     var imageName   : String { return "v.circle" }

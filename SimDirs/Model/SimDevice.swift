@@ -74,7 +74,7 @@ struct SimDevice: Decodable {
     }
 }
 
-extension SimDevice: PresentableItem {
+extension SimDevice: PresentableItem, Identifiable {
     var title       : String { return name }
     var id          : String { return udid }
 

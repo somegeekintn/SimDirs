@@ -14,6 +14,7 @@ struct PathRow: View {
     var body: some View {
         HStack {
             Text("\(title): \(path)")
+                .truncationMode(/*@START_MENU_TOKEN@*/.middle/*@END_MENU_TOKEN@*/)
             PathActions(path: path)
         }
     }

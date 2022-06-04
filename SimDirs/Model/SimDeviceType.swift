@@ -39,7 +39,7 @@ struct SimDeviceType: Decodable {
     }
 }
 
-extension SimDeviceType: PresentableItem {
+extension SimDeviceType: PresentableItem, Identifiable {
     var title       : String { return name }
     var id          : String { return identifier }
     var imageName   : String { return productFamily.imageName }

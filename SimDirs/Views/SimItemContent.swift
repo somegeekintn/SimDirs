@@ -20,7 +20,7 @@ struct SimItemContent: View {
                 Spacer()
             }
             .padding(.all)
-            .navigationTitle(item.title)
+            .navigationTitle(item.navTitle)
         }
     }
 }

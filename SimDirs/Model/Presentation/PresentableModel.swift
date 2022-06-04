@@ -25,9 +25,11 @@ class PresentableModel: ObservableObject {
     var baseModel   = SimModel()
     var style       = Style.byRuntime
     var items       = [PresentationItem]()
+    var flatItems   : [PresentationItem] { items.flatMap { $0.flattened } }
     
     init() {
         rebuildPresentation()
+        validateItems()
 //        dumpPresentationItems(items)
     }
     
@@ -113,6 +115,22 @@ class PresentableModel: ObservableObject {
             }
 
             return platformItem
+        }
+    }
+    
+    func itemsOf<T> (type: T.Type) -> [T] {
+        return flatItems.compactMap { $0.underlying as? T }
+    }
+
+    func validateItems() {
+        let allIDs = flatItems.map { $0.id }
+        var idSet   = Set<String>()
+        
+        print("Validating \(allIDs.count) items")
+        for id in allIDs {
+            if !idSet.insert(id).inserted {
+                print("Duplicate PresentationItem.id: \(id)")
+            }
         }
     }
     

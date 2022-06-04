@@ -59,9 +59,20 @@ struct RuntimeView: View {
 }
 
 struct RuntimeView_Previews: PreviewProvider {
-    static let model = SimModel()
+    static let runtimes  = PresentableModel().itemsOf(type: SimRuntime.self)
     
     static var previews: some View {
-        RuntimeView(runtime: model.runtimes[0])
+        if runtimes.isEmpty {
+            Text("No SimRuntime present in model data")
+        }
+        else {
+            if let available = runtimes.first(where: { $0.isAvailable }) {
+                RuntimeView(runtime: available)
+                    .previewLayout(.sizeThatFits)
+            }
+            if let unavailable = runtimes.first(where: { !$0.isAvailable }) {
+                RuntimeView(runtime: unavailable)
+            }
+        }
     }
 }

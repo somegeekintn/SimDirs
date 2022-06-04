@@ -39,15 +39,19 @@ struct DeviceView: View {
 }
 
 struct DeviceView_Previews: PreviewProvider {
-    static let model        = SimModel()
-    static var testDevice   : SimDevice? { model.runtimes.flatMap({ $0.devices }).first }
+    static let devices  = PresentableModel().itemsOf(type: SimDevice.self)
     
     static var previews: some View {
-        if let device = testDevice {
-            DeviceView(device: device)
+        if devices.isEmpty {
+            Text("No SimDevice present in model data")
         }
         else {
-            Text("No SimDevice present in model data")
+            if let available = devices.first(where: { $0.isAvailable }) {
+                DeviceView(device: available)
+            }
+            if let unavailable = devices.first(where: { !$0.isAvailable }) {
+                DeviceView(device: unavailable)
+            }
         }
     }
 }

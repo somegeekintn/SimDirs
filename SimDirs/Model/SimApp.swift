@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct SimApp {
-    let identifier              : String
-    let bundleID                : String
-    let bundleName              : String
-    let displayName             : String
-    let version                 : String
-    let minOSVersion            : String
-    let bundlePath              : String
-    let sandboxPath             : String?
-    let nsIcon                  : NSImage?
+    let identifier      : String
+    let bundleID        : String
+    let bundleName      : String
+    let displayName     : String
+    let version         : String
+    let minOSVersion    : String
+    let bundlePath      : String
+    let sandboxPath     : String?
+    let nsIcon          : NSImage?
     
     init(bundlePath: URL, sandboxPaths: [String : URL]) throws {
         guard let infoPList	= PropertyListSerialization.propertyList(from: bundlePath.appendingPathComponent("Info.plist")) else { throw SimError.invalidApp }
@@ -71,7 +71,7 @@ struct SimApp {
     }
 }
 
-extension SimApp: PresentableItem {
+extension SimApp: PresentableItem, Identifiable {
     var title       : String { return displayName }
     var id          : String { return identifier }
 
