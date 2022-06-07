@@ -26,9 +26,9 @@ struct SimItemContent: View {
 }
 
 struct SimItemContent_Previews: PreviewProvider {
-    static var model   = PresentableModel()
-    
     static var previews: some View {
-        SimItemContent(item: model.items[0].children![0])
+        let testItem    = PresentationState().presentationItems(from: SimModel())[0]
+
+        SimItemContent(item: testItem.children![0])
     }
 }

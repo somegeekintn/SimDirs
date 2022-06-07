@@ -9,12 +9,11 @@ import SwiftUI
 
 @main
 struct SimDirsApp: App {
-    @StateObject private var modelData = PresentableModel()
+    @StateObject private var simModel = SimModel()
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(modelData)
+            ContentView(model: simModel)
         }
         .commands {
             SimCommands()

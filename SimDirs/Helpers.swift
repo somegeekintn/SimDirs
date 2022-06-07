@@ -22,6 +22,13 @@ extension NSWorkspace {
     }
 }
 
+extension OptionSet where Self == Self.Element {
+    mutating func booleanSet(_ value: Bool, options: Self) {
+        if value { update(with: options) }
+        else { subtract(options) }
+    }
+}
+
 extension PropertyListSerialization {
 	class func propertyList(from url: URL) -> [String : AnyObject]? {
         guard let plistData	= try? Data(contentsOf: url) else { return nil }

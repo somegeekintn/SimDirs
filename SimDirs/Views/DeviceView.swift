@@ -39,9 +39,9 @@ struct DeviceView: View {
 }
 
 struct DeviceView_Previews: PreviewProvider {
-    static let devices  = PresentableModel().itemsOf(type: SimDevice.self)
-    
     static var previews: some View {
+        let devices = PresentationState.testItemsOf(type: SimDevice.self)
+
         if devices.isEmpty {
             Text("No SimDevice present in model data")
         }

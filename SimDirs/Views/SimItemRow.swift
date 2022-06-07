@@ -11,7 +11,7 @@ struct SimItemRow: View {
     var item    : PresentationItem
 
     var body: some View {
-        HStack {
+        Label(title: { Text(item.title) }) {
             if let icon = item.icon {
                 Image(nsImage: icon)
                     .resizable()
@@ -23,17 +23,14 @@ struct SimItemRow: View {
                     .foregroundColor(item.imageColor)
                     .symbolRenderingMode(.hierarchical)
             }
-            Text(item.title)
         }
     }
 }
 
 struct SimItemRow_Previews: PreviewProvider {
-    static var model   = PresentableModel()
-    
     static var previews: some View {
-        Group {
-            SimItemRow(item: model.items[0])
-        }
+        let testItem    = PresentationState().presentationItems(from: SimModel())[0]
+
+        SimItemRow(item: testItem)
     }
 }

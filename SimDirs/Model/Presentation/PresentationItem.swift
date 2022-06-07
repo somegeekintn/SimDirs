@@ -53,26 +53,43 @@ struct PresentationItem: Identifiable {
         customImage = image
     }
     
-    func filtered(_ filter: PresentationFilter) -> Self {
-        guard var childItems    = self.children, !filter.isEmpty else { return self }
-        var filteredItem        = self
+    func titlesContain(_ searchTerm: String) -> Bool {
+        return title.contains(searchTerm) || children?.contains(where: { $0.titlesContain(searchTerm)}) ?? false
+    }
+    
+    func containsType<T>(_ type: T.Type) -> Bool {
+        return underlying is T || children?.contains(where: { $0.containsType(type)}) ?? false
+    }
+}
+
+extension Array where Element == PresentationItem {
+    var flatItems           : [PresentationItem] { self.flatMap { $0.flattened } }
+
+    func itemsOf<T> (type: T.Type) -> [T] {
+        return flatItems.compactMap { $0.underlying as? T }
+    }
+
+    func validateItems() {
+        let allIDs = flatItems.map { $0.id }
+        var idSet   = Set<String>()
         
-        if filter.contains(.withApps) {
-            childItems = childItems.filter { $0.containsType(SimApp.self) }
-        }
-        if filter.contains(.runtimeInstalled) {
-            childItems = childItems.filter {
-                guard let runtime = $0.underlying as? SimRuntime else { return true }
-                
-                return runtime.isAvailable
+        print("Validating \(allIDs.count) items")
+        for id in allIDs {
+            if !idSet.insert(id).inserted {
+                print("Duplicate PresentationItem.id: \(id)")
             }
         }
-        filteredItem.children = childItems.isEmpty ? nil : childItems.map { $0.filtered(filter)}
-        
-        return filteredItem
     }
+
+    func dumpPresentation(level: Int = 0) {
+        let ident   = Array<String>(repeating: "\t", count: level).joined()
         
-    func containsType<T> (_ type: T.Type) -> Bool {
-        return underlying is T || children?.contains(where: { $0.containsType(type)}) ?? false
+        for item in self {
+            print("\(ident)\(item.title) [\(item.id)]")
+            
+            if let children = item.children {
+                children.dumpPresentation(level: level + 1)
+            }
+        }
     }
 }

@@ -53,9 +53,9 @@ struct AppView: View {
 }
 
 struct AppView_Previews: PreviewProvider {
-    static let apps         = PresentableModel().itemsOf(type: SimApp.self)
-    
     static var previews: some View {
+        let apps    = PresentationState.testItemsOf(type: SimApp.self)
+        
         if apps.isEmpty {
             Text("No SimApp present in model data")
         }

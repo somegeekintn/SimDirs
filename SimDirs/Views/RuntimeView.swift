@@ -59,9 +59,9 @@ struct RuntimeView: View {
 }
 
 struct RuntimeView_Previews: PreviewProvider {
-    static let runtimes  = PresentableModel().itemsOf(type: SimRuntime.self)
-    
     static var previews: some View {
+        let runtimes = PresentationState.testItemsOf(type: SimRuntime.self)
+
         if runtimes.isEmpty {
             Text("No SimRuntime present in model data")
         }

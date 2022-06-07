@@ -8,15 +8,33 @@
 import SwiftUI
 
 struct ContentView: View {
+    let model           : SimModel
+    var rootItems       : [PresentationItem] { state.presentationItems(from: model) }
+
+    @State private var state = PresentationState(filter: [])
 
     var body: some View {
-        SimItemList()
+        NavigationView {
+            List {
+                ForEach(rootItems) { item in
+                    SimItemGroup(item: item, state: $state)
+                }
+                .padding(.leading, 2.0)
+            }
+            .frame(minWidth: 200)
+            .toolbar {
+                ToolbarItem { ToolbarMenu(state: $state) }
+            }
+            Text("SimDirs")
+        }
+        .searchable(text: $state.searchTerm, placement: .sidebar)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
+    static var simModel = SimModel()
+
     static var previews: some View {
-        ContentView()
-            .environmentObject(PresentableModel())
+        ContentView(model: simModel)
     }
 }

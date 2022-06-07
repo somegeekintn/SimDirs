@@ -12,7 +12,7 @@ enum SimError: Error {
     case invalidApp
 }
 
-struct SimModel {
+class SimModel: ObservableObject {
     var deviceTypes : [SimDeviceType]
     var runtimes    : [SimRuntime]
     
