@@ -111,6 +111,20 @@ struct SimRuntime: Comparable, Decodable {
             }
         }
     }
+    
+    func updatedDevices(from devices: [SimDevice]) -> [SimDevice] {
+        return devices.compactMap { device in
+            self.devices.first(where: { $0.udid == device.udid })?.updatedDevice(from: device)
+        }
+    }
+    
+    mutating func applyDeviceUpdates(_ devices: [SimDevice]) {
+        for device in devices {
+            guard let devIdx    = self.devices.firstIndex(where: { $0.udid == device.udid }) else { continue }
+            
+            self.devices[devIdx] = device
+        }
+    }
 }
 
 extension SimRuntime: PresentableItem, Identifiable {

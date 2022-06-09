@@ -26,7 +26,7 @@ struct DeviceView: View {
                         .foregroundColor(.red)
                         .padding(.leading)
                 }
-                Text("State: \(device.state)")
+                Text("State: \(device.state.rawValue)")
                 Text("UDID: \(device.udid)")
                 PathRow(title: "Data Path", path: device.dataPath)
                 PathRow(title: "Log Path", path: device.logPath)

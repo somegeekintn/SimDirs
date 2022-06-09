@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    let model           : SimModel
-    var rootItems       : [PresentationItem] { state.presentationItems(from: model) }
-
-    @State private var state = PresentationState(filter: [])
+    @ObservedObject var model   : SimModel
+    @State private var state    = PresentationState(filter: [])
+    
+    var rootItems   : [PresentationItem] { state.presentationItems(from: model) }
 
     var body: some View {
         NavigationView {

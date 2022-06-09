@@ -9,9 +9,10 @@ import SwiftUI
 
 struct SimItemRow: View {
     var item    : PresentationItem
-
     var body: some View {
-        Label(title: { Text(item.title) }) {
+        Label {
+            Text(item.title)
+        } icon: {
             if let icon = item.icon {
                 Image(nsImage: icon)
                     .resizable()

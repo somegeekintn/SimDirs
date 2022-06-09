@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SimDevice: Decodable {
+struct SimDevice: Decodable, Equatable {
     enum CodingKeys: String, CodingKey {
         case availabilityError
         case dataPath
@@ -19,19 +19,27 @@ struct SimDevice: Decodable {
         case state
         case udid
     }
+    
+    enum State: String, Decodable {
+        case booting        = "Booting"
+        case booted         = "Booted"
+        case shuttingDown   = "Shutting Down"
+        case shutdown       = "Shutdown"
+    }
 
-    let name                    : String
+    var name                    : String
     let udid                    : String
-    let state                   : String
+    var state                   : State
     let dataPath                : String
     let dataPathSize            : Int
     let logPath                 : String
-    let isAvailable             : Bool
+    var isAvailable             : Bool
     let deviceTypeIdentifier    : String
-    let availabilityError       : String?
+    var availabilityError       : String?
     var apps                    = [SimApp]()
-
+    
     var dataURL                 : URL { URL(fileURLWithPath: dataPath) }
+    var logURL                  : URL { URL(fileURLWithPath: logPath) }
     var bundleContainerURL      : URL { dataURL.appendingPathComponent("Containers/Bundle/Application") }
     var dataContainerURL        : URL { dataURL.appendingPathComponent("Containers/Data/Application") }
     var scannedDevice           : Self { var scanned = self; scanned.scanApplications(); return scanned }
@@ -71,6 +79,29 @@ struct SimDevice: Decodable {
                 }
             }
         }
+    }
+    
+    func hasChanged(from other: Self) -> Bool {
+        return !(name == other.name && state == other.state && isAvailable == other.isAvailable && availabilityError == other.availabilityError)
+    }
+
+    func updatedDevice(from other: Self) -> Self? {
+        guard hasChanged(from: other) else { return nil }
+        var updated = self
+        
+        updated.name = other.name
+        updated.state = other.state
+        updated.isAvailable = other.isAvailable
+        updated.availabilityError = other.availabilityError
+
+        return updated
+    }
+    
+    mutating func applyChanges(from other: Self) {
+        name = other.name
+        state = other.state
+        isAvailable = other.isAvailable
+        availabilityError = other.availabilityError
     }
 }
 

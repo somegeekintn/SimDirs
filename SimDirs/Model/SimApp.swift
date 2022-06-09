@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SimApp {
+struct SimApp: Equatable {
     let identifier      : String
     let bundleID        : String
     let bundleName      : String
