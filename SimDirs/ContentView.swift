@@ -25,7 +25,7 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem { ToolbarMenu(state: $state) }
             }
-            Text("SimDirs")
+            Image("Icon-256")
         }
         .searchable(text: $state.searchTerm, placement: .sidebar)
     }
