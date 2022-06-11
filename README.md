@@ -1,12 +1,10 @@
 SimDirs
 =======
 
-Quick and dirty app to display Xcode 6 simulator names and open their locations. Though becoming less quick and dirty each day it seems.
+This started as a quick and dirty app to display the location of simulator devices and apps way back in Xcode 6. I didn't put a ton of thought into it at the time. I've recently (Spring 2022) started looking at it again. First just getting it to compile and then redesigning it to use SwiftUI and driven, mostly, by the output of `xcrun simctl`.
 
-The new way that Xcode names simulator folders doesn't make it easy to see what's what so I made this thing. SimDirs displays a list of device names / OS versions. Select an item to display details and open bundle or sandbox locations.
-
-Use the refresh button to update locations after installing or deleting an app from the simulator.
+It's a bit of a work in progress. Perhaps eventually It'll turn into a tool with a bit more functionality. If that happens I may even write some real documentation.
 
 That's it.
 
-![Screenshot](https://raw.githubusercontent.com/somegeekintn/SimDirs/master/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/somegeekintn/SimDirs/main/screenshot.png)
