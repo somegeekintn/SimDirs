@@ -8,27 +8,20 @@
 import SwiftUI
 
 struct ToolbarMenu: View {
-    @Binding var state  : PresentationState
-
-    var withApps        : Binding<Bool> {
-        Binding(get: { state.filter.contains(.withApps) },
-                set: { state.filter.booleanSet($0, options: .withApps) })
-    }
-    var withRuntimes    : Binding<Bool> {
-        Binding(get: { state.filter.contains(.runtimeInstalled) },
-                set: { state.filter.booleanSet($0, options: .runtimeInstalled) })
-    }
+    @ObservedObject var state   : SourceState
 
     var body: some View {
         Menu {
-            Picker("Organization", selection: $state.organization) {
-                ForEach(PresentationState.Organization.allCases) { style in
-                    Text(style.rawValue).tag(style)
+            Picker("Style", selection: $state.style) {
+                ForEach(SourceState.Style.allCases) { style in
+                    if style.visible {
+                        Text(style.title).tag(style)
+                    }
                 }
             }
             .pickerStyle(.inline)
-            Toggle(isOn: withApps) { Label("With Apps", systemImage: "app.fill") }
-            Toggle(isOn: withRuntimes) { Label("Installed Runtimes", systemImage:  "cpu.fill") }
+            Toggle(isOn: $state.filterApps) { Label("With Apps", systemImage: "app.fill") }
+            Toggle(isOn: $state.filterRuntimes) { Label("Installed Runtimes", systemImage:  "cpu.fill") }
         } label: {
             Label("Filter", systemImage: "slider.horizontal.3")
         }
@@ -36,10 +29,10 @@ struct ToolbarMenu: View {
 }
 
 struct ToolbarMenu_Previews: PreviewProvider {
-    @State static var state = PresentationState(filter: [])
+    static var state = SourceState(model: SimModel())
 
     static var previews: some View {
-        ToolbarMenu(state: $state)
+        ToolbarMenu(state: state)
     }
 }
 

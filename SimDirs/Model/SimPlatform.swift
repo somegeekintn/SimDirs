@@ -13,16 +13,18 @@ enum SimPlatform: String, Decodable {
     case watchOS
 
     static let presentation    : [SimPlatform] = [.iOS, .watchOS, .tvOS]
-}
-
-extension SimPlatform: PresentableItem {
-    var title       : String { return self.rawValue }
-    var id          : String { return self.rawValue }
-    var imageName   : String {
+    
+    var symbolName  : String {
         switch self {
             case .iOS:      return "iphone"
             case .tvOS:     return "appletv"
             case .watchOS:  return "applewatch"
         }
     }
+}
+
+extension SimPlatform: SourceItemData {
+    var title       : String { self.rawValue }
+    var headerTitle : String { "Platform: \(title)" }
+    var imageDesc   : SourceImageDesc { .symbol(systemName: symbolName) }
 }

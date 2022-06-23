@@ -105,11 +105,14 @@ struct SimDevice: Decodable, Equatable {
     }
 }
 
-extension SimDevice: PresentableItem, Identifiable {
+extension SimDevice: SourceItemData {
     var title       : String { return name }
-    var id          : String { return udid }
-
-    var imageName   : String { return "shippingbox" }
-    var imageColor  : Color? { return isAvailable ? .green : .red }
+    var headerTitle : String { "Device: \(title)" }
+    var imageDesc   : SourceImageDesc { .symbol(systemName: "questionmark.circle", color: isAvailable ? .green : .red) }
 }
 
+extension Array where Element == SimDevice {
+    func of(deviceType: SimDeviceType) -> Self {
+        filter { $0.isDeviceOfType(deviceType) }
+    }
+}

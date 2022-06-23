@@ -15,6 +15,7 @@ struct SimDirsApp: App {
         WindowGroup {
             ContentView(model: simModel)
         }
+        .windowStyle(.hiddenTitleBar)
         .commands {
             SimCommands()
         }

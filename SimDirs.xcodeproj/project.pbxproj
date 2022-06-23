@@ -7,15 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C90BCE442861D3C500C2EF35 /* DeviceContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90BCE432861D3C500C2EF35 /* DeviceContent.swift */; };
+		C90BCE462861D57100C2EF35 /* DeviceHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90BCE452861D57100C2EF35 /* DeviceHeader.swift */; };
+		C90BCE482861D70500C2EF35 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90BCE472861D70500C2EF35 /* ErrorView.swift */; };
+		C90BCE4A2861DA6700C2EF35 /* RuntimeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90BCE492861DA6700C2EF35 /* RuntimeHeader.swift */; };
+		C90BCE4C2861E37900C2EF35 /* AppHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90BCE4B2861E37900C2EF35 /* AppHeader.swift */; };
+		C90BCE4E2861E4E400C2EF35 /* AppContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90BCE4D2861E4E400C2EF35 /* AppContent.swift */; };
+		C90BCE502861E9D000C2EF35 /* SourceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90BCE4F2861E9D000C2EF35 /* SourceState.swift */; };
+		C90BCE522861EDBF00C2EF35 /* SourceFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90BCE512861EDBF00C2EF35 /* SourceFilter.swift */; };
 		C927A0D92846414900533D66 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C927A0D82846414900533D66 /* Helpers.swift */; };
 		C927A0DB2846502300533D66 /* PathActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C927A0DA2846502300533D66 /* PathActions.swift */; };
-		C94C52C72844E80A00E2129E /* SimItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C52C62844E80A00E2129E /* SimItemRow.swift */; };
-		C94C52C92844E99B00E2129E /* SimItemContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C52C82844E99B00E2129E /* SimItemContent.swift */; };
-		C94C52CB2844EAAC00E2129E /* RuntimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C52CA2844EAAC00E2129E /* RuntimeView.swift */; };
-		C95E5AB6284B6DDE00A2124E /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95E5AB5284B6DDE00A2124E /* AppView.swift */; };
-		C977973C284F58A900706DFB /* PresentationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C977973B284F58A900706DFB /* PresentationState.swift */; };
-		C977973E284F5AE100706DFB /* SimItemNavLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C977973D284F5AE100706DFB /* SimItemNavLink.swift */; };
-		C9779740284F5CBB00706DFB /* SimItemGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C977973F284F5CBB00706DFB /* SimItemGroup.swift */; };
 		C9779742284F6DE000706DFB /* ToolbarMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9779741284F6DE000706DFB /* ToolbarMenu.swift */; };
 		C982F859283B9F9000D491F4 /* SimDirsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F858283B9F9000D491F4 /* SimDirsApp.swift */; };
 		C982F85B283B9F9000D491F4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F85A283B9F9000D491F4 /* ContentView.swift */; };
@@ -28,23 +29,31 @@
 		C982F877283D020C00D491F4 /* SimProductFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F876283D020C00D491F4 /* SimProductFamily.swift */; };
 		C982F879283D042E00D491F4 /* SimModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F878283D042E00D491F4 /* SimModel.swift */; };
 		C982F87B283E40C800D491F4 /* SimCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F87A283E40C800D491F4 /* SimCtl.swift */; };
-		C982F880283E57E600D491F4 /* PresentationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F87F283E57E600D491F4 /* PresentationItem.swift */; };
-		C982F883283E813F00D491F4 /* DeviceTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F882283E813F00D491F4 /* DeviceTypeView.swift */; };
-		C9D729F128478AB00064152D /* DeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D729F028478AB00064152D /* DeviceView.swift */; };
+		C9D73C25285C8C0C0044A279 /* SourceItemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D73C24285C8C0C0044A279 /* SourceItemData.swift */; };
+		C9D73C29285C8C4B0044A279 /* SourceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D73C28285C8C4B0044A279 /* SourceItem.swift */; };
+		C9DD54C32860936D00D46AB3 /* SourceItemGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DD54C22860936D00D46AB3 /* SourceItemGroup.swift */; };
+		C9DD54C52860938C00D46AB3 /* SourceItemLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DD54C42860938C00D46AB3 /* SourceItemLink.swift */; };
+		C9DD54C7286093A500D46AB3 /* SourceItemContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DD54C6286093A500D46AB3 /* SourceItemContent.swift */; };
+		C9DD54C9286093C100D46AB3 /* SourceItemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DD54C8286093C100D46AB3 /* SourceItemImage.swift */; };
+		C9DD54CB2860948600D46AB3 /* SourceItemLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DD54CA2860948600D46AB3 /* SourceItemLabel.swift */; };
+		C9DD54CE2860A0AF00D46AB3 /* DeviceTypeContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DD54CD2860A0AF00D46AB3 /* DeviceTypeContent.swift */; };
+		C9DD54D02860A1A500D46AB3 /* DeviceTypeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DD54CF2860A1A500D46AB3 /* DeviceTypeHeader.swift */; };
+		C9DD54D22860A24B00D46AB3 /* RuntimeContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DD54D12860A24B00D46AB3 /* RuntimeContent.swift */; };
 		C9EE0CD228478FDB00E9B97A /* PathRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EE0CD128478FDB00E9B97A /* PathRow.swift */; };
 		C9EE0CD42847B79E00E9B97A /* SimApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EE0CD32847B79E00E9B97A /* SimApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C90BCE432861D3C500C2EF35 /* DeviceContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceContent.swift; sourceTree = "<group>"; };
+		C90BCE452861D57100C2EF35 /* DeviceHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceHeader.swift; sourceTree = "<group>"; };
+		C90BCE472861D70500C2EF35 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		C90BCE492861DA6700C2EF35 /* RuntimeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeHeader.swift; sourceTree = "<group>"; };
+		C90BCE4B2861E37900C2EF35 /* AppHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHeader.swift; sourceTree = "<group>"; };
+		C90BCE4D2861E4E400C2EF35 /* AppContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContent.swift; sourceTree = "<group>"; };
+		C90BCE4F2861E9D000C2EF35 /* SourceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceState.swift; sourceTree = "<group>"; };
+		C90BCE512861EDBF00C2EF35 /* SourceFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceFilter.swift; sourceTree = "<group>"; };
 		C927A0D82846414900533D66 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		C927A0DA2846502300533D66 /* PathActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathActions.swift; sourceTree = "<group>"; };
-		C94C52C62844E80A00E2129E /* SimItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimItemRow.swift; sourceTree = "<group>"; };
-		C94C52C82844E99B00E2129E /* SimItemContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimItemContent.swift; sourceTree = "<group>"; };
-		C94C52CA2844EAAC00E2129E /* RuntimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeView.swift; sourceTree = "<group>"; };
-		C95E5AB5284B6DDE00A2124E /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
-		C977973B284F58A900706DFB /* PresentationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationState.swift; sourceTree = "<group>"; };
-		C977973D284F5AE100706DFB /* SimItemNavLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimItemNavLink.swift; sourceTree = "<group>"; };
-		C977973F284F5CBB00706DFB /* SimItemGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimItemGroup.swift; sourceTree = "<group>"; };
 		C9779741284F6DE000706DFB /* ToolbarMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarMenu.swift; sourceTree = "<group>"; };
 		C982F855283B9F9000D491F4 /* SimDirs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimDirs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C982F858283B9F9000D491F4 /* SimDirsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimDirsApp.swift; sourceTree = "<group>"; };
@@ -59,9 +68,16 @@
 		C982F876283D020C00D491F4 /* SimProductFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimProductFamily.swift; sourceTree = "<group>"; };
 		C982F878283D042E00D491F4 /* SimModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimModel.swift; sourceTree = "<group>"; };
 		C982F87A283E40C800D491F4 /* SimCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimCtl.swift; sourceTree = "<group>"; };
-		C982F87F283E57E600D491F4 /* PresentationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationItem.swift; sourceTree = "<group>"; };
-		C982F882283E813F00D491F4 /* DeviceTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTypeView.swift; sourceTree = "<group>"; };
-		C9D729F028478AB00064152D /* DeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceView.swift; sourceTree = "<group>"; };
+		C9D73C24285C8C0C0044A279 /* SourceItemData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceItemData.swift; sourceTree = "<group>"; };
+		C9D73C28285C8C4B0044A279 /* SourceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceItem.swift; sourceTree = "<group>"; };
+		C9DD54C22860936D00D46AB3 /* SourceItemGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceItemGroup.swift; sourceTree = "<group>"; };
+		C9DD54C42860938C00D46AB3 /* SourceItemLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceItemLink.swift; sourceTree = "<group>"; };
+		C9DD54C6286093A500D46AB3 /* SourceItemContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceItemContent.swift; sourceTree = "<group>"; };
+		C9DD54C8286093C100D46AB3 /* SourceItemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceItemImage.swift; sourceTree = "<group>"; };
+		C9DD54CA2860948600D46AB3 /* SourceItemLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceItemLabel.swift; sourceTree = "<group>"; };
+		C9DD54CD2860A0AF00D46AB3 /* DeviceTypeContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTypeContent.swift; sourceTree = "<group>"; };
+		C9DD54CF2860A1A500D46AB3 /* DeviceTypeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTypeHeader.swift; sourceTree = "<group>"; };
+		C9DD54D12860A24B00D46AB3 /* RuntimeContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeContent.swift; sourceTree = "<group>"; };
 		C9EE0CD128478FDB00E9B97A /* PathRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathRow.swift; sourceTree = "<group>"; };
 		C9EE0CD32847B79E00E9B97A /* SimApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +116,7 @@
 				C982F85A283B9F9000D491F4 /* ContentView.swift */,
 				C927A0D82846414900533D66 /* Helpers.swift */,
 				C982F867283BA09B00D491F4 /* Model */,
+				C9D73C23285C8B3B0044A279 /* Presentation */,
 				C982F881283E7F0400D491F4 /* Views */,
 				C982F85C283B9F9200D491F4 /* Assets.xcassets */,
 				C982F861283B9F9200D491F4 /* SimDirs.entitlements */,
@@ -119,7 +136,6 @@
 		C982F867283BA09B00D491F4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C982F87C283E579900D491F4 /* Presentation */,
 				C982F87A283E40C800D491F4 /* SimCtl.swift */,
 				C982F878283D042E00D491F4 /* SimModel.swift */,
 				C9EE0CD32847B79E00E9B97A /* SimApp.swift */,
@@ -132,31 +148,55 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		C982F87C283E579900D491F4 /* Presentation */ = {
+		C982F881283E7F0400D491F4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C982F87F283E57E600D491F4 /* PresentationItem.swift */,
-				C977973B284F58A900706DFB /* PresentationState.swift */,
+				C9DD54C12860935300D46AB3 /* SourceItem Views */,
+				C9DD54CC2860992200D46AB3 /* Model Views */,
+				C90BCE472861D70500C2EF35 /* ErrorView.swift */,
+				C927A0DA2846502300533D66 /* PathActions.swift */,
+				C9EE0CD128478FDB00E9B97A /* PathRow.swift */,
+				C9779741284F6DE000706DFB /* ToolbarMenu.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C9D73C23285C8B3B0044A279 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				C9D73C28285C8C4B0044A279 /* SourceItem.swift */,
+				C90BCE512861EDBF00C2EF35 /* SourceFilter.swift */,
+				C9D73C24285C8C0C0044A279 /* SourceItemData.swift */,
+				C90BCE4F2861E9D000C2EF35 /* SourceState.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
 		};
-		C982F881283E7F0400D491F4 /* Views */ = {
+		C9DD54C12860935300D46AB3 /* SourceItem Views */ = {
 			isa = PBXGroup;
 			children = (
-				C95E5AB5284B6DDE00A2124E /* AppView.swift */,
-				C982F882283E813F00D491F4 /* DeviceTypeView.swift */,
-				C9D729F028478AB00064152D /* DeviceView.swift */,
-				C927A0DA2846502300533D66 /* PathActions.swift */,
-				C9EE0CD128478FDB00E9B97A /* PathRow.swift */,
-				C94C52CA2844EAAC00E2129E /* RuntimeView.swift */,
-				C94C52C82844E99B00E2129E /* SimItemContent.swift */,
-				C977973F284F5CBB00706DFB /* SimItemGroup.swift */,
-				C977973D284F5AE100706DFB /* SimItemNavLink.swift */,
-				C94C52C62844E80A00E2129E /* SimItemRow.swift */,
-				C9779741284F6DE000706DFB /* ToolbarMenu.swift */,
+				C9DD54C6286093A500D46AB3 /* SourceItemContent.swift */,
+				C9DD54C22860936D00D46AB3 /* SourceItemGroup.swift */,
+				C9DD54C8286093C100D46AB3 /* SourceItemImage.swift */,
+				C9DD54CA2860948600D46AB3 /* SourceItemLabel.swift */,
+				C9DD54C42860938C00D46AB3 /* SourceItemLink.swift */,
 			);
-			path = Views;
+			path = "SourceItem Views";
+			sourceTree = "<group>";
+		};
+		C9DD54CC2860992200D46AB3 /* Model Views */ = {
+			isa = PBXGroup;
+			children = (
+				C90BCE4D2861E4E400C2EF35 /* AppContent.swift */,
+				C90BCE4B2861E37900C2EF35 /* AppHeader.swift */,
+				C90BCE432861D3C500C2EF35 /* DeviceContent.swift */,
+				C90BCE452861D57100C2EF35 /* DeviceHeader.swift */,
+				C9DD54CD2860A0AF00D46AB3 /* DeviceTypeContent.swift */,
+				C9DD54CF2860A1A500D46AB3 /* DeviceTypeHeader.swift */,
+				C9DD54D12860A24B00D46AB3 /* RuntimeContent.swift */,
+				C90BCE492861DA6700C2EF35 /* RuntimeHeader.swift */,
+			);
+			path = "Model Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -229,29 +269,37 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C982F883283E813F00D491F4 /* DeviceTypeView.swift in Sources */,
-				C94C52C92844E99B00E2129E /* SimItemContent.swift in Sources */,
+				C9DD54C9286093C100D46AB3 /* SourceItemImage.swift in Sources */,
+				C9D73C25285C8C0C0044A279 /* SourceItemData.swift in Sources */,
+				C90BCE4E2861E4E400C2EF35 /* AppContent.swift in Sources */,
 				C927A0DB2846502300533D66 /* PathActions.swift in Sources */,
+				C90BCE442861D3C500C2EF35 /* DeviceContent.swift in Sources */,
+				C90BCE502861E9D000C2EF35 /* SourceState.swift in Sources */,
+				C90BCE4A2861DA6700C2EF35 /* RuntimeHeader.swift in Sources */,
 				C9EE0CD42847B79E00E9B97A /* SimApp.swift in Sources */,
+				C9DD54C7286093A500D46AB3 /* SourceItemContent.swift in Sources */,
+				C9DD54D22860A24B00D46AB3 /* RuntimeContent.swift in Sources */,
 				C9779742284F6DE000706DFB /* ToolbarMenu.swift in Sources */,
-				C9779740284F5CBB00706DFB /* SimItemGroup.swift in Sources */,
-				C95E5AB6284B6DDE00A2124E /* AppView.swift in Sources */,
+				C9DD54CE2860A0AF00D46AB3 /* DeviceTypeContent.swift in Sources */,
+				C90BCE4C2861E37900C2EF35 /* AppHeader.swift in Sources */,
+				C9DD54D02860A1A500D46AB3 /* DeviceTypeHeader.swift in Sources */,
+				C90BCE522861EDBF00C2EF35 /* SourceFilter.swift in Sources */,
 				C982F85B283B9F9000D491F4 /* ContentView.swift in Sources */,
 				C982F875283CEEBB00D491F4 /* SimDevice.swift in Sources */,
-				C977973C284F58A900706DFB /* PresentationState.swift in Sources */,
+				C9DD54C52860938C00D46AB3 /* SourceItemLink.swift in Sources */,
 				C982F873283CE9AD00D491F4 /* SimDeviceType.swift in Sources */,
-				C977973E284F5AE100706DFB /* SimItemNavLink.swift in Sources */,
+				C9DD54CB2860948600D46AB3 /* SourceItemLabel.swift in Sources */,
+				C90BCE482861D70500C2EF35 /* ErrorView.swift in Sources */,
 				C982F877283D020C00D491F4 /* SimProductFamily.swift in Sources */,
 				C982F859283B9F9000D491F4 /* SimDirsApp.swift in Sources */,
 				C982F871283CE7B800D491F4 /* SimRuntime.swift in Sources */,
 				C9EE0CD228478FDB00E9B97A /* PathRow.swift in Sources */,
-				C94C52C72844E80A00E2129E /* SimItemRow.swift in Sources */,
 				C982F86B283BA22100D491F4 /* SimPlatform.swift in Sources */,
 				C927A0D92846414900533D66 /* Helpers.swift in Sources */,
-				C94C52CB2844EAAC00E2129E /* RuntimeView.swift in Sources */,
-				C982F880283E57E600D491F4 /* PresentationItem.swift in Sources */,
+				C90BCE462861D57100C2EF35 /* DeviceHeader.swift in Sources */,
+				C9DD54C32860936D00D46AB3 /* SourceItemGroup.swift in Sources */,
+				C9D73C29285C8C4B0044A279 /* SourceItem.swift in Sources */,
 				C982F879283D042E00D491F4 /* SimModel.swift in Sources */,
-				C9D729F128478AB00064152D /* DeviceView.swift in Sources */,
 				C982F87B283E40C800D491F4 /* SimCtl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

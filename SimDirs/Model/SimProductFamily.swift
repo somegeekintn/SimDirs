@@ -14,13 +14,8 @@ enum SimProductFamily: String, Decodable {
     case iPhone
 
     static let presentation    : [SimProductFamily] = [.iPhone, .iPad, .appleWatch, .appleTV]
-}
 
-extension SimProductFamily: PresentableItem {
-    var title   : String { return self.rawValue }
-    var id      : String { return self.rawValue }
-    
-    var imageName   : String {
+    var symbolName  : String {
         switch self {
             case .iPad:         return "ipad"
             case .iPhone:       return "iphone"
@@ -28,4 +23,10 @@ extension SimProductFamily: PresentableItem {
             case .appleWatch:   return "applewatch"
         }
     }
+}
+
+extension SimProductFamily: SourceItemData {
+    var title       : String { self.rawValue }
+    var headerTitle : String { "Product Family: \(title)" }
+    var imageDesc   : SourceImageDesc { .symbol(systemName: symbolName) }
 }

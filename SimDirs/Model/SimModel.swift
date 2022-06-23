@@ -15,9 +15,12 @@ enum SimError: Error {
 class SimModel: ObservableObject {
     var deviceTypes         : [SimDeviceType]
     @Published var runtimes : [SimRuntime]
-    let timer               = DispatchSource.makeTimerSource()
+    var monitorSource       : DispatchSourceTimer?
     let updateInterval      = 1.0
-    
+ 
+    var devices             : [SimDevice] { runtimes.flatMap { $0.devices } }
+    var apps                : [SimApp] { devices.flatMap { $0.apps } }
+
     init() {
         let simctl = SimCtl()
         
@@ -38,7 +41,9 @@ class SimModel: ObservableObject {
                 }
             }
             runtimes.sort()
-            beginMonitor()
+            if !ProcessInfo.processInfo.isPreviewing {
+                beginMonitor()
+            }
         }
         catch {
             fatalError("Failed to initialize data model:\n\(error)")
@@ -46,6 +51,8 @@ class SimModel: ObservableObject {
     }
     
     func beginMonitor() {
+        let timer   = DispatchSource.makeTimerSource()
+        
         timer.setEventHandler {
             guard let runtimeDevs : [String : [SimDevice]] = try? SimCtl().readAllRuntimeDevices() else { return }
 
@@ -78,5 +85,6 @@ class SimModel: ObservableObject {
         }
         timer.schedule(deadline: DispatchTime.now(), repeating: updateInterval)
         timer.resume()
+        monitorSource = timer
     }
 }

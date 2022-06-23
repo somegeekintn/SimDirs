@@ -127,11 +127,12 @@ struct SimRuntime: Comparable, Decodable {
     }
 }
 
-extension SimRuntime: PresentableItem, Identifiable {
-    var title       : String { return name }
-    var id          : String { return identifier }
-    var imageName   : String { return "v.circle" }
-    var imageColor  : Color? { return isAvailable ? .green : .red }
+extension SimRuntime: SourceItemData {
+    var title           : String { return name }
+    var headerTitle     : String { "Runtime: \(title)" }
+    var imageDesc       : SourceImageDesc { .symbol(systemName: "shippingbox", color: isAvailable ? .green : .red) }
+
+    var optionTrait     : SourceFilter.Options { isAvailable ? .runtimeInstalled : [] }
 }
 
 extension Array where Element == SimRuntime {
@@ -141,5 +142,13 @@ extension Array where Element == SimRuntime {
             
             return self.endIndex - 1
         }()
+    }
+    
+    func supporting(deviceType: SimDeviceType) -> Self {
+        filter { $0.supports(deviceType: deviceType) }
+    }
+    
+    func supporting(platform: SimPlatform) -> Self {
+        filter { $0.supports(platform: platform) }
     }
 }

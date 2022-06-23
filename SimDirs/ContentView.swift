@@ -8,33 +8,52 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var model   : SimModel
-    @State private var state    = PresentationState(filter: [])
+    @ObservedObject var state    : SourceState
     
-    var rootItems   : [PresentationItem] { state.presentationItems(from: model) }
-
+    init(model: SimModel) {
+        state = SourceState(model: model)
+    }
+    
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(rootItems) { item in
-                    SimItemGroup(item: item, state: $state)
+        VStack {
+            NavigationView {
+                List {
+                    Divider()
+
+                    switch state.filteredRoot {
+                        case .placeholder:
+                            Text("Placeholder")
+
+                        case let .device(_, root):
+                            ForEach(root.items) {
+                                SourceItemGroup(selection: $state.selection, item: $0)
+                            }
+                            
+                        case let .runtime(_, root):
+                            ForEach(root.items) {
+                                SourceItemGroup(selection: $state.selection, item: $0)
+                            }
+                    }
                 }
-                .padding(.leading, 2.0)
+                .toolbar {
+                    ToolbarItem { ToolbarMenu(state: state) }
+                }
+                .frame(minWidth: 200)
+                
+                Image("Icon-256")   // Initial View
             }
-            .frame(minWidth: 200)
-            .toolbar {
-                ToolbarItem { ToolbarMenu(state: $state) }
-            }
-            Image("Icon-256")
+            .searchable(text: $state.filter.searchTerm, placement: .sidebar)
         }
-        .searchable(text: $state.searchTerm, placement: .sidebar)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
-    static var simModel = SimModel()
+    static var model = SimModel()
 
     static var previews: some View {
-        ContentView(model: simModel)
+        ContentView(model: model)
+            .preferredColorScheme(.dark)
+        ContentView(model: model)
+            .preferredColorScheme(.light)
     }
 }

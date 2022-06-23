@@ -71,10 +71,10 @@ struct SimApp: Equatable {
     }
 }
 
-extension SimApp: PresentableItem, Identifiable {
-    var title       : String { return displayName }
-    var id          : String { return identifier }
+extension SimApp: SourceItemData {
+    var title           : String { return displayName }
+    var headerTitle     : String { "App: \(title)" }
+    var imageDesc       : SourceImageDesc { nsIcon.map { .icon(nsImage: $0) } ?? .symbol(systemName: "questionmark.app.dashed") }
 
-    var imageName   : String { return "questionmark.app.dashed" }
-    var icon        : NSImage? { return nsIcon }
+    var optionTrait     : SourceFilter.Options { .withApps }
 }

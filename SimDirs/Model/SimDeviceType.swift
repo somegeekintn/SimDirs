@@ -39,8 +39,19 @@ struct SimDeviceType: Decodable {
     }
 }
 
-extension SimDeviceType: PresentableItem, Identifiable {
+extension SimDeviceType: SourceItemData {
     var title       : String { return name }
-    var id          : String { return identifier }
-    var imageName   : String { return productFamily.imageName }
+    var headerTitle : String { "Device Type: \(title)" }
+    var imageDesc   : SourceImageDesc { .symbol(systemName: productFamily.symbolName) }
 }
+
+extension Array where Element == SimDeviceType {
+    func supporting(productFamily: SimProductFamily) -> Self {
+        filter { $0.supports(productFamily: productFamily) }
+    }
+    
+    func supporting(runtime: SimRuntime) -> Self {
+        filter { $0.supports(runtime: runtime) }
+    }
+}
+

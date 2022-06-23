@@ -27,8 +27,6 @@ struct PathActions: View {
             .stroke(.white.opacity(0.4), lineWidth: 1.0))
         .background(.black.opacity(0.4))
         .cornerRadius(6.0)
-// based on scenePhase?
-//        .shadow(color: .black.opacity(0.4), radius: 8.0, x: 4.0, y: 4.0)
     }
 }
 
