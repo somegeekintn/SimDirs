@@ -8,16 +8,15 @@
 import SwiftUI
 
 struct SourceItemGroup<Item: SourceItem>: View {
-    @State private var isExpanded = false
+    @State private var isExpanded = false   // would like to move into Item
     @Binding var selection: UUID?
-
-    var item   : Item
+    @StateObject var item: Item
 
     var body: some View {
-        if let childItems = item.children, childItems.count > 0 {
+        if item.visibleChildren.count > 0 {
             DisclosureGroup(
                 isExpanded: $isExpanded) {
-                    ForEach(childItems) { childItem in
+                    ForEach(item.visibleChildren) { childItem in
                         SourceItemGroup<Item.Child>(selection: $selection, item: childItem)
                     }
                 } label: {

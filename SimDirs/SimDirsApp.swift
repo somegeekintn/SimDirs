@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct SimDirsApp: App {
-    @StateObject private var simModel = SimModel()
+    private var simModel = SimModel()
     
     var body: some Scene {
         WindowGroup {

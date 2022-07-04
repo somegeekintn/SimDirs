@@ -12,7 +12,7 @@ extension SimDevice {
 }
 
 struct DeviceHeader: View {
-    var device         : SimDevice
+    @ObservedObject var device         : SimDevice
     
     var body: some View {
         VStack(alignment: .leading, spacing: 3.0) {

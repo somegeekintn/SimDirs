@@ -43,9 +43,8 @@ enum SourceImageDesc {
     }
 }
 
-extension Never: SourceItemData {
-    var headerTitle     : String { fatalError () }
-    var imageDesc       : SourceImageDesc { SourceImageDesc.symbol(systemName: "exclamationmark.octagon", color: .red) }
-    var header          : some View { Text("Error: Never SourceItemData type cannot provide header") }
-    var content         : some View { Text("Error: Never SourceItemData type cannot provide content") }
+struct SourceItemDataNone: SourceItemData {
+    static let none     = SourceItemDataNone()
+    
+    var title           : String { "" }
 }

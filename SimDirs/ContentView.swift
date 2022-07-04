@@ -20,17 +20,17 @@ struct ContentView: View {
                 List {
                     Divider()
 
-                    switch state.filteredRoot {
+                    switch state.base {
                         case .placeholder:
                             Text("Placeholder")
 
-                        case let .device(_, root):
-                            ForEach(root.items) {
+                        case let .device(_, item):
+                            ForEach(item.visibleChildren) {
                                 SourceItemGroup(selection: $state.selection, item: $0)
                             }
                             
-                        case let .runtime(_, root):
-                            ForEach(root.items) {
+                        case let .runtime(_, item):
+                            ForEach(item.visibleChildren) {
                                 SourceItemGroup(selection: $state.selection, item: $0)
                             }
                     }

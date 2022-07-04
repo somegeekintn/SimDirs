@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 class SourceState: ObservableObject {
     typealias ProductFamily = SourceItemVal<SimProductFamily, DeviceType_DS>
@@ -15,13 +16,13 @@ class SourceState: ObservableObject {
     typealias Runtime_DS    = SourceItemVal<SimRuntime, Device>
     typealias Runtime_RT    = SourceItemVal<SimRuntime, DeviceType_RT>
     typealias Device        = SourceItemVal<SimDevice, App>
-    typealias App           = SourceItemVal<SimApp, Never>
+    typealias App           = SourceItemVal<SimApp, SourceItemNone>
 
-    enum Root: Identifiable {
+    enum Base: Identifiable {
         case placeholder(id: UUID = UUID())
-        case device(id: UUID = UUID(), SourceRoot<ProductFamily>)
-        case runtime(id: UUID = UUID(), SourceRoot<Platform>)
-        
+        case device(id: UUID = UUID(), SourceItemVal<SourceItemDataNone, ProductFamily>)
+        case runtime(id: UUID = UUID(), SourceItemVal<SourceItemDataNone, Platform>)
+
         var id      :  UUID {
             switch self {
                 case let .placeholder(id):  return id
@@ -52,21 +53,14 @@ class SourceState: ObservableObject {
         }
     }
     
-    @Published var style        = Style.placeholder { didSet { baseRoot = rootFor(style: style) } }
-    @Published var filter       = SourceFilter()
+    @Published var style        = Style.placeholder { didSet { rebuildBase() } }
+    @Published var filter       = SourceFilter() { didSet { applyFilter() } }
     @Published var selection    : UUID?
 
     var model           : SimModel
-    var baseRoot        = Root.placeholder()
-
-    var filteredRoot    : Root {
-        switch baseRoot {
-            case .placeholder:          return baseRoot
-            case let .device(_, root):  return .device(id: baseRoot.id, filter.filtered(root: root))
-            case let .runtime(_, root): return .runtime(id: baseRoot.id, filter.filtered(root: root))
-        }
-    }
-
+    var base            = Base.placeholder()
+    var deviceUpdates   : Cancellable?
+    
     var filterApps      : Bool {
         get { filter.options.contains(.withApps) }
         set { filter.options.booleanSet(newValue, options: .withApps) }
@@ -77,21 +71,92 @@ class SourceState: ObservableObject {
         set { filter.options.booleanSet(newValue, options: .runtimeInstalled) }
     }
 
-
-    func filtering<T: SourceItem>(_ items: [T]) -> [T] {
-        return items
-    }
-    
     init(model: SimModel) {
+        self.style = .byDevice
         self.model = model
-        style = Style.byDevice
+        
+        self.rebuildBase()
+
+        deviceUpdates = model.deviceUpdates.sink(receiveValue: applyDeviceUpdates)
     }
     
-    func rootFor(style: Style) -> Root {
+    func applyDeviceUpdates(_ updates: SimDevicesUpdates) {
+        switch base {
+            case .placeholder:
+                break
+
+            case let .device(_, item):
+                for prodFamily in item.children {
+                    for devType in prodFamily.children {
+                        for runtime in devType.children {
+                            guard updates.runtime.identifier == runtime.data.identifier else { continue }
+                            let devTypeDevices  = updates.additions.filter { $0.isDeviceOfType(devType.data) }
+                            
+                            runtime.children = runtime.children.filter { device in !updates.removals.contains { $0.udid == device.data.udid } }
+                            runtime.children.append(contentsOf: devTypeDevices.map { device in
+                                let imageDesc = devType.imageDesc.withColor(device.isAvailable ? .green : .red)
+
+                                return Device(data: device, children: device.apps.map { app in App(data: app, children: []) }, customImgDesc: imageDesc)
+                            })
+                        }
+                    }
+                }
+
+            case let .runtime(_, item):
+                for platform in item.children {
+                    for runtime in platform.children {
+                        guard updates.runtime.identifier == runtime.data.identifier else { continue }
+                        
+                        for devType in runtime.children {
+                            let devTypeDevices  = updates.additions.filter { $0.isDeviceOfType(devType.data) }
+                            
+                            devType.children = devType.children.filter { device in !updates.removals.contains { $0.udid == device.data.udid } }
+                            devType.children.append(contentsOf: devTypeDevices.map { device in
+                                let imageDesc = devType.imageDesc.withColor(device.isAvailable ? .green : .red)
+
+                                return Device(data: device, children: device.apps.map { app in App(data: app, children: []) }, customImgDesc: imageDesc)
+                            })
+                        }
+                    }
+                }
+        }
+        
+        applyFilter()
+    }
+    
+    func applyFilter() {
+        switch base {
+            case .placeholder:          break
+            case let .device(_, item):  item.applyFilter(filter)
+            case let .runtime(_, item): item.applyFilter(filter)
+        }
+    }
+    
+    func rebuildBase() {
+        var baseID  : UUID
+        
+        // Preserve identifier if style is not changing
+        switch (style, base) {
+            case (.placeholder, let .placeholder(id)):  baseID = id;
+            case (.byDevice, let .device(id, _)):       baseID = id;
+            case (.byRuntime, let .runtime(id, _)):     baseID = id;
+            default:                                    baseID = UUID()
+        }
+        
+        switch style {
+            case .placeholder:  base = .placeholder(id: baseID)
+            case .byDevice:     base = .device(id: baseID, SourceItemVal(data: .none, children: deviceStyleItems()))
+            case .byRuntime:    base = .runtime(id: baseID, SourceItemVal(data: .none, children: runtimeStyleItems()))
+        }
+        
+        applyFilter()
+    }
+    
+    func baseFor(style: Style) -> Base {
         switch style {
             case .placeholder:  return .placeholder()
-            case .byDevice:     return .device(SourceRoot(items: deviceStyleItems()))
-            case .byRuntime:    return .runtime(SourceRoot(items: runtimeStyleItems()))
+            case .byDevice:     return .device(SourceItemVal(data: .none, children: deviceStyleItems()))
+            case .byRuntime:    return .runtime(SourceItemVal(data: .none, children: runtimeStyleItems()))
         }
     }
     
@@ -102,7 +167,7 @@ class SourceState: ObservableObject {
                     Runtime_DS(data: runtime, children: runtime.devices.of(deviceType: devType).map { device in
                         let imageDesc = devType.imageDesc.withColor(device.isAvailable ? .green : .red)
 
-                        return Device(data: device, children: device.apps.map { app in App(data: app) }, customImgDesc: imageDesc)
+                        return Device(data: device, children: device.apps.map { app in App(data: app, children: []) }, customImgDesc: imageDesc)
                     })
                 })
             })
@@ -116,25 +181,11 @@ class SourceState: ObservableObject {
                     DeviceType_RT(data: devType, children: runtime.devices.of(deviceType: devType).map { device in
                         let imageDesc = devType.imageDesc.withColor(device.isAvailable ? .green : .red)
                         
-                        return Device(data: device, children: device.apps.map { app in App(data: app) }, customImgDesc: imageDesc)
+                        return Device(data: device, children: device.apps.map { app in App(data: app, children: []) }, customImgDesc: imageDesc)
                     })
                 })
             })
         }
     }
-    
-#if OLDWAY
-    static func testItemsOf<T>(type: T.Type) -> [T] {
-        return PresentationState(model: SimModel()).allUnderlyingOf(type: type)
-    }
-
-    func allItemsOf<T>(type: T.Type) -> [PresentationItem] {
-        return presentationItems().flatItems.itemsOf(type: type)
-    }
-    
-    func allUnderlyingOf<T>(type: T.Type) -> [T] {
-        return presentationItems().flatItems.underlyingOf(type: type)
-    }
-#endif
 }
 

@@ -6,21 +6,30 @@
 //
 
 import Foundation
+import Combine
 
 enum SimError: Error {
     case deviceParsingFailure
     case invalidApp
 }
 
-class SimModel: ObservableObject {
+struct SimDevicesUpdates {
+    let runtime     : SimRuntime
+    var additions   : [SimDevice]
+    var removals    : [SimDevice]
+}
+
+class SimModel {
     var deviceTypes         : [SimDeviceType]
-    @Published var runtimes : [SimRuntime]
-    var monitorSource       : DispatchSourceTimer?
-    let updateInterval      = 1.0
+    var runtimes            : [SimRuntime]
+    var monitor             : Cancellable?
+    let updateInterval      = 2.0
  
     var devices             : [SimDevice] { runtimes.flatMap { $0.devices } }
     var apps                : [SimApp] { devices.flatMap { $0.apps } }
 
+    var deviceUpdates       = PassthroughSubject<SimDevicesUpdates, Never>()
+    
     init() {
         let simctl = SimCtl()
         
@@ -51,40 +60,41 @@ class SimModel: ObservableObject {
     }
     
     func beginMonitor() {
-        let timer   = DispatchSource.makeTimerSource()
-        
-        timer.setEventHandler {
-            guard let runtimeDevs : [String : [SimDevice]] = try? SimCtl().readAllRuntimeDevices() else { return }
+        monitor = Timer.publish(every: updateInterval, on: .main, in: .default)
+            .autoconnect()
+            .receive(on: DispatchQueue.global(qos: .background))
+            .flatMap { _ in
+                Just((try? SimCtl().readAllRuntimeDevices()) ?? [String : [SimDevice]]())
+            }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] runtimeDevs in
+                guard let this   = self else { return }
+                
+                for (runtimeID, curDevices) in runtimeDevs {
+                    guard let runtime   = this.runtimes.first(where: { $0.identifier == runtimeID }) else { print("missing runtime: \(runtimeID)"); continue }
+                    let curDevIDs       = curDevices.map { $0.udid }
+                    let lastDevID       = runtime.devices.map { $0.udid }
+                    let updates         = SimDevicesUpdates(
+                                            runtime: runtime,
+                                            additions: curDevices.filter { !lastDevID.contains($0.udid) },
+                                            removals: runtime.devices.filter { !curDevIDs.contains($0.udid) })
 
-            // Device updating
-            for (runtimeID, newDevices) in runtimeDevs {
-                guard let runtime       = self.runtimes.first(where: { $0.identifier == runtimeID }) else { continue }
-                let newDevIDs           = newDevices.map { $0.udid }
-                let curDevIDs           = runtime.devices.map { $0.udid }
-                let updates             = runtime.updatedDevices(from: newDevices)
-                let deleteIDs           = curDevIDs.filter { !newDevIDs.contains($0) }
-                let inserts             = newDevices.filter { !curDevIDs.contains($0.udid) }
-                let changes             : (upd: Bool, del: Bool, ins: Bool) = (!updates.isEmpty, !deleteIDs.isEmpty, !inserts.isEmpty)
-
-                if changes != (false, false, false) {
-                    DispatchQueue.main.async {
-                        guard let runtimeIdx    = self.runtimes.firstIndex(of: runtime) else { return }
+                    if !updates.removals.isEmpty || !updates.additions.isEmpty {
+                        let idsToRemove = updates.removals.map { $0.udid }
                         
-                        if changes.upd {
-                            self.runtimes[runtimeIdx].applyDeviceUpdates(updates)
-                        }
-                        if changes.del {
-                            self.runtimes[runtimeIdx].devices.removeAll(where: { deleteIDs.contains($0.udid) })
-                        }
-                        if changes.ins {
-                            self.runtimes[runtimeIdx].devices.append(contentsOf: inserts)
+                        runtime.devices.removeAll(where: { idsToRemove.contains($0.udid) })
+                        runtime.devices.append(contentsOf: updates.additions)
+                        this.deviceUpdates.send(updates)
+                    }
+
+                    for srcDevice in curDevices {
+                        guard let dstDevice = runtime.devices.first(where: { $0.udid == srcDevice.udid }) else { print("missing device: \(srcDevice.udid)"); continue }
+                        
+                        if dstDevice.updateDevice(from: srcDevice) {
+                            print("\(dstDevice.udid) updated: \(dstDevice.state)")
                         }
                     }
                 }
             }
-        }
-        timer.schedule(deadline: DispatchTime.now(), repeating: updateInterval)
-        timer.resume()
-        monitorSource = timer
     }
 }

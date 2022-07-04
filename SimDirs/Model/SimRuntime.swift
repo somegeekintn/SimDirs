@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SimRuntime: Comparable, Decodable {
+class SimRuntime: ObservableObject, Comparable, Decodable {
     enum CodingKeys: String, CodingKey {
         case availabilityError
         case bundlePath
@@ -36,6 +36,8 @@ struct SimRuntime: Comparable, Decodable {
         }
     }
     
+    @Published var devices      = [SimDevice]()
+
     let name                    : String
     let version                 : String
     let identifier              : String
@@ -49,7 +51,6 @@ struct SimRuntime: Comparable, Decodable {
     var supportedDeviceTypes    : [DeviceType]
     let availabilityError       : String?
     
-    var devices                 = [SimDevice]()
     var isPlaceholder           = false
     
     static func < (lhs: SimRuntime, rhs: SimRuntime) -> Bool {
@@ -96,8 +97,11 @@ struct SimRuntime: Comparable, Decodable {
         return self.platform == platform
     }
     
-    mutating func setDevices(_ devices: [SimDevice], from devTypes: [SimDeviceType]) {
-        self.devices = devices.map { $0.scannedDevice }
+    func setDevices(_ devices: [SimDevice], from devTypes: [SimDeviceType]) {
+        self.devices = devices
+        for device in devices {
+            device.scanApplications()
+        }
         
         // If this runtime is a placeholder it will be missing supported device types
         // create device type stubs based on the devices being added using supplied
@@ -109,20 +113,6 @@ struct SimRuntime: Comparable, Decodable {
             self.supportedDeviceTypes = devTypeIDs.compactMap { devTypeID in
                 devTypes.first(where: { $0.identifier == devTypeID }).map({ SimRuntime.DeviceType(canonical: $0) })
             }
-        }
-    }
-    
-    func updatedDevices(from devices: [SimDevice]) -> [SimDevice] {
-        return devices.compactMap { device in
-            self.devices.first(where: { $0.udid == device.udid })?.updatedDevice(from: device)
-        }
-    }
-    
-    mutating func applyDeviceUpdates(_ devices: [SimDevice]) {
-        for device in devices {
-            guard let devIdx    = self.devices.firstIndex(where: { $0.udid == device.udid }) else { continue }
-            
-            self.devices[devIdx] = device
         }
     }
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SimDevice: Decodable, Equatable {
+class SimDevice: ObservableObject, Decodable {
     enum CodingKeys: String, CodingKey {
         case availabilityError
         case dataPath
@@ -27,28 +27,41 @@ struct SimDevice: Decodable, Equatable {
         case shutdown       = "Shutdown"
     }
 
-    var name                    : String
+    @Published var name                 : String
+    @Published var state                : State
+    @Published var isAvailable          : Bool
+    @Published var availabilityError    : String?
+
     let udid                    : String
-    var state                   : State
     let dataPath                : String
     let dataPathSize            : Int
     let logPath                 : String
-    var isAvailable             : Bool
     let deviceTypeIdentifier    : String
-    var availabilityError       : String?
     var apps                    = [SimApp]()
-    
     var dataURL                 : URL { URL(fileURLWithPath: dataPath) }
     var logURL                  : URL { URL(fileURLWithPath: logPath) }
     var bundleContainerURL      : URL { dataURL.appendingPathComponent("Containers/Bundle/Application") }
     var dataContainerURL        : URL { dataURL.appendingPathComponent("Containers/Data/Application") }
-    var scannedDevice           : Self { var scanned = self; scanned.scanApplications(); return scanned }
+    
+    required init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+
+        availabilityError = try values.decodeIfPresent(String.self, forKey: .availabilityError)
+        dataPath = try values.decode(String.self, forKey: .dataPath)
+        dataPathSize = try values.decode(Int.self, forKey: .dataPathSize)
+        deviceTypeIdentifier = try values.decode(String.self, forKey: .deviceTypeIdentifier)
+        isAvailable = try values.decode(Bool.self, forKey: .isAvailable)
+        logPath = try values.decode(String.self, forKey: .logPath)
+        name = try values.decode(String.self, forKey: .name)
+        state = try values.decode(State.self, forKey: .state)
+        udid = try values.decode(String.self, forKey: .udid)
+    }
     
     func isDeviceOfType(_ deviceType: SimDeviceType) -> Bool {
         return deviceTypeIdentifier == deviceType.identifier
     }
     
-    mutating func scanApplications() {
+    func scanApplications() {
         let fileManager         = FileManager.default
         var sandboxPaths        = [String : URL]()
         
@@ -81,27 +94,19 @@ struct SimDevice: Decodable, Equatable {
         }
     }
     
-    func hasChanged(from other: Self) -> Bool {
+    func hasChanged(from other: SimDevice) -> Bool {
         return !(name == other.name && state == other.state && isAvailable == other.isAvailable && availabilityError == other.availabilityError)
     }
 
-    func updatedDevice(from other: Self) -> Self? {
-        guard hasChanged(from: other) else { return nil }
-        var updated = self
+    func updateDevice(from other: SimDevice) -> Bool {
+        guard hasChanged(from: other) else { return false }
         
-        updated.name = other.name
-        updated.state = other.state
-        updated.isAvailable = other.isAvailable
-        updated.availabilityError = other.availabilityError
-
-        return updated
-    }
-    
-    mutating func applyChanges(from other: Self) {
         name = other.name
         state = other.state
         isAvailable = other.isAvailable
         availabilityError = other.availabilityError
+
+        return true
     }
 }
 

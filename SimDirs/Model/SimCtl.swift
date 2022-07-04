@@ -42,4 +42,8 @@ struct SimCtl {
         
         return try JSONDecoder().decode([String : [String : [SimDevice]]].self, from: json)["devices"] ?? [:]
     }
+    
+    func readAllDevices() throws -> [SimDevice] {
+       return try readAllRuntimeDevices().flatMap { $1 }
+    }
 }
