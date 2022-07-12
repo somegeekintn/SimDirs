@@ -43,7 +43,34 @@ struct SimCtl {
         return try JSONDecoder().decode([String : [String : [SimDevice]]].self, from: json)["devices"] ?? [:]
     }
     
+    func readDevice(_ device: SimDevice) throws -> SimDevice? {
+        let json    : Data = try run(args: ["list", "-j", "devices", device.udid])
+        let decoded = try JSONDecoder().decode([String : [String : [SimDevice]]].self, from: json)["devices"] ?? [:]
+        var result  : SimDevice? = nil
+        
+        for devices in decoded.values {
+            if let match = devices.first(where: { $0.udid == device.udid }) {
+                result = match
+                break
+            }
+        }
+        
+        return result
+    }
+    
     func readAllDevices() throws -> [SimDevice] {
        return try readAllRuntimeDevices().flatMap { $1 }
+    }
+    
+    func bootDevice(_ device: SimDevice, boot: Bool) async throws {
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            group.addTask { let _ : Data = try run(args: [boot ? "boot" : "shutdown", device.udid]) }
+            group.addTask { try await Task.sleep(nanoseconds: 1_000_000_000) }
+            try await group.next()  // delay or run complate
+        }
+
+        if let refreshedDev = try readDevice(device) {
+            await MainActor.run { () -> Void in device.updateDevice(from: refreshedDev) }
+        }
     }
 }

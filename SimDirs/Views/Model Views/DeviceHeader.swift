@@ -12,11 +12,21 @@ extension SimDevice {
 }
 
 struct DeviceHeader: View {
-    @ObservedObject var device         : SimDevice
+    @ObservedObject var device  : SimDevice
     
     var body: some View {
         VStack(alignment: .leading, spacing: 3.0) {
-            Text("State: \(device.state.rawValue)")
+            HStack(spacing: 8.0) {
+                Toggle("Booted", isOn: $device.isBooted)
+                    .toggleStyle(.switch)
+                    .disabled(device.isTransitioning)
+
+                if device.isTransitioning {
+                    ProgressView()
+                        .controlSize(.small)
+                    Text(device.state.rawValue)
+                }
+            }
             Text("UDID: \(device.udid)")
         }
         .font(.subheadline)

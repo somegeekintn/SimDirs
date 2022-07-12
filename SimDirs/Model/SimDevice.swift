@@ -25,12 +25,24 @@ class SimDevice: ObservableObject, Decodable {
         case booted         = "Booted"
         case shuttingDown   = "Shutting Down"
         case shutdown       = "Shutdown"
+        
+        var showBooted      : Bool {
+            switch self {
+                case .booted, .booting: return true
+                default:                return false
+            }
+        }
     }
 
     @Published var name                 : String
     @Published var state                : State
     @Published var isAvailable          : Bool
     @Published var availabilityError    : String?
+    var isTransitioning                 : Bool { state == .booting || state == .shuttingDown }
+    var isBooted                        : Bool {
+        get { state.showBooted == true }
+        set { bootDevice(newValue) }
+    }
 
     let udid                    : String
     let dataPath                : String
@@ -98,7 +110,7 @@ class SimDevice: ObservableObject, Decodable {
         return !(name == other.name && state == other.state && isAvailable == other.isAvailable && availabilityError == other.availabilityError)
     }
 
-    func updateDevice(from other: SimDevice) -> Bool {
+    @discardableResult func updateDevice(from other: SimDevice) -> Bool {
         guard hasChanged(from: other) else { return false }
         
         name = other.name
@@ -107,6 +119,21 @@ class SimDevice: ObservableObject, Decodable {
         availabilityError = other.availabilityError
 
         return true
+    }
+    
+    func bootDevice(_ boot: Bool) {
+        if boot && state == .shutdown || !boot && state == .booted {
+            let simctl = SimCtl()
+            
+            state = boot ? .booting : .shuttingDown
+            Task {
+                do {
+                    try await simctl.bootDevice(self, boot: boot)
+                } catch {
+                    print("Failed to \(boot ? "boot" : "shutdown") device: \(error)")
+                }
+            }
+        }
     }
 }
 
