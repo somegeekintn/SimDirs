@@ -8,24 +8,40 @@
 import SwiftUI
 
 struct SourceItemGroup<Item: SourceItem>: View {
-    @State private var isExpanded = false   // would like to move into Item
-    @Binding var selection: UUID?
-    @StateObject var item: Item
+    @StateObject var item               : Item
+    @Binding var selection              : UUID?
 
     var body: some View {
-        if item.visibleChildren.count > 0 {
-            DisclosureGroup(
-                isExpanded: $isExpanded) {
-                    ForEach(item.visibleChildren) { childItem in
-                        SourceItemGroup<Item.Child>(selection: $selection, item: childItem)
-                    }
-                } label: {
-                    SourceItemLink(selection: $selection, item: item)
-                }
+        HStack(spacing: 0) {
+            let button = Button(action: {
+                let optionActive = NSApplication.shared.currentEvent?.modifierFlags.contains(.option) == true
                 
-        }
-        else {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    item.toggleExpanded(deep: optionActive)
+                }
+            }, label: {
+                Image(systemName: "chevron.right")
+                    .padding(.horizontal, 2.0)
+                    .contentShape(Rectangle())
+                    .rotationEffect(.degrees(item.isExpanded ? 90.0 : 0.0))
+            })
+            .buttonStyle(.plain)
+            
+            if item.visibleChildren.count == 0 {
+                button.hidden()
+            }
+            else {
+                button
+            }
+            
             SourceItemLink(selection: $selection, item: item)
+        }
+        
+        if item.isExpanded {
+            ForEach(item.visibleChildren) { childItem in
+                SourceItemGroup<Item.Child>(item: childItem, selection: $selection)
+            }
+            .padding(.leading, 12.0)
         }
     }
 }
@@ -36,6 +52,10 @@ struct SourceItemGroup_Previews: PreviewProvider {
     static var sampleItem = state.deviceStyleItems()[0]
 
     static var previews: some View {
-        SourceItemGroup(selection: $selection, item: sampleItem)
+        List {
+            SourceItemGroup(item: sampleItem, selection: $selection)
+            SourceItemGroup(item: sampleItem, selection: $selection)
+            SourceItemGroup(item: sampleItem, selection: $selection)
+        }
     }
 }

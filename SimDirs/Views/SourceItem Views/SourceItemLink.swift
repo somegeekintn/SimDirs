@@ -15,10 +15,7 @@ struct SourceItemLink<Item: SourceItem>: View {
     var body: some View {
         NavigationLink(tag: item.id, selection: $selection,
             destination: { SourceItemContent(item: item) },
-            label: {
-                SourceItemLabel(item: item)
-                    .padding(.leading, 2.0)
-            }
+            label: { SourceItemLabel(item: item) }
         )
     }
 }

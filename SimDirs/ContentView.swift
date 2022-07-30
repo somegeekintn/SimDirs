@@ -17,7 +17,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             NavigationView {
-                List {
+                List(selection: $state.selection) {
                     Divider()
 
                     switch state.base {
@@ -26,12 +26,12 @@ struct ContentView: View {
 
                         case let .device(_, item):
                             ForEach(item.visibleChildren) {
-                                SourceItemGroup(selection: $state.selection, item: $0)
+                                SourceItemGroup(item: $0, selection: $state.selection)
                             }
                             
                         case let .runtime(_, item):
                             ForEach(item.visibleChildren) {
-                                SourceItemGroup(selection: $state.selection, item: $0)
+                                SourceItemGroup(item: $0, selection: $state.selection)
                             }
                     }
                 }

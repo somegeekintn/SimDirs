@@ -16,6 +16,7 @@ protocol SourceItem: Identifiable, ObservableObject {
     var children        : [Child] { get set }
     var visibleChildren : [Child] { get set }
     var customImgDesc   : SourceImageDesc? { get }
+    var isExpanded      : Bool { get set }
 }
 
 extension SourceItem {
@@ -54,10 +55,21 @@ extension SourceItem {
 
         return match || !visibleChildren.isEmpty
     }
+
+    func toggleExpanded(_ expanded: Bool? = nil, deep: Bool) {
+        isExpanded = expanded ?? !isExpanded
+        
+        if deep {
+            for child in children {
+                child.toggleExpanded(isExpanded, deep: true)
+            }
+        }
+    }
 }
 
 class SourceItemVal<Model: SourceItemData, Child: SourceItem>: SourceItem {
     @Published var visibleChildren  : [Child]
+    @Published var isExpanded       : Bool
     
     var id              = UUID()
     var data            : Model
@@ -70,6 +82,7 @@ class SourceItemVal<Model: SourceItemData, Child: SourceItem>: SourceItem {
         self.children = children
         self.visibleChildren = children
         self.customImgDesc = customImgDesc
+        self.isExpanded = false
     }
 }
 
@@ -78,4 +91,5 @@ class SourceItemNone: SourceItem {
     var data            = SourceItemDataNone()
     var children        = [SourceItemNone]()
     var visibleChildren = [SourceItemNone]()
+    var isExpanded      = false
 }
