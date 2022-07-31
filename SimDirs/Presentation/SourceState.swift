@@ -54,7 +54,7 @@ class SourceState: ObservableObject {
     }
     
     @Published var style        = Style.placeholder { didSet { rebuildBase() } }
-    @Published var filter       = SourceFilter() { didSet { applyFilter() } }
+    @Published var filter       = SourceFilter.restore() { didSet { applyFilter() } }
     @Published var selection    : UUID?
 
     var model           : SimModel

@@ -34,5 +34,13 @@ struct SourceFilter {
     }
 
     var searchTerm      = ""
-    var options         = Options()
+    var options         = Options() { didSet { UserDefaults.standard.set(options.rawValue, forKey: "FilterOptions") } }
+
+    static func restore() -> SourceFilter {
+        var filter = SourceFilter()
+        
+        filter.options = SourceFilter.Options(rawValue: UserDefaults.standard.integer(forKey: "FilterOptions"))
+        
+        return filter
+    }
 }
