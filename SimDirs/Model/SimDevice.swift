@@ -34,10 +34,18 @@ class SimDevice: ObservableObject, Decodable {
         }
     }
 
+    enum Appearance: String {
+        case light          = "light"
+        case dark           = "dark"
+        case unsupported    = "unsupported"
+        case unknown        = "unknown"
+    }
+
     @Published var name                 : String
     @Published var state                : State
     @Published var isAvailable          : Bool
     @Published var availabilityError    : String?
+    @Published var appearance           = Appearance.unknown
     var isTransitioning                 : Bool { state == .booting || state == .shuttingDown }
     var isBooted                        : Bool {
         get { state.showBooted == true }
@@ -49,6 +57,7 @@ class SimDevice: ObservableObject, Decodable {
     let dataPathSize            : Int
     let logPath                 : String
     let deviceTypeIdentifier    : String
+    var deviceModel             : String?
     var apps                    = [SimApp]()
     var dataURL                 : URL { URL(fileURLWithPath: dataPath) }
     var logURL                  : URL { URL(fileURLWithPath: logPath) }
@@ -71,6 +80,11 @@ class SimDevice: ObservableObject, Decodable {
     
     func isDeviceOfType(_ deviceType: SimDeviceType) -> Bool {
         return deviceTypeIdentifier == deviceType.identifier
+    }
+    
+    func completeSetup(with devTypes: [SimDeviceType]) {
+        deviceModel = devTypes.first(where: { $0.identifier == deviceTypeIdentifier })?.name
+        scanApplications()
     }
     
     func scanApplications() {
@@ -123,16 +137,34 @@ class SimDevice: ObservableObject, Decodable {
     
     func bootDevice(_ boot: Bool) {
         if boot && state == .shutdown || !boot && state == .booted {
-            let simctl = SimCtl()
-            
             state = boot ? .booting : .shuttingDown
             Task {
                 do {
-                    try await simctl.bootDevice(self, boot: boot)
+                    try await SimCtl().bootDevice(self, boot: boot)
                 } catch {
                     print("Failed to \(boot ? "boot" : "shutdown") device: \(error)")
                 }
             }
+        }
+    }
+    
+    func discoverAppearance() {
+        if appearance == .unknown {
+            Task {
+                let result = try await SimCtl().getDeviceAppearance(self)
+                
+                await MainActor.run { appearance = result }
+            }
+        }
+    }
+    
+    func setAppearance(_ appearance: Appearance) {
+        self.appearance = appearance     // optimistic
+        
+        do {
+            try SimCtl().setDeviceAppearance(self, appearance: appearance)
+        } catch {
+            print("Failed to set device appeaarnce: \(error)")
         }
     }
 }
@@ -146,5 +178,9 @@ extension SimDevice: SourceItemData {
 extension Array where Element == SimDevice {
     func of(deviceType: SimDeviceType) -> Self {
         filter { $0.isDeviceOfType(deviceType) }
+    }
+
+    func completeSetup(with devTypes: [SimDeviceType]) {
+        for device in self { device.completeSetup(with: devTypes) }
     }
 }

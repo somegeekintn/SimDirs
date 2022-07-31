@@ -22,7 +22,19 @@ struct SimCtl {
     }
     
     func run(args: [String]) throws -> String {
-        return String(data: try run(args: args), encoding: .utf8) ?? ""
+        return try String(data: run(args: args), encoding: .utf8) ?? ""
+    }
+
+    func runAsync(args: [String]) throws {
+        Task(priority: nil, operation: { let _ : Data = try run(args: args) })
+    }
+
+    func runAsync(args: [String]) async throws -> Data {
+        return try await Task(priority: nil, operation: { try run(args: args) }).value
+    }
+    
+    func runAsync(args: [String]) async throws -> String {
+        return try await Task(priority: nil, operation: { try String(data: run(args: args), encoding: .utf8) ?? "" }).value
     }
 
     func readAllDeviceTypes() throws -> [SimDeviceType] {
@@ -66,11 +78,21 @@ struct SimCtl {
         try await withThrowingTaskGroup(of: Void.self) { group in
             group.addTask { let _ : Data = try run(args: [boot ? "boot" : "shutdown", device.udid]) }
             group.addTask { try await Task.sleep(nanoseconds: 1_000_000_000) }
-            try await group.next()  // delay or run complate
+            try await group.next()  // wait for timeout or run to complate
         }
 
         if let refreshedDev = try readDevice(device) {
             await MainActor.run { () -> Void in device.updateDevice(from: refreshedDev) }
         }
+    }
+    
+    func getDeviceAppearance(_ device: SimDevice) async throws -> SimDevice.Appearance {
+        let appearance : String = try await runAsync(args: ["ui", device.udid, "appearance"]).trimmingCharacters(in: .whitespacesAndNewlines)
+
+        return SimDevice.Appearance(rawValue: appearance) ?? .unknown
+    }
+    
+    func setDeviceAppearance(_ device: SimDevice, appearance: SimDevice.Appearance) throws {
+        try runAsync(args: ["ui", device.udid, "appearance", appearance.rawValue])
     }
 }

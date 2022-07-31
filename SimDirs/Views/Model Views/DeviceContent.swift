@@ -8,11 +8,27 @@
 import SwiftUI
 
 extension SimDevice {
-    public var content : some View { DeviceContent(device: self) }
+    public var content  : some View { DeviceContent(device: self) }
+    var scheme          : ColorScheme? {
+        get {
+            switch appearance {
+                case .light:    return .light
+                case .dark:     return .dark
+                default:        return nil
+            }
+        }
+        set {
+            switch newValue {
+                case .light:    setAppearance(.light)
+                case .dark:     setAppearance(.dark)
+                default:        break
+            }
+        }
+    }
 }
 
 struct DeviceContent: View {
-    var device         : SimDevice
+    @ObservedObject var device  : SimDevice
     
     var body: some View {
         VStack(alignment: .leading, spacing: 3.0) {
@@ -23,15 +39,22 @@ struct DeviceContent: View {
                         description: device.availabilityError ?? "Unknown Error")
                 }
                 
-                Text("PATHS")
-                    .fontWeight(.semibold)
-                    .foregroundColor(.secondary)
+                ContentHeader("Paths")
                 PathRow(title: "Data Path", path: device.dataPath)
                 PathRow(title: "Log Path", path: device.logPath)
+                
+                ContentHeader("UI")
+                if device.appearance != .unsupported {
+                    AppearancePicker(scheme: $device.scheme)
+                        .disabled(!device.isBooted)
+                }
             }
             .font(.subheadline)
             .textSelection(.enabled)
             .lineLimit(1)
+        }
+        .onAppear {
+            device.discoverAppearance()
         }
     }
 }
@@ -40,7 +63,14 @@ struct DeviceContent_Previews: PreviewProvider {
     static var devices    = SimModel().devices
     
     static var previews: some View {
-        DeviceContent(device: devices[0])
-        DeviceContent(device: devices.randomElement() ?? devices[1])
+        if !devices.isEmpty {
+            DeviceContent(device: devices[0])
+                .preferredColorScheme(.light)
+            DeviceContent(device: devices.randomElement() ?? devices[0])
+                .preferredColorScheme(.dark)
+        }
+        else {
+            Text("No devices")
+        }
     }
 }

@@ -99,10 +99,7 @@ class SimRuntime: ObservableObject, Comparable, Decodable {
     
     func setDevices(_ devices: [SimDevice], from devTypes: [SimDeviceType]) {
         self.devices = devices
-        for device in devices {
-            device.scanApplications()
-        }
-        
+
         // If this runtime is a placeholder it will be missing supported device types
         // create device type stubs based on the devices being added using supplied
         // fully described device types

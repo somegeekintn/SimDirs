@@ -27,7 +27,8 @@ struct DeviceHeader: View {
                     Text(device.state.rawValue)
                 }
             }
-            Text("UDID: \(device.udid)")
+            Text("Model: \(device.deviceModel ?? "- unknown - ")")
+            Text("Identifier: \(device.udid)")
         }
         .font(.subheadline)
         .textSelection(.enabled)
@@ -38,7 +39,12 @@ struct DeviceHeader_Previews: PreviewProvider {
     static var devices    = SimModel().devices
     
     static var previews: some View {
-        DeviceHeader(device: devices[0])
-        DeviceHeader(device: devices.randomElement() ?? devices[1])
+        if !devices.isEmpty {
+            DeviceHeader(device: devices[0])
+            DeviceHeader(device: devices.randomElement() ?? devices[1])
+        }
+        else {
+            Text("No devices")
+        }
     }
 }

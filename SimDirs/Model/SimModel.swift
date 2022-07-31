@@ -50,6 +50,8 @@ class SimModel {
                 }
             }
             runtimes.sort()
+            devices.completeSetup(with: deviceTypes)
+            
             if !ProcessInfo.processInfo.isPreviewing {
                 beginMonitor()
             }
@@ -82,8 +84,10 @@ class SimModel {
                     if !updates.removals.isEmpty || !updates.additions.isEmpty {
                         let idsToRemove = updates.removals.map { $0.udid }
                         
+                        updates.additions.completeSetup(with: this.deviceTypes)
                         runtime.devices.removeAll(where: { idsToRemove.contains($0.udid) })
                         runtime.devices.append(contentsOf: updates.additions)
+                        
                         this.deviceUpdates.send(updates)
                     }
 
