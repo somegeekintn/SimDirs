@@ -95,4 +95,14 @@ struct SimCtl {
     func setDeviceAppearance(_ device: SimDevice, appearance: SimDevice.Appearance) throws {
         try runAsync(args: ["ui", device.udid, "appearance", appearance.rawValue])
     }
+    
+    func getDeviceContentSize(_ device: SimDevice) async throws -> SimDevice.ContentSize {
+        let contentSize : String = try await runAsync(args: ["ui", device.udid, "content_size"]).trimmingCharacters(in: .whitespacesAndNewlines)
+
+        return SimDevice.ContentSize(rawValue: contentSize) ?? .unknown
+    }
+    
+    func setDeviceContentSize(_ device: SimDevice, contentSize: SimDevice.ContentSize) throws {
+        try runAsync(args: ["ui", device.udid, "content_size", contentSize.rawValue])
+    }
 }

@@ -20,32 +20,12 @@ class SimDevice: ObservableObject, Decodable {
         case udid
     }
     
-    enum State: String, Decodable {
-        case booting        = "Booting"
-        case booted         = "Booted"
-        case shuttingDown   = "Shutting Down"
-        case shutdown       = "Shutdown"
-        
-        var showBooted      : Bool {
-            switch self {
-                case .booted, .booting: return true
-                default:                return false
-            }
-        }
-    }
-
-    enum Appearance: String {
-        case light          = "light"
-        case dark           = "dark"
-        case unsupported    = "unsupported"
-        case unknown        = "unknown"
-    }
-
     @Published var name                 : String
     @Published var state                : State
     @Published var isAvailable          : Bool
     @Published var availabilityError    : String?
     @Published var appearance           = Appearance.unknown
+    @Published var contentSize          = ContentSize.unknown
     var isTransitioning                 : Bool { state == .booting || state == .shuttingDown }
     var isBooted                        : Bool {
         get { state.showBooted == true }
@@ -148,12 +128,19 @@ class SimDevice: ObservableObject, Decodable {
         }
     }
     
-    func discoverAppearance() {
+    func discoverUI() {
         if appearance == .unknown {
             Task {
                 let result = try await SimCtl().getDeviceAppearance(self)
                 
                 await MainActor.run { appearance = result }
+            }
+        }
+        if contentSize == .unknown {
+            Task {
+                let result = try await SimCtl().getDeviceContentSize(self)
+                
+                await MainActor.run { contentSize = result }
             }
         }
     }
@@ -165,6 +152,96 @@ class SimDevice: ObservableObject, Decodable {
             try SimCtl().setDeviceAppearance(self, appearance: appearance)
         } catch {
             print("Failed to set device appeaarnce: \(error)")
+        }
+    }
+    
+    func setContenSize(_ contentSize: ContentSize) {
+        self.contentSize = contentSize  // optimistic
+        
+        do {
+            try SimCtl().setDeviceContentSize(self, contentSize: contentSize)
+        } catch {
+            print("Failed to set device content size: \(error)")
+        }
+    }
+}
+
+extension SimDevice {
+    enum State: String, Decodable {
+        case booting        = "Booting"
+        case booted         = "Booted"
+        case shuttingDown   = "Shutting Down"
+        case shutdown       = "Shutdown"
+        
+        var showBooted      : Bool {
+            switch self {
+                case .booted, .booting: return true
+                default:                return false
+            }
+        }
+    }
+
+    enum Appearance: String {
+        case light          = "light"
+        case dark           = "dark"
+        case unsupported    = "unsupported"
+        case unknown        = "unknown"
+    }
+
+    enum ContentSize: String {
+        case XS             = "extra-small"
+        case S              = "small"
+        case M              = "medium"
+        case L              = "large"
+        case XL             = "extra-large"
+        case XXL            = "extra-extra-large"
+        case XXXL           = "extra-extra-extra-large"
+        case A12Y_M         = "accessibility-medium"
+        case A12Y_L         = "accessibility-large"
+        case A12Y_XL        = "accessibility-extra-large"
+        case A12Y_XXL       = "accessibility-extra-extra-large"
+        case A12Y_XXXL      = "accessibility-extra-extra-extra-large"
+        case unsupported    = "unsupported"
+        case unknown        = "unknown"
+        
+        static var range    : ClosedRange<Double> { Double(ContentSize.XS.intValue)...Double(ContentSize.A12Y_XXXL.intValue) }
+
+        var intValue        : Int {
+            switch self {
+                case .XS:           return 0
+                case .S:            return 1
+                case .M:            return 2
+                case .L:            return 3
+                case .XL:           return 4
+                case .XXL:          return 5
+                case .XXXL:         return 6
+                case .A12Y_M:       return 7
+                case .A12Y_L:       return 8
+                case .A12Y_XL:      return 8
+                case .A12Y_XXL:     return 10
+                case .A12Y_XXXL:    return 11
+                case .unsupported:  return 12
+                case .unknown:      return 13
+            }
+        }
+
+        init(intValue: Int) {
+            switch intValue {
+                case 0:     self = .XS
+                case 1:     self = .S
+                case 2:     self = .M
+                case 3:     self = .L
+                case 4:     self = .XL
+                case 5:     self = .XXL
+                case 6:     self = .XXXL
+                case 7:     self = .A12Y_M
+                case 8:     self = .A12Y_L
+                case 9:     self = .A12Y_XL
+                case 10:    self = .A12Y_XXL
+                case 11:    self = .A12Y_XXXL
+                case 12:    self = .unsupported
+                default:    self = .unknown
+            }
         }
     }
 }

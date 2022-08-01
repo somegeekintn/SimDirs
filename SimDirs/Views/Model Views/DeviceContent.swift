@@ -25,6 +25,10 @@ extension SimDevice {
             }
         }
     }
+    var contentSizeVal  : Double {
+        get { Double(contentSize.intValue) }
+        set { setContenSize(ContentSize(intValue: Int(newValue))) }
+    }
 }
 
 struct DeviceContent: View {
@@ -44,17 +48,31 @@ struct DeviceContent: View {
                 PathRow(title: "Log Path", path: device.logPath)
                 
                 ContentHeader("UI")
-                if device.appearance != .unsupported {
-                    AppearancePicker(scheme: $device.scheme)
-                        .disabled(!device.isBooted)
+                HStack(spacing: 32) {
+                    if device.appearance != .unsupported {
+                        AppearancePicker(scheme: $device.scheme)
+                    }
+                    if device.contentSize != .unsupported {
+                        VStack {
+                            HStack {
+                                Image(systemName: "textformat.size")
+                                    .imageScale(.small)
+                                Slider(value: $device.contentSizeVal, in: SimDevice.ContentSize.range, step: 1)
+                                Image(systemName: "textformat.size")
+                                    .imageScale(.large)
+                            }
+                            Text("Content Size")
+                        }
+                    }
                 }
+                .disabled(!device.isBooted)
             }
             .font(.subheadline)
             .textSelection(.enabled)
             .lineLimit(1)
         }
         .onAppear {
-            device.discoverAppearance()
+            device.discoverUI()
         }
     }
 }
