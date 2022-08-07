@@ -26,6 +26,7 @@ class SimDevice: ObservableObject, Decodable {
     @Published var availabilityError    : String?
     @Published var appearance           = Appearance.unknown
     @Published var contentSize          = ContentSize.unknown
+    @Published var increaseContrast     = IncreaseContrast.unknown
     var isTransitioning                 : Bool { state == .booting || state == .shuttingDown }
     var isBooted                        : Bool {
         get { state.showBooted == true }
@@ -143,6 +144,13 @@ class SimDevice: ObservableObject, Decodable {
                 await MainActor.run { contentSize = result }
             }
         }
+        if increaseContrast == .unknown {
+            Task {
+                let result = try await SimCtl().getDeviceIncreaseContrast(self)
+                
+                await MainActor.run { increaseContrast = result }
+            }
+        }
     }
     
     func setAppearance(_ appearance: Appearance) {
@@ -162,6 +170,16 @@ class SimDevice: ObservableObject, Decodable {
             try SimCtl().setDeviceContentSize(self, contentSize: contentSize)
         } catch {
             print("Failed to set device content size: \(error)")
+        }
+    }
+    
+    func setIncreaseContrast(_ increaseContrast: IncreaseContrast) {
+        self.increaseContrast = increaseContrast    // optimistic
+        
+        do {
+            try SimCtl().setDeviceIncreaseContrast(self, increaseContrast: increaseContrast)
+        } catch {
+            print("Failed to set device increase contrast: \(error)")
         }
     }
 }
@@ -244,11 +262,21 @@ extension SimDevice {
             }
         }
     }
+
+    enum IncreaseContrast: String {
+        case enabled        = "enabled"
+        case disabled       = "disabled"
+        case unsupported    = "unsupported"
+        case unknown        = "unknown"
+        
+        var isOn            : Bool { self == .enabled }
+    }
 }
 
 extension SimDevice: SourceItemData {
     var title       : String { return name }
     var headerTitle : String { "Device: \(title)" }
+    var isEnabled   : Bool { isBooted }
     var imageDesc   : SourceImageDesc { .symbol(systemName: "questionmark.circle", color: isAvailable ? .green : .red) }
 }
 

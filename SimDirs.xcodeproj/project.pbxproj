@@ -31,6 +31,8 @@
 		C982F877283D020C00D491F4 /* SimProductFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F876283D020C00D491F4 /* SimProductFamily.swift */; };
 		C982F879283D042E00D491F4 /* SimModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F878283D042E00D491F4 /* SimModel.swift */; };
 		C982F87B283E40C800D491F4 /* SimCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F87A283E40C800D491F4 /* SimCtl.swift */; };
+		C9BF5232289FE95D00BDDC91 /* DescriptiveToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF5231289FE95D00BDDC91 /* DescriptiveToggle.swift */; };
+		C9BF5234289FE99600BDDC91 /* DescriptiveToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF5233289FE99600BDDC91 /* DescriptiveToggleStyle.swift */; };
 		C9D73C25285C8C0C0044A279 /* SourceItemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D73C24285C8C0C0044A279 /* SourceItemData.swift */; };
 		C9D73C29285C8C4B0044A279 /* SourceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D73C28285C8C4B0044A279 /* SourceItem.swift */; };
 		C9DD54C32860936D00D46AB3 /* SourceItemGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DD54C22860936D00D46AB3 /* SourceItemGroup.swift */; };
@@ -72,6 +74,8 @@
 		C982F876283D020C00D491F4 /* SimProductFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimProductFamily.swift; sourceTree = "<group>"; };
 		C982F878283D042E00D491F4 /* SimModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimModel.swift; sourceTree = "<group>"; };
 		C982F87A283E40C800D491F4 /* SimCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimCtl.swift; sourceTree = "<group>"; };
+		C9BF5231289FE95D00BDDC91 /* DescriptiveToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptiveToggle.swift; sourceTree = "<group>"; };
+		C9BF5233289FE99600BDDC91 /* DescriptiveToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptiveToggleStyle.swift; sourceTree = "<group>"; };
 		C9D73C24285C8C0C0044A279 /* SourceItemData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceItemData.swift; sourceTree = "<group>"; };
 		C9D73C28285C8C4B0044A279 /* SourceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceItem.swift; sourceTree = "<group>"; };
 		C9DD54C22860936D00D46AB3 /* SourceItemGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceItemGroup.swift; sourceTree = "<group>"; };
@@ -159,6 +163,8 @@
 				C9DD54CC2860992200D46AB3 /* Model Views */,
 				C90DCC152896B0370072E403 /* AppearancePicker.swift */,
 				C90DCC132896AAAA0072E403 /* ContentHeader.swift */,
+				C9BF5231289FE95D00BDDC91 /* DescriptiveToggle.swift */,
+				C9BF5233289FE99600BDDC91 /* DescriptiveToggleStyle.swift */,
 				C90BCE472861D70500C2EF35 /* ErrorView.swift */,
 				C927A0DA2846502300533D66 /* PathActions.swift */,
 				C9EE0CD128478FDB00E9B97A /* PathRow.swift */,
@@ -281,6 +287,7 @@
 				C927A0DB2846502300533D66 /* PathActions.swift in Sources */,
 				C90BCE442861D3C500C2EF35 /* DeviceContent.swift in Sources */,
 				C90DCC142896AAAA0072E403 /* ContentHeader.swift in Sources */,
+				C9BF5232289FE95D00BDDC91 /* DescriptiveToggle.swift in Sources */,
 				C90BCE502861E9D000C2EF35 /* SourceState.swift in Sources */,
 				C90BCE4A2861DA6700C2EF35 /* RuntimeHeader.swift in Sources */,
 				C9EE0CD42847B79E00E9B97A /* SimApp.swift in Sources */,
@@ -295,6 +302,7 @@
 				C982F85B283B9F9000D491F4 /* ContentView.swift in Sources */,
 				C982F875283CEEBB00D491F4 /* SimDevice.swift in Sources */,
 				C9DD54C52860938C00D46AB3 /* SourceItemLink.swift in Sources */,
+				C9BF5234289FE99600BDDC91 /* DescriptiveToggleStyle.swift in Sources */,
 				C982F873283CE9AD00D491F4 /* SimDeviceType.swift in Sources */,
 				C9DD54CB2860948600D46AB3 /* SourceItemLabel.swift in Sources */,
 				C90BCE482861D70500C2EF35 /* ErrorView.swift in Sources */,

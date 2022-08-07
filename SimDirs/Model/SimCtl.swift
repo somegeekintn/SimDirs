@@ -105,4 +105,14 @@ struct SimCtl {
     func setDeviceContentSize(_ device: SimDevice, contentSize: SimDevice.ContentSize) throws {
         try runAsync(args: ["ui", device.udid, "content_size", contentSize.rawValue])
     }
+
+    func getDeviceIncreaseContrast(_ device: SimDevice) async throws -> SimDevice.IncreaseContrast {
+        let increaseContrast : String = try await runAsync(args: ["ui", device.udid, "increase_contrast"]).trimmingCharacters(in: .whitespacesAndNewlines)
+
+        return SimDevice.IncreaseContrast(rawValue: increaseContrast) ?? .unknown
+    }
+    
+    func setDeviceIncreaseContrast(_ device: SimDevice, increaseContrast: SimDevice.IncreaseContrast) throws {
+        try runAsync(args: ["ui", device.udid, "increase_contrast", increaseContrast.rawValue])
+    }
 }
