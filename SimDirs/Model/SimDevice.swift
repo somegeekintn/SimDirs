@@ -27,6 +27,8 @@ class SimDevice: ObservableObject, Decodable {
     @Published var appearance           = Appearance.unknown
     @Published var contentSize          = ContentSize.unknown
     @Published var increaseContrast     = IncreaseContrast.unknown
+    @Published var isRecording          = false
+    var recordingProcess                : Process?
     var isTransitioning                 : Bool { state == .booting || state == .shuttingDown }
     var isBooted                        : Bool {
         get { state.showBooted == true }
@@ -188,6 +190,28 @@ class SimDevice: ObservableObject, Decodable {
             try SimCtl().saveScreen(self, url: url)
         } catch {
             print("Failed to save screen: \(error)")
+        }
+    }
+
+    func saveVideo(_ url: URL) {
+        do {
+            recordingProcess = try SimCtl().saveVideo(self, url: url)
+            if recordingProcess != nil {
+                isRecording = true
+            }
+        } catch {
+            print("Failed to save video: \(error)")
+        }
+    }
+    
+    func endRecording() {
+        if let process = recordingProcess {
+            process.interrupt()
+            recordingProcess = nil
+            isRecording = false
+        }
+        else {
+            isRecording = false
         }
     }
 }

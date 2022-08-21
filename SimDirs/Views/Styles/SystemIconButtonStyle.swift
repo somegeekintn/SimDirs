@@ -8,17 +8,19 @@
 import SwiftUI
 
 extension ButtonStyle where Self == SystemIconButtonStyle {
-    static func systemIcon(_ imageName: String) -> SystemIconButtonStyle {
-        SystemIconButtonStyle(imageName)
+    static func systemIcon(_ imageName: String, active: Bool = false) -> SystemIconButtonStyle {
+        SystemIconButtonStyle(imageName, active: active)
     }
 }
 
 struct SystemIconButtonStyle: ButtonStyle {
     @State var isFocused    = false
+    let isActive            : Bool
     let imageName           : String
     
-    init(_ imageName: String) {
+    init(_ imageName: String, active: Bool = false) {
         self.imageName = imageName
+        self.isActive = active
     }
     
     func makeBody(configuration: Configuration) -> some View {
@@ -32,11 +34,12 @@ struct SystemIconButtonStyle: ButtonStyle {
                     .resizable()
                     .aspectRatio(contentMode: ContentMode.fit)
                     .frame(width: 24, height: 24)
+                    .foregroundColor(isActive ? .accentColor : foregroundColor(pressed: configuration.isPressed))
             }
             
             configuration.label
+                .foregroundColor(foregroundColor(pressed: configuration.isPressed))
         }
-        .foregroundColor(foregroundColor(pressed: configuration.isPressed))
         .padding(1.0)
         .onHover { isFocused = $0 }
     }

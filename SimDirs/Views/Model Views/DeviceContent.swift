@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 
 extension SimDevice {
     public var content      : some View { DeviceContent(self) }
@@ -45,6 +46,25 @@ extension SimDevice.IncreaseContrast: ToggleDescriptor {
 }
 
 struct DeviceContent: View {
+    enum SaveType {
+        case image
+        case video
+        
+        var allowedContentTypes : [UTType] {
+            switch self {
+                case .image:    return [.png]
+                case .video:    return [.mpeg4Movie]
+            }
+        }
+        
+        var title : String {
+            switch self {
+                case .image:    return "Save Screen"
+                case .video:    return "Save Recording"
+            }
+        }
+    }
+    
     @ObservedObject var device  : SimDevice
     @State var isBooted         : Bool
     
@@ -77,6 +97,23 @@ struct DeviceContent: View {
             .font(.subheadline)
             .textSelection(.enabled)
             
+            ContentHeader("Actions")
+            HStack(spacing: 16) {
+                Button(action: { saveScreen(.image) }) {
+                    Text("Save Screen")
+                        .fontWeight(.semibold)
+                        .font(.system(size: 11))
+                }
+                .buttonStyle(.systemIcon("camera.on.rectangle"))
+                
+                Button(action: { device.isRecording ? device.endRecording() : saveScreen(.video) }) {
+                    Text(device.isRecording ? "End Recording" : "Record Screen")
+                        .fontWeight(.semibold)
+                        .font(.system(size: 11))
+                }
+                .buttonStyle(.systemIcon("record.circle", active: device.isRecording))
+            }
+
             ContentHeader("UI")
             HStack(spacing: 16) {
                 if device.appearance != .unsupported {
@@ -99,14 +136,6 @@ struct DeviceContent: View {
                     .opacity(isBooted ? 1.0 : 0.5)
                 }
             }
-            
-            ContentHeader("Actions")
-            Button(action: saveScreen) {
-                Text("Save Screen")
-                    .fontWeight(.semibold)
-                    .font(.system(size: 11))
-            }
-            .buttonStyle(.systemIcon("camera.on.rectangle"))
         }
         .environment(\.isEnabled, isBooted)
         .onAppear {
@@ -124,21 +153,24 @@ struct DeviceContent: View {
             }
         }
     }
-
-    func saveScreen() {
+    
+    func saveScreen(_ type: SaveType = .image) {
         let savePanel = NSSavePanel()
         
-        savePanel.allowedContentTypes = [.png]
+        savePanel.allowedContentTypes = type.allowedContentTypes
         savePanel.canCreateDirectories = true
         savePanel.isExtensionHidden = false
-        savePanel.title = "Save Screen"
+        savePanel.title = type.title
         savePanel.message = "Select destination"
         savePanel.nameFieldLabel = "Filename:"
         savePanel.nameFieldStringValue = "\(device.name) - \(fileDateFormatter.string(from: Date()))"
 
         if savePanel.runModal() == .OK {
             if let url = savePanel.url {
-                device.saveScreen(url)
+                switch type {
+                    case .image: device.saveScreen(url)
+                    case .video: device.saveVideo(url)
+                }
             }
         }
     }

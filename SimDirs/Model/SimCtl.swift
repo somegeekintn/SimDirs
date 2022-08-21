@@ -8,14 +8,24 @@
 import Foundation
 
 struct SimCtl {
-    func run(args: [String]) throws -> Data {
+    func run(args: [String], run: Bool = true) throws -> Process {
         let process = Process()
-        let pipe    = Pipe()
         
         process.executableURL = URL(fileURLWithPath: "/usr/bin/xcrun")
         process.arguments = ["simctl"] + args
-        process.standardOutput = pipe
         process.standardError = nil
+        if run {
+            try process.run()
+        }
+        
+        return process
+    }
+    
+    func run(args: [String]) throws -> Data {
+        let process : Process = try run(args: args, run: false)
+        let pipe    = Pipe()
+        
+        process.standardOutput = pipe
         try process.run()
         
         return pipe.fileHandleForReading.readDataToEndOfFile()
@@ -118,5 +128,9 @@ struct SimCtl {
     
     func saveScreen(_ device: SimDevice, url: URL) throws {
         try runAsync(args: ["io", device.udid, "screenshot", url.path])
+    }
+    
+    func saveVideo(_ device: SimDevice, url: URL) throws -> Process {
+        return try run(args: ["io", device.udid, "recordVideo", "--force", url.path])
     }
 }
