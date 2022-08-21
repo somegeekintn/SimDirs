@@ -115,4 +115,8 @@ struct SimCtl {
     func setDeviceIncreaseContrast(_ device: SimDevice, increaseContrast: SimDevice.IncreaseContrast) throws {
         try runAsync(args: ["ui", device.udid, "increase_contrast", increaseContrast.rawValue])
     }
+    
+    func saveScreen(_ device: SimDevice, url: URL) throws {
+        try runAsync(args: ["io", device.udid, "screenshot", url.path])
+    }
 }

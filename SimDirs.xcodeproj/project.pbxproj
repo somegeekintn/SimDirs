@@ -19,6 +19,8 @@
 		C90DCC162896B0370072E403 /* AppearancePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90DCC152896B0370072E403 /* AppearancePicker.swift */; };
 		C927A0D92846414900533D66 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C927A0D82846414900533D66 /* Helpers.swift */; };
 		C927A0DB2846502300533D66 /* PathActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C927A0DA2846502300533D66 /* PathActions.swift */; };
+		C95CC0F828B2411700928FAE /* AppearanceButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95CC0F728B2411700928FAE /* AppearanceButtonStyle.swift */; };
+		C95CC0FA28B2414900928FAE /* SystemIconButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95CC0F928B2414900928FAE /* SystemIconButtonStyle.swift */; };
 		C9779742284F6DE000706DFB /* ToolbarMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9779741284F6DE000706DFB /* ToolbarMenu.swift */; };
 		C982F859283B9F9000D491F4 /* SimDirsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F858283B9F9000D491F4 /* SimDirsApp.swift */; };
 		C982F85B283B9F9000D491F4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982F85A283B9F9000D491F4 /* ContentView.swift */; };
@@ -60,6 +62,8 @@
 		C90DCC152896B0370072E403 /* AppearancePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearancePicker.swift; sourceTree = "<group>"; };
 		C927A0D82846414900533D66 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		C927A0DA2846502300533D66 /* PathActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathActions.swift; sourceTree = "<group>"; };
+		C95CC0F728B2411700928FAE /* AppearanceButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceButtonStyle.swift; sourceTree = "<group>"; };
+		C95CC0F928B2414900928FAE /* SystemIconButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemIconButtonStyle.swift; sourceTree = "<group>"; };
 		C9779741284F6DE000706DFB /* ToolbarMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarMenu.swift; sourceTree = "<group>"; };
 		C982F855283B9F9000D491F4 /* SimDirs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimDirs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C982F858283B9F9000D491F4 /* SimDirsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimDirsApp.swift; sourceTree = "<group>"; };
@@ -101,6 +105,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C95CC0F628B240F500928FAE /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				C95CC0F728B2411700928FAE /* AppearanceButtonStyle.swift */,
+				C9BF5233289FE99600BDDC91 /* DescriptiveToggleStyle.swift */,
+				C95CC0F928B2414900928FAE /* SystemIconButtonStyle.swift */,
+			);
+			path = Styles;
+			sourceTree = "<group>";
+		};
 		C982F84C283B9F9000D491F4 = {
 			isa = PBXGroup;
 			children = (
@@ -159,12 +173,12 @@
 		C982F881283E7F0400D491F4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C95CC0F628B240F500928FAE /* Styles */,
 				C9DD54C12860935300D46AB3 /* SourceItem Views */,
 				C9DD54CC2860992200D46AB3 /* Model Views */,
 				C90DCC152896B0370072E403 /* AppearancePicker.swift */,
 				C90DCC132896AAAA0072E403 /* ContentHeader.swift */,
 				C9BF5231289FE95D00BDDC91 /* DescriptiveToggle.swift */,
-				C9BF5233289FE99600BDDC91 /* DescriptiveToggleStyle.swift */,
 				C90BCE472861D70500C2EF35 /* ErrorView.swift */,
 				C927A0DA2846502300533D66 /* PathActions.swift */,
 				C9EE0CD128478FDB00E9B97A /* PathRow.swift */,
@@ -309,6 +323,7 @@
 				C982F877283D020C00D491F4 /* SimProductFamily.swift in Sources */,
 				C982F859283B9F9000D491F4 /* SimDirsApp.swift in Sources */,
 				C982F871283CE7B800D491F4 /* SimRuntime.swift in Sources */,
+				C95CC0FA28B2414900928FAE /* SystemIconButtonStyle.swift in Sources */,
 				C9EE0CD228478FDB00E9B97A /* PathRow.swift in Sources */,
 				C982F86B283BA22100D491F4 /* SimPlatform.swift in Sources */,
 				C927A0D92846414900533D66 /* Helpers.swift in Sources */,
@@ -317,6 +332,7 @@
 				C9D73C29285C8C4B0044A279 /* SourceItem.swift in Sources */,
 				C982F879283D042E00D491F4 /* SimModel.swift in Sources */,
 				C982F87B283E40C800D491F4 /* SimCtl.swift in Sources */,
+				C95CC0F828B2411700928FAE /* AppearanceButtonStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -182,6 +182,14 @@ class SimDevice: ObservableObject, Decodable {
             print("Failed to set device increase contrast: \(error)")
         }
     }
+
+    func saveScreen(_ url: URL) {
+        do {
+            try SimCtl().saveScreen(self, url: url)
+        } catch {
+            print("Failed to save screen: \(error)")
+        }
+    }
 }
 
 extension SimDevice {

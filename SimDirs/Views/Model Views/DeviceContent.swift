@@ -48,6 +48,14 @@ struct DeviceContent: View {
     @ObservedObject var device  : SimDevice
     @State var isBooted         : Bool
     
+    var fileDateFormatter       : DateFormatter {
+        let formatter = DateFormatter()
+        
+        formatter.dateFormat = "yyyy.MM.dd'_'HH.mm.ss"
+        
+        return formatter
+    }
+    
     init(_ device: SimDevice) {
         self.device = device
         self.isBooted = device.isBooted
@@ -91,6 +99,14 @@ struct DeviceContent: View {
                     .opacity(isBooted ? 1.0 : 0.5)
                 }
             }
+            
+            ContentHeader("Actions")
+            Button(action: saveScreen) {
+                Text("Save Screen")
+                    .fontWeight(.semibold)
+                    .font(.system(size: 11))
+            }
+            .buttonStyle(.systemIcon("camera.on.rectangle"))
         }
         .environment(\.isEnabled, isBooted)
         .onAppear {
@@ -105,6 +121,24 @@ struct DeviceContent: View {
                 if isBooted {
                     device.discoverUI()
                 }
+            }
+        }
+    }
+
+    func saveScreen() {
+        let savePanel = NSSavePanel()
+        
+        savePanel.allowedContentTypes = [.png]
+        savePanel.canCreateDirectories = true
+        savePanel.isExtensionHidden = false
+        savePanel.title = "Save Screen"
+        savePanel.message = "Select destination"
+        savePanel.nameFieldLabel = "Filename:"
+        savePanel.nameFieldStringValue = "\(device.name) - \(fileDateFormatter.string(from: Date()))"
+
+        if savePanel.runModal() == .OK {
+            if let url = savePanel.url {
+                device.saveScreen(url)
             }
         }
     }
