@@ -30,17 +30,12 @@ struct RuntimeContent: View {
                         description: runtime.availabilityError ?? "Unknown Error")
                 }
 
-                Text("PATHS")
-                    .fontWeight(.semibold)
-                    .foregroundColor(.secondary)
+                ContentHeader("Paths")
                 if !runtime.bundlePath.isEmpty {
                     PathRow(title: "Bundle Path", path: runtime.bundlePath)
                 }
                 
-                Text("SUPPORTED DEVICES \(runtime.isPlaceholder ? "(partial list)" : "")")
-                        .fontWeight(.semibold)
-                        .foregroundColor(.secondary)
-                        .padding(.top, 8.0)
+                ContentHeader("Supported devices\(runtime.isPlaceholder ? " (partial list)" : "")")
                 ForEach(items) { item in
                     Text("• \(item.name)")
                 }

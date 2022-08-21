@@ -16,6 +16,7 @@ struct DeviceTypeContent: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0.0) {
+            ContentHeader("Paths")
             PathRow(title: "Bundle Path", path: deviceType.bundlePath)
         }
         .font(.subheadline)

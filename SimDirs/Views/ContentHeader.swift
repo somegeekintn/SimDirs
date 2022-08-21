@@ -15,11 +15,14 @@ struct ContentHeader: View {
     }
     
     var body: some View {
-        Text(title)
-            .fontWeight(.semibold)
-            .foregroundColor(Color("ContentHeader"))
-            .padding(.top)
-            .padding(.bottom, 4.0)
+        VStack(alignment: .leading, spacing: 4) {
+            Text(title)
+                .fontWeight(.semibold)
+                .foregroundColor(Color("ContentHeader"))
+                .padding(.top)
+            Divider()
+        }
+        .padding(.bottom, 4)
     }
 }
 

@@ -83,14 +83,14 @@ struct DeviceContent: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 3.0) {
+            if !device.isAvailable {
+                ErrorView(
+                    title: "\(device.name) is unavailable",
+                    description: device.availabilityError ?? "Unknown Error")
+            }
+                
             ContentHeader("Paths")
             Group {
-                if !device.isAvailable {
-                    ErrorView(
-                        title: "\(device.name) is unavailable",
-                        description: device.availabilityError ?? "Unknown Error")
-                }
-                
                 PathRow(title: "Data Path", path: device.dataPath)
                 PathRow(title: "Log Path", path: device.logPath)
             }
@@ -113,6 +113,7 @@ struct DeviceContent: View {
                 }
                 .buttonStyle(.systemIcon("record.circle", active: device.isRecording))
             }
+            .environment(\.isEnabled, isBooted)
 
             ContentHeader("UI")
             HStack(spacing: 16) {
@@ -136,8 +137,8 @@ struct DeviceContent: View {
                     .opacity(isBooted ? 1.0 : 0.5)
                 }
             }
+            .environment(\.isEnabled, isBooted)
         }
-        .environment(\.isEnabled, isBooted)
         .onAppear {
             device.discoverUI()
         }

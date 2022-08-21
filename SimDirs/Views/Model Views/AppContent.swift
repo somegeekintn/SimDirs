@@ -16,9 +16,7 @@ struct AppContent: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0.0) {
-            Text("PATHS")
-                .fontWeight(.semibold)
-                .foregroundColor(.secondary)
+            ContentHeader("Paths")
 
             PathRow(title: "Bundle Path", path: app.bundlePath)
             if let sandboxPath = app.sandboxPath {
