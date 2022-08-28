@@ -7,7 +7,11 @@
 
 import SwiftUI
 
-struct SimApp: Equatable {
+class SimApp: ObservableObject {
+    @Published var state    = State.unknown
+    @Published var pid      : Int?
+
+    weak var device     : SimDevice?
     let identifier      : String
     let bundleID        : String
     let bundleName      : String
@@ -18,12 +22,13 @@ struct SimApp: Equatable {
     let sandboxPath     : String?
     let nsIcon          : NSImage?
     
-    init(bundlePath: URL, sandboxPaths: [String : URL]) throws {
+    init(bundlePath: URL, sandboxPaths: [String : URL], device: SimDevice) throws {
         guard let infoPList	= PropertyListSerialization.propertyList(from: bundlePath.appendingPathComponent("Info.plist")) else { throw SimError.invalidApp }
         guard let bundleID = infoPList[kCFBundleIdentifierKey as String] as? String else { throw SimError.invalidApp }
         
         self.bundlePath = bundlePath.path
         self.bundleID = bundleID
+        self.device = device
         bundleName = (infoPList[kCFBundleNameKey as String] as? String) ?? "<missing>"
         displayName = (infoPList["CFBundleDisplayName"] as? String) ?? bundleName
         version = (infoPList["CFBundleShortVersionString"] as? String) ?? "<missing>"
@@ -68,6 +73,49 @@ struct SimApp: Equatable {
             
             return validIcon ? icon : nil
         }
+    }
+    
+    func discoverState() {
+        Task {
+            let result = try await SimCtl().getAppPID(self)
+
+            await MainActor.run {
+                pid = result
+                state = pid != nil ? .launched : .terminated
+            }
+        }
+    }
+    
+    func toggleLaunchState() {
+        Task {
+            switch state {
+                case .launched:
+                    try SimCtl().terminate(self)
+                    
+                    await MainActor.run {
+                        pid = nil
+                        state = .terminated
+                    }
+                    
+                default:
+                    let result = try await SimCtl().launch(self)
+                    
+                    await MainActor.run {
+                        pid = result
+                        state = pid != nil ? .launched : .terminated
+                    }
+            }
+        }
+    }
+}
+
+extension SimApp {
+    enum State: String {
+        case terminated     = "terminated"
+        case launched       = "launched"
+        case unknown        = "unknown"
+        
+        var isOn            : Bool { self == .launched }
     }
 }
 

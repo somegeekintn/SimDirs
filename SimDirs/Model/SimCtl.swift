@@ -133,4 +133,46 @@ struct SimCtl {
     func saveVideo(_ device: SimDevice, url: URL) throws -> Process {
         return try run(args: ["io", device.udid, "recordVideo", "--force", url.path])
     }
+
+    func getAppPID(_ app: SimApp) async throws -> Int? {
+        guard let device = app.device else { return nil }
+        let list    : String = try await runAsync(args: ["spawn", device.udid, "launchctl", "list"])
+        let regex   = try NSRegularExpression(pattern: "(?<PID>[0-9]+).*\(app.bundleID)")
+        let nsRange = NSRange(location: 0, length: (list as NSString).length)
+        var pid     : Int? = nil
+        
+        if let match = regex.firstMatch(in: list, range: nsRange) {
+            let range = match.range(withName: "PID")
+            
+            if range.location != NSNotFound {
+                pid = Int((list as NSString).substring(with: range))
+            }
+        }
+
+        return pid
+    }
+    
+    func launch(_ app: SimApp) async throws -> Int? {
+        guard let device = app.device else { return nil }
+        let output : String = try await runAsync(args: ["launch", device.udid, app.bundleID])
+        let regex   = try NSRegularExpression(pattern: ".*: (?<PID>[0-9]+)")
+        let nsRange = NSRange(location: 0, length: (output as NSString).length)
+        var pid     : Int? = nil
+        
+        if let match = regex.firstMatch(in: output, range: nsRange) {
+            let range = match.range(withName: "PID")
+            
+            if range.location != NSNotFound {
+                pid = Int((output as NSString).substring(with: range))
+            }
+        }
+
+        return pid
+    }
+    
+    func terminate(_ app: SimApp) throws {
+        guard let device = app.device else { return }
+        
+        try runAsync(args: ["terminate", device.udid, app.bundleID])
+    }
 }

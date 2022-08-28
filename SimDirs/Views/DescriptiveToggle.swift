@@ -21,15 +21,17 @@ extension ToggleDescriptor {
 struct DescriptiveToggle<T: ToggleDescriptor>: View {
     @Binding var isOn   : Bool
     var descriptor      : T
+    var subtitled       : Bool
     
-    init(_ descriptor: T, isOn: Binding<Bool>) {
+    init(_ descriptor: T, isOn: Binding<Bool>, subtitled: Bool = true) {
         self._isOn = isOn
         self.descriptor = descriptor
+        self.subtitled = subtitled
     }
     
     var body: some View {
         Toggle(descriptor.titleKey, isOn: _isOn)
-            .toggleStyle(DescriptiveToggleStyle(descriptor))
+            .toggleStyle(DescriptiveToggleStyle(descriptor, subtitled: subtitled))
     }
 }
 

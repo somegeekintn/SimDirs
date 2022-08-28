@@ -9,25 +9,47 @@ import SwiftUI
 
 extension SimApp {
     public var content : some View { AppContent(app: self) }
+
+    var isLaunched  : Bool {
+        get { state.isOn }
+        set { toggleLaunchState() }
+    }
+}
+
+extension SimApp.State: ToggleDescriptor {
+    var titleKey    : LocalizedStringKey { isOn ? "Terminate" : "Launch" }
+    var text        : String { isOn ? "Launched" : "Terminated" }
+    var image       : Image { Image(systemName: "power.circle") }
 }
 
 struct AppContent: View {
-    var app     : SimApp
+    @ObservedObject var app     : SimApp
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0.0) {
             ContentHeader("Paths")
+            Group {
+                PathRow(title: "Bundle Path", path: app.bundlePath)
+                if let sandboxPath = app.sandboxPath {
+                    PathRow(title: "Sandbox Path", path: sandboxPath)
+                }
+                else {
+                    Text("Sandbox Path: <unknown>")
+                }
+            }
+            .font(.subheadline)
+            .lineLimit(1)
 
-            PathRow(title: "Bundle Path", path: app.bundlePath)
-            if let sandboxPath = app.sandboxPath {
-                PathRow(title: "Sandbox Path", path: sandboxPath)
+            ContentHeader("Actions")
+            HStack(spacing: 16) {
+                DescriptiveToggle(app.state, isOn: $app.isLaunched, subtitled: false)
+                    .frame(width: 58)
             }
-            else {
-                Text("Sandbox Path: <unknown>")
-            }
+            .environment(\.isEnabled, app.device?.isBooted == true)
         }
-        .font(.subheadline)
-        .lineLimit(1)
+        .onAppear {
+            app.discoverState()
+        }
     }
 }
 

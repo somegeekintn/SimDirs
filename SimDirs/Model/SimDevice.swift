@@ -92,7 +92,7 @@ class SimDevice: ObservableObject, Decodable {
                 for testDir in testDirs {
                     if NSWorkspace.shared.isFilePackage(atPath: testDir.path) {
                         do {
-                            apps.append(try SimApp(bundlePath: testDir, sandboxPaths: sandboxPaths))
+                            apps.append(try SimApp(bundlePath: testDir, sandboxPaths: sandboxPaths, device: self))
                         }
                         catch {
                             print("Failed to instantiate SimApp at \(testDir.path)")

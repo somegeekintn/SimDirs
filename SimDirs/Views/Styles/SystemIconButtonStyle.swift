@@ -14,6 +14,7 @@ extension ButtonStyle where Self == SystemIconButtonStyle {
 }
 
 struct SystemIconButtonStyle: ButtonStyle {
+    @Environment(\.isEnabled) var isEnabled
     @State var isFocused    = false
     let isActive            : Bool
     let imageName           : String
@@ -41,15 +42,15 @@ struct SystemIconButtonStyle: ButtonStyle {
                 .foregroundColor(foregroundColor(pressed: configuration.isPressed))
         }
         .padding(1.0)
-        .onHover { isFocused = $0 }
+        .onHover { isFocused = $0 && isEnabled }
     }
     
     func foregroundColor(pressed: Bool) -> Color {
-        return .primary.opacity(pressed ? 1.0 : 0.6)
+        return .primary.opacity(pressed ? 1.0 : (isEnabled ? 0.7 : 0.6))
     }
     
     func backgroundColor(pressed: Bool) -> Color {
-        return .primary.opacity(0.05 + (isFocused ? 0.1 : 0.0) + (pressed ? 0.1 : 0.0))
+        return .primary.opacity((isEnabled ? 0.1 : 0.05) + (isFocused ? 0.1 : 0.0) + (pressed ? 0.1 : 0.0))
     }
 }
 

@@ -23,6 +23,7 @@ struct AppHeader: View {
             Text("Minimum OS Version: \(app.minOSVersion)")
         }
         .font(.subheadline)
+        .textSelection(.enabled)
     }
 }
 

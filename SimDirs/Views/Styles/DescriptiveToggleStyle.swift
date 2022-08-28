@@ -8,10 +8,15 @@
 import SwiftUI
 
 struct DescriptiveToggleStyle<T: ToggleDescriptor>: ToggleStyle {
+    @Environment(\.isEnabled) var isEnabled
+    @State var isFocused    = false
+
     var descriptor  : T
+    var subtitled   : Bool
     
-    init(_ descriptor: T) {
+    init(_ descriptor: T, subtitled: Bool = true) {
         self.descriptor = descriptor
+        self.subtitled = subtitled
     }
     
     func makeBody(configuration: Configuration) -> some View {
@@ -19,7 +24,7 @@ struct DescriptiveToggleStyle<T: ToggleDescriptor>: ToggleStyle {
             VStack(spacing: 0) {
                 ZStack {
                     Circle()
-                        .foregroundColor(descriptor.circleColor)
+                        .foregroundColor(descriptor.circleColor.opacity(isFocused ? 1.0 : 0.9))
                     descriptor.image
                         .resizable()
                         .foregroundColor(descriptor.isOn ? .white : Color("CircleSymbolOff"))
@@ -32,14 +37,18 @@ struct DescriptiveToggleStyle<T: ToggleDescriptor>: ToggleStyle {
                 Group {
                     Text(descriptor.titleKey)
                         .fontWeight(.semibold)
-                    Text(descriptor.text)
-                        .foregroundColor(.secondary)
+                    
+                    if subtitled {
+                        Text(descriptor.text)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 .font(.system(size: 11))
                 .allowsTightening(true)
                 .minimumScaleFactor(0.5)
                 .multilineTextAlignment(.center)
             }
+            .onHover { isFocused = $0 && isEnabled }
         }
         .buttonStyle(.plain)
     }
