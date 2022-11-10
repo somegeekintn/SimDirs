@@ -126,6 +126,14 @@ struct SimCtl {
         try runAsync(args: ["ui", device.udid, "increase_contrast", increaseContrast.rawValue])
     }
     
+    func sendPushNotification(_ device: SimDevice, payload: Data) throws {
+        let temporaryDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
+        let temporaryFileURL = temporaryDirectoryURL.appendingPathComponent(ProcessInfo().globallyUniqueString)
+
+        try payload.write(to: temporaryFileURL, options: .atomic)
+        try runAsync(args: ["push", device.udid, temporaryFileURL.path])
+    }
+    
     func saveScreen(_ device: SimDevice, url: URL) throws {
         try runAsync(args: ["io", device.udid, "screenshot", url.path])
     }

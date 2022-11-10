@@ -46,7 +46,7 @@ struct SystemIconButtonStyle: ButtonStyle {
     }
     
     func foregroundColor(pressed: Bool) -> Color {
-        return .primary.opacity(pressed ? 1.0 : (isEnabled ? 0.7 : 0.6))
+        return .primary.opacity(pressed ? 1.0 : (isEnabled ? 0.7 : 0.4))
     }
     
     func backgroundColor(pressed: Bool) -> Color {

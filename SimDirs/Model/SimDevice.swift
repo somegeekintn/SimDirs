@@ -214,6 +214,14 @@ class SimDevice: ObservableObject, Decodable {
             isRecording = false
         }
     }
+    
+    func sendPushNotification(payload: Data) {
+        do {
+            try SimCtl().sendPushNotification(self, payload: payload)
+        } catch {
+            print("Failed to send push notification: \(error)")
+        }
+    }
 }
 
 extension SimDevice {
