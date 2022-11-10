@@ -7,4 +7,8 @@ It's a bit of a work in progress. Perhaps eventually It'll turn into a tool with
 
 That's it.
 
-![Screenshot](https://raw.githubusercontent.com/somegeekintn/SimDirs/main/screenshot.png)
+#### Device View
+![Screenshot](https://raw.githubusercontent.com/somegeekintn/SimDirs/main/screens/device.png)
+
+#### App View
+![Screenshot](https://raw.githubusercontent.com/somegeekintn/SimDirs/main/screens/app.png)
