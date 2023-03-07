@@ -9,8 +9,6 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 extension SimDevice {
-    public var content      : some View { DeviceContent(self) }
-    
     var scheme              : ColorScheme? {
         get {
             switch appearance {

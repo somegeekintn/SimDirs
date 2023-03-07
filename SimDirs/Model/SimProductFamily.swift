@@ -24,9 +24,3 @@ enum SimProductFamily: String, Decodable {
         }
     }
 }
-
-extension SimProductFamily: SourceItemData {
-    var title       : String { self.rawValue }
-    var headerTitle : String { "Product Family: \(title)" }
-    var imageDesc   : SourceImageDesc { .symbol(systemName: symbolName) }
-}

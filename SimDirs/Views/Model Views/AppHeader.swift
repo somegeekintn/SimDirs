@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-extension SimApp {
-    public var header : some View { AppHeader(app: self) }
-}
-
 struct AppHeader: View {
     var app     : SimApp
 

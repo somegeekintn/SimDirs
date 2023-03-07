@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ToolbarMenu: View {
     @ObservedObject var state   : SourceState
+    @Binding var filter         : SourceFilter
 
     var body: some View {
         Menu {
@@ -20,8 +21,8 @@ struct ToolbarMenu: View {
                 }
             }
             .pickerStyle(.inline)
-            Toggle(isOn: $state.filterApps) { Label("With Apps", systemImage: "app.fill") }
-            Toggle(isOn: $state.filterRuntimes) { Label("Installed Runtimes", systemImage:  "cpu.fill") }
+            Toggle(isOn: $filter.filterApps) { Label("With Apps", systemImage: "app.fill") }
+            Toggle(isOn: $filter.filterRuntimes) { Label("Installed Runtimes", systemImage:  "cpu.fill") }
         } label: {
             Label("Filter", systemImage: "slider.horizontal.3")
         }
@@ -29,10 +30,10 @@ struct ToolbarMenu: View {
 }
 
 struct ToolbarMenu_Previews: PreviewProvider {
-    static var state = SourceState(model: SimModel())
+    static var state            = SourceState(model: SimModel())
+    @State static var filter    = SourceFilter.restore()
 
     static var previews: some View {
-        ToolbarMenu(state: state)
+        ToolbarMenu(state: state, filter: $filter)
     }
 }
-

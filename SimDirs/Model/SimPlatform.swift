@@ -22,9 +22,3 @@ enum SimPlatform: String, Decodable {
         }
     }
 }
-
-extension SimPlatform: SourceItemData {
-    var title       : String { self.rawValue }
-    var headerTitle : String { "Platform: \(title)" }
-    var imageDesc   : SourceImageDesc { .symbol(systemName: symbolName) }
-}

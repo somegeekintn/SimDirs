@@ -39,12 +39,6 @@ struct SimDeviceType: Decodable {
     }
 }
 
-extension SimDeviceType: SourceItemData {
-    var title       : String { return name }
-    var headerTitle : String { "Device Type: \(title)" }
-    var imageDesc   : SourceImageDesc { .symbol(systemName: productFamily.symbolName) }
-}
-
 extension Array where Element == SimDeviceType {
     func supporting(productFamily: SimProductFamily) -> Self {
         filter { $0.supports(productFamily: productFamily) }

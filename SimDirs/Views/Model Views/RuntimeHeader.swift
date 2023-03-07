@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-extension SimRuntime {
-    public var header : some View { RuntimeHeader(runtime: self) }
-}
-
 struct RuntimeHeader: View {
     var runtime         : SimRuntime
     

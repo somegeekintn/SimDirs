@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-extension SimRuntime {
-    public var content : some View { RuntimeContent(runtime: self) }
-}
-
 struct RuntimeContent: View {
     struct SupportedItem: Identifiable {
         let name    : String

@@ -9,29 +9,6 @@ import Foundation
 import Combine
 
 class SourceState: ObservableObject {
-    typealias ProductFamily = SourceItemVal<SimProductFamily, DeviceType_DS>
-    typealias Platform      = SourceItemVal<SimPlatform, Runtime_RT>
-    typealias DeviceType_DS = SourceItemVal<SimDeviceType, Runtime_DS>
-    typealias DeviceType_RT = SourceItemVal<SimDeviceType, Device>
-    typealias Runtime_DS    = SourceItemVal<SimRuntime, Device>
-    typealias Runtime_RT    = SourceItemVal<SimRuntime, DeviceType_RT>
-    typealias Device        = SourceItemVal<SimDevice, App>
-    typealias App           = SourceItemVal<SimApp, SourceItemNone>
-
-    enum Base: Identifiable {
-        case placeholder(id: UUID = UUID())
-        case device(id: UUID = UUID(), SourceItemVal<SourceItemDataNone, ProductFamily>)
-        case runtime(id: UUID = UUID(), SourceItemVal<SourceItemDataNone, Platform>)
-
-        var id      :  UUID {
-            switch self {
-                case let .placeholder(id):  return id
-                case let .device(id, _):    return id
-                case let .runtime(id, _):   return id
-            }
-        }
-    }
-
     enum Style: Int, CaseIterable, Identifiable {
         case placeholder
         case byDevice
@@ -53,34 +30,22 @@ class SourceState: ObservableObject {
         }
     }
     
-    @Published var style        = Style.placeholder { didSet { rebuildBase() } }
-    @Published var filter       = SourceFilter.restore() { didSet { applyFilter() } }
+    @Published var style        = Style.placeholder // { didSet { rebuildBase() } }
     @Published var selection    : UUID?
 
     var model           : SimModel
-    var base            = Base.placeholder()
     var deviceUpdates   : Cancellable?
     
-    var filterApps      : Bool {
-        get { filter.options.contains(.withApps) }
-        set { filter.options.booleanSet(newValue, options: .withApps) }
-    }
-
-    var filterRuntimes  : Bool {
-        get { filter.options.contains(.runtimeInstalled) }
-        set { filter.options.booleanSet(newValue, options: .runtimeInstalled) }
-    }
-
     init(model: SimModel) {
         self.style = .byDevice
         self.model = model
-        
-        self.rebuildBase()
 
         deviceUpdates = model.deviceUpdates.sink(receiveValue: applyDeviceUpdates)
     }
-    
+
+#warning("TODO: still need to apply updates")
     func applyDeviceUpdates(_ updates: SimDevicesUpdates) {
+#if false
         switch base {
             case .placeholder:
                 break
@@ -122,69 +87,37 @@ class SourceState: ObservableObject {
         }
         
         applyFilter()
+#endif
     }
-    
-    func applyFilter() {
-        switch base {
-            case .placeholder:          break
-            case let .device(_, item):  item.applyFilter(filter)
-            case let .runtime(_, item): item.applyFilter(filter)
-        }
-    }
-    
-    func rebuildBase() {
-        var baseID  : UUID
-        
-        // Preserve identifier if style is not changing
-        switch (style, base) {
-            case (.placeholder, let .placeholder(id)):  baseID = id;
-            case (.byDevice, let .device(id, _)):       baseID = id;
-            case (.byRuntime, let .runtime(id, _)):     baseID = id;
-            default:                                    baseID = UUID()
-        }
-        
-        switch style {
-            case .placeholder:  base = .placeholder(id: baseID)
-            case .byDevice:     base = .device(id: baseID, SourceItemVal(data: .none, children: deviceStyleItems()))
-            case .byRuntime:    base = .runtime(id: baseID, SourceItemVal(data: .none, children: runtimeStyleItems()))
-        }
-        
-        applyFilter()
-    }
-    
-    func baseFor(style: Style) -> Base {
-        switch style {
-            case .placeholder:  return .placeholder()
-            case .byDevice:     return .device(SourceItemVal(data: .none, children: deviceStyleItems()))
-            case .byRuntime:    return .runtime(SourceItemVal(data: .none, children: runtimeStyleItems()))
-        }
-    }
-    
-    func deviceStyleItems() -> [ProductFamily] {
-        SimProductFamily.presentation.map { family in
-            ProductFamily(data: family, children: model.deviceTypes.supporting(productFamily: family).map { devType in
-                DeviceType_DS(data: devType, children: model.runtimes.supporting(deviceType: devType).map { runtime in
-                    Runtime_DS(data: runtime, children: runtime.devices.of(deviceType: devType).map { device in
-                        let imageDesc = devType.imageDesc.withColor(device.isAvailable ? .green : .red)
 
-                        return Device(data: device, children: device.apps.map { app in App(data: app, children: []) }, customImgDesc: imageDesc)
-                    })
-                })
-            })
+    @NodeListBuilder
+    var items: some NodeList {
+        switch style {
+            case .placeholder:  [] as [LeafNode]
+            case .byDevice:     deviceStyleItems
+            case .byRuntime:    runtimeStyleItems
+        }
+    }
+
+    @NodeListBuilder
+    var deviceStyleItems: some NodeList {
+        SimProductFamily.presentation.linkEachTo { family in
+            model.deviceTypes.supporting(productFamily: family).linkEachTo(emptyIsNil: true) { devType in
+                model.runtimes.supporting(deviceType: devType).linkEachTo(emptyIsNil: true) { runtime in
+                    runtime.devices.linkingDeviceType(devType)
+                }
+            }
         }
     }
     
-    func runtimeStyleItems() -> [Platform] {
-        SimPlatform.presentation.map { platform in
-            Platform(data: platform, children: model.runtimes.supporting(platform: platform).map { runtime in
-                Runtime_RT(data: runtime, children: model.deviceTypes.supporting(runtime: runtime).map { devType in
-                    DeviceType_RT(data: devType, children: runtime.devices.of(deviceType: devType).map { device in
-                        let imageDesc = devType.imageDesc.withColor(device.isAvailable ? .green : .red)
-                        
-                        return Device(data: device, children: device.apps.map { app in App(data: app, children: []) }, customImgDesc: imageDesc)
-                    })
-                })
-            })
+    @NodeListBuilder
+    var runtimeStyleItems: some NodeList {
+        SimPlatform.presentation.linkEachTo(emptyIsNil: true) { platform in
+            model.runtimes.supporting(platform: platform).linkEachTo(emptyIsNil: true) { runtime in
+                model.deviceTypes.supporting(runtime: runtime).linkEachTo(emptyIsNil: true) { devType in
+                    runtime.devices.linkingDeviceType(devType)
+                }
+            }
         }
     }
 }

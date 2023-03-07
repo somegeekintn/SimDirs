@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var state    : SourceState
+    @ObservedObject var state   : SourceState
+    @State var filter           = SourceFilter.restore()
     
     init(model: SimModel) {
         state = SourceState(model: model)
@@ -17,32 +18,13 @@ struct ContentView: View {
     var body: some View {
         VStack {
             NavigationView {
-                List(selection: $state.selection) {
-                    Divider()
-
-                    switch state.base {
-                        case .placeholder:
-                            Text("Placeholder")
-
-                        case let .device(_, item):
-                            ForEach(item.visibleChildren) {
-                                SourceItemGroup(item: $0, selection: $state.selection)
-                            }
-                            
-                        case let .runtime(_, item):
-                            ForEach(item.visibleChildren) {
-                                SourceItemGroup(item: $0, selection: $state.selection)
-                            }
-                    }
-                }
-                .toolbar {
-                    ToolbarItem { ToolbarMenu(state: state) }
-                }
-                .frame(minWidth: 200)
+                FilteredNodeView(filter: $filter) { state.items }
+                    .id(state.style)
+                    .toolbar { ToolbarItem { ToolbarMenu(state: state, filter: $filter) } }
+                    .frame(minWidth: 200)
                 
                 Image("Icon-256")   // Initial View
             }
-            .searchable(text: $state.filter.searchTerm, placement: .sidebar)
         }
     }
 }

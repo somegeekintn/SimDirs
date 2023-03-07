@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-extension SimDevice {
-    public var header : some View { DeviceHeader(device: self) }
-}
-
 struct DeviceHeader: View {
     @ObservedObject var device  : SimDevice
     

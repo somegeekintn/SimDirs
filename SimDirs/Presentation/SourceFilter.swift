@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SourceFilter {
+struct SourceFilter: Equatable {
     struct Options: OptionSet, CaseIterable {
         let rawValue:   Int
         
@@ -15,26 +15,20 @@ struct SourceFilter {
         static let runtimeInstalled = Options(rawValue: 1 << 1)
 
         static var allCases         : [Options] = [.withApps, .runtimeInstalled]
-
-        func search<T: SourceItem>(item: T, progress: Options) -> Self {
-            var foundOptions    = progress.union(item.data.optionTrait)
-
-            if !subtracting(foundOptions).isEmpty {
-                for child in item.children {
-                    foundOptions = search(item: child, progress: foundOptions)
-
-                    if isSubset(of: foundOptions) {
-                        break
-                    }
-                }
-            }
-
-            return foundOptions
-        }
     }
 
     var searchTerm      = ""
     var options         = Options() { didSet { UserDefaults.standard.set(options.rawValue, forKey: "FilterOptions") } }
+
+    var filterApps      : Bool {
+        get { options.contains(.withApps) }
+        set { options.booleanSet(newValue, options: .withApps) }
+    }
+
+    var filterRuntimes  : Bool {
+        get { options.contains(.runtimeInstalled) }
+        set { options.booleanSet(newValue, options: .runtimeInstalled) }
+    }
 
     static func restore() -> SourceFilter {
         var filter = SourceFilter()

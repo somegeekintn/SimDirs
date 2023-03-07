@@ -1,27 +1,29 @@
 //
-//  SourceItemContent.swift
+//  NodeView.swift
 //  SimDirs
 //
-//  Created by Casey Fleser on 6/20/22.
+//  Created by Casey Fleser on 3/6/23.
 //
 
 import SwiftUI
 
-import SwiftUI
+struct NodeView<Item: Node>: View {
+    var node   : Item
 
-struct SourceItemContent<Item: SourceItem>: View {
-    var item   : Item
-
+    init(_ node: Item) {
+        self.node = node
+    }
+    
     var body: some View {
         GeometryReader { geometry in
             VStack(alignment: .leading, spacing: 0.0) {
                 // --- Header section ---
                 VStack(alignment: .leading) {
-                    Text(item.headerTitle)
+                    Text(node.headerTitle)
                         .font(.system(size: 20))
                         .padding(.top, 12.0)
                         .padding(.bottom, 8.0)
-                    item.header
+                    node.header
                         .padding(.trailing, 136.0)
                 }
                 .padding([.leading, .trailing])
@@ -31,7 +33,7 @@ struct SourceItemContent<Item: SourceItem>: View {
                 // --- Content section ---
                 ScrollView {
                     HStack {
-                        item.content
+                        node.content
                             .padding(.top, 4.0)
                             .padding(.trailing)
                         Spacer()
@@ -41,27 +43,18 @@ struct SourceItemContent<Item: SourceItem>: View {
                 .padding([.leading, .top])
                 .background(.background)
             }
-            .overlay(
-                SourceItemImage(imageDesc: item.imageDesc, isLabelImage: false)
-                    .padding([.top, .trailing], 24.0),
-                alignment: .topTrailing
-            )
+            .overlay(alignment: .topTrailing) {
+                node.icon(forHeader: true)
+                    .padding([.top, .trailing], 24.0)
+            }
             .padding(.top, -geometry.frame(in: .global).origin.y)
         }
-        .navigationTitle(item.title)
+        .navigationTitle(node.title)
     }
 }
 
-struct SourceItemContent_Previews: PreviewProvider {
-    static var state = SourceState(model: SimModel())
-    static var sampleItems = state.deviceStyleItems()[0...1]
-
+struct NodeView_Previews: PreviewProvider {
     static var previews: some View {
-        ForEach(sampleItems) { item in
-            SourceItemContent(item: item)
-                .preferredColorScheme(.dark)
-            SourceItemContent(item: item)
-                .preferredColorScheme(.light)
-        }
+        NodeView(SimPlatform.iOS)
     }
 }

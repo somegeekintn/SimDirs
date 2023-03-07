@@ -114,14 +114,6 @@ class SimRuntime: ObservableObject, Comparable, Decodable {
     }
 }
 
-extension SimRuntime: SourceItemData {
-    var title           : String { return name }
-    var headerTitle     : String { "Runtime: \(title)" }
-    var imageDesc       : SourceImageDesc { .symbol(systemName: "shippingbox", color: isAvailable ? .green : .red) }
-
-    var optionTrait     : SourceFilter.Options { isAvailable ? .runtimeInstalled : [] }
-}
-
 extension Array where Element == SimRuntime {
     mutating func indexOfMatchedOrCreated(identifier: String) throws -> Index {
         return try firstIndex { $0.identifier == identifier } ?? {

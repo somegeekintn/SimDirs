@@ -8,8 +8,6 @@
 import SwiftUI
 
 extension SimApp {
-    public var content : some View { AppContent(app: self) }
-
     var isLaunched  : Bool {
         get { state.isOn }
         set { toggleLaunchState() }

@@ -118,11 +118,3 @@ extension SimApp {
         var isOn            : Bool { self == .launched }
     }
 }
-
-extension SimApp: SourceItemData {
-    var title           : String { return displayName }
-    var headerTitle     : String { "App: \(title)" }
-    var imageDesc       : SourceImageDesc { nsIcon.map { .icon(nsImage: $0) } ?? .symbol(systemName: "questionmark.app.dashed") }
-
-    var optionTrait     : SourceFilter.Options { .withApps }
-}
