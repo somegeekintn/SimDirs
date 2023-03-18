@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct ToolbarMenu: View {
-    @ObservedObject var state   : SourceState
+    @Binding var style          : ContentView.Style
     @Binding var filter         : SourceFilter
 
     var body: some View {
         Menu {
-            Picker("Style", selection: $state.style) {
-                ForEach(SourceState.Style.allCases) { style in
+            Picker("Style", selection: $style) {
+                ForEach(ContentView.Style.allCases) { style in
                     if style.visible {
                         Text(style.title).tag(style)
                     }
@@ -30,10 +30,10 @@ struct ToolbarMenu: View {
 }
 
 struct ToolbarMenu_Previews: PreviewProvider {
-    static var state            = SourceState(model: SimModel())
+    @State static var style     = ContentView.Style.byDevice
     @State static var filter    = SourceFilter.restore()
 
     static var previews: some View {
-        ToolbarMenu(state: state, filter: $filter)
+        ToolbarMenu(style: $style, filter: $filter)
     }
 }

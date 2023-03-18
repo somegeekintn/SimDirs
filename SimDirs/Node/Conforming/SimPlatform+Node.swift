@@ -17,5 +17,12 @@ extension SimPlatform: Node {
     func icon(forHeader: Bool) -> some View {
         symbolIcon(symbolName, forHeader: forHeader)
     }
-}
 
+    func linked(from model: SimModel) -> some Node {
+        NodeLink(self) {
+            model.runtimes.supporting(platform: self).map { runtime in
+                runtime.linkedForRuntimeStyle(from: model)
+            }
+        }
+    }
+}

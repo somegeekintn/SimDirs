@@ -17,5 +17,12 @@ extension SimProductFamily: Node {
     func icon(forHeader: Bool) -> some View {
         symbolIcon(symbolName, forHeader: forHeader)
     }
+    
+    func linked(from model: SimModel) -> some Node {
+        NodeLink(self) {
+            model.deviceTypes.supporting(productFamily: self).map { deviceType in
+                deviceType.linkedForDeviceStyle(from: model)
+            }
+        }
+    }
 }
-

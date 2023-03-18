@@ -7,25 +7,38 @@
 
 import SwiftUI
 
-extension SimDevice: Node {
-    var title       : String { return name }
-    var headerTitle : String { "Device: \(title)" }
-    
-    var header      : some View { DeviceHeader(device: self) }
-    var content     : some View { DeviceContent(self) }
+// SimDevice requires a wrapper to simulate Node conformance because its
+// icon is provided by a SimDeviceType
 
-//    var isEnabled   : Bool { isBooted }
-    var iconName    : String { deviceType?.productFamily.symbolName ?? "questionmark.circle" }
+struct SimDeviceNode: Node {
+    let device      : SimDevice
+    var iconName    : String
+
+    var title       : String { device.name }
+    var headerTitle : String { "Device: \(title)" }
+    var header      : some View { DeviceHeader(device) }
+    var content     : some View { DeviceContent(device) }
     var items       : [SimApp]? {
-        get { apps }
-        set { apps = newValue ?? [] }
+        get { device.apps }
+        set { device.apps = newValue ?? [] }
     }
 
+    init(_ device: SimDevice, iconName: String) {
+        self.device = device
+        self.iconName = iconName
+    }
+    
     func icon(forHeader: Bool) -> some View {
-        symbolIcon(iconName, color: isAvailable ? .green : .red, forHeader: forHeader)
+        symbolIcon(iconName, color: device.isAvailable ? .green : .red, forHeader: forHeader)
     }
     
     func matchedFilterOptions() -> SourceFilter.Options {
-        return !apps.isEmpty ? .withApps : []
+        return !device.apps.isEmpty ? .withApps : []
+    }
+}
+
+extension Array where Element == SimDevice {
+    func nodesFor(deviceType: SimDeviceType) -> [SimDeviceNode] {
+        filter({ $0.isDeviceOfType(deviceType) }).map({ SimDeviceNode($0, iconName: deviceType.productFamily.symbolName) })
     }
 }

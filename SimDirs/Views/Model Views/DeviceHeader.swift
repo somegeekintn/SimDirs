@@ -10,6 +10,10 @@ import SwiftUI
 struct DeviceHeader: View {
     @ObservedObject var device  : SimDevice
     
+    init(_ device: SimDevice) {
+        self.device = device
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 3.0) {
             HStack(spacing: 8.0) {
@@ -36,8 +40,8 @@ struct DeviceHeader_Previews: PreviewProvider {
     
     static var previews: some View {
         if !devices.isEmpty {
-            DeviceHeader(device: devices[0])
-            DeviceHeader(device: devices.randomElement() ?? devices[1])
+            DeviceHeader(devices[0])
+            DeviceHeader(devices.randomElement() ?? devices[1])
         }
         else {
             Text("No devices")

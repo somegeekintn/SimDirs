@@ -7,11 +7,14 @@
 
 import SwiftUI
 
-protocol Node: NodeSource {
+protocol Node {
     associatedtype Icon: View
     associatedtype Header: View
     associatedtype Content: View
+    associatedtype Child: Node
     
+    var items                   : [Child]? { get set }
+
     var title                   : String { get }
     var headerTitle             : String { get }
 
@@ -23,14 +26,13 @@ protocol Node: NodeSource {
     
     func matchedFilterOptions() -> SourceFilter.Options
     func matchesFilter(_ filter: SourceFilter, inherited options: SourceFilter.Options) -> Bool
+    @discardableResult
+    mutating func processUpdate(_ update: SimModel.Update) -> Bool
 }
 
 extension Node {
-    var items       : [LeafNode]? {
-        get { nil }
-        set { }
-    }
-
+    var items       : [LeafNode]? { get { nil } set { } }
+    
     @ViewBuilder
     func symbolIcon(_ systemName: String, color: Color? = nil, forHeader: Bool) -> some View {
         if forHeader {
@@ -66,14 +68,11 @@ extension Node {
     func matchesFilter(_ filter: SourceFilter, inherited options: SourceFilter.Options) -> Bool {
         filter.options.isSubset(of: options) && matchesTerm(filter.searchTerm)
     }
-}
-
-/// Indicates a type that owns a list of Nodes
-
-protocol NodeSource {
-    associatedtype List: NodeList
-
-    var items    : List? { get set }
+    
+    @discardableResult
+    mutating func processUpdate(_ update: SimModel.Update) -> Bool {
+        return false
+    }
 }
 
 /// Defines the requirements of a collection that can serve as a `NodeList`.
@@ -82,14 +81,10 @@ protocol NodeList: RandomAccessCollection where Self.Element: Node, Index: Hasha
 
 extension NodeList {
     @NodeListBuilder
-    func linkEachTo<Item: Node>(emptyIsNil: Bool = false, @NodeListBuilder items: (Element) -> [Item]) -> some NodeList {
+    func linkEachTo<Item: Node>(emptyIsNil: Bool = false, @NodeListBuilder items: (Element) -> [Item]) -> [some Node] {
         map { item in
             item.link(emptyIsNil: emptyIsNil, to: { items(item) })
         }
-// Makes compiler unhappy. resultBuilder probably incorrect
-//        for item in self {
-//            item.link(to: { items(item) })
-//        }
     }
 }
 
@@ -124,17 +119,22 @@ struct RootNode<Item: Node>: Node {
         self.items = items()
     }
 
-    func icon(forHeader: Bool) -> some View { symbolIcon("tree", forHeader: forHeader) }
+    func icon(forHeader: Bool) -> some View {
+        symbolIcon("tree", forHeader: forHeader)
+    }
 }
 
 struct NodeLink<Base: Node, Item: Node>: Node {
-    var base        : Base
-    var items       : [Item]?
-    var title       : String { base.title }
-    var headerTitle : String { base.headerTitle }
-    var header      : Base.Header { base.header }
-    var content     : Base.Content { base.content }
+    typealias UpdateHandler = (SimModel.Update) -> [Item]??
 
+    var base            : Base
+    var items           : [Item]?
+    var title           : String { base.title }
+    var headerTitle     : String { base.headerTitle }
+    var header          : Base.Header { base.header }
+    var content         : Base.Content { base.content }
+    var updaterHandler  : UpdateHandler? = nil
+    
     init(_ base: Base, emptyIsNil: Bool = false, @NodeListBuilder items: () -> [Item]) {
         let list = items()
         
@@ -142,10 +142,9 @@ struct NodeLink<Base: Node, Item: Node>: Node {
         self.items = emptyIsNil ? (list.isEmpty ? nil : list) : list
     }
 
-@available(*, deprecated, message: "Consider using Root { items } instead")
-    init(@NodeListBuilder _ items: () -> [Item]) where Base == RootNode<Item> {
-        self.base = RootNode()
-        self.items = items()
+    init(_ base: Base, emptyIsNil: Bool = false, items: [Item]) {
+        self.base = base
+        self.items = emptyIsNil ? (items.isEmpty ? nil : items) : items
     }
 
     func icon(forHeader: Bool) -> some View {
@@ -154,5 +153,20 @@ struct NodeLink<Base: Node, Item: Node>: Node {
 
     func matchedFilterOptions() -> SourceFilter.Options {
         return base.matchedFilterOptions()
+    }
+    
+    mutating func onUpdate(_ handler: @escaping UpdateHandler) -> Self {
+        updaterHandler = handler
+        
+        return self
+    }
+    
+    @discardableResult
+    mutating func processUpdate(_ update: SimModel.Update) -> Bool {
+        guard let newItems = updaterHandler?(update) else { return false }
+
+        self.items = newItems
+
+        return true
     }
 }

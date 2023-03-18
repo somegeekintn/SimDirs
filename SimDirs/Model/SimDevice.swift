@@ -40,7 +40,6 @@ class SimDevice: ObservableObject, Decodable {
     let dataPathSize            : Int
     let logPath                 : String
     let deviceTypeIdentifier    : String
-    var deviceType              : SimDeviceType?
     var deviceModel             : String?
     var apps                    = [SimApp]()
     var dataURL                 : URL { URL(fileURLWithPath: dataPath) }
@@ -315,16 +314,6 @@ extension SimDevice {
 }
 
 extension Array where Element == SimDevice {
-    func linkingDeviceType(_ deviceType: SimDeviceType) -> Self {
-        let devices = filter { $0.isDeviceOfType(deviceType) }
-        
-        for device in devices {
-            device.deviceType = deviceType
-        }
-        
-        return devices
-    }
-
     func of(deviceType: SimDeviceType) -> Self {
         filter { $0.isDeviceOfType(deviceType) }
     }

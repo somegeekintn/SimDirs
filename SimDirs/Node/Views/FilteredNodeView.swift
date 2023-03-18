@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import Combine
 
 struct FilteredNodeView<T: Node>: View {
+    @Environment(\.deviceUpdates) var deviceUpdates
     @StateObject var node   : FilteredNode<T>
     @Binding var filter     : SourceFilter
     
@@ -25,6 +27,10 @@ struct FilteredNodeView<T: Node>: View {
             .searchable(text: $filter.searchTerm, placement: .sidebar)
             .onAppear { node.applyFilter(filter) }
             .onChange(of: filter) { node.applyFilter($0) }
+            .onReceive(deviceUpdates) { update in
+                node.processUpdate(update)
+                node.applyFilter(filter)
+            }
     }
 }
 
@@ -32,7 +38,7 @@ extension FilteredNodeView {
     struct Root: View {
         @ObservedObject var node    : FilteredNode<T>
         
-        var visibleItems    : FilteredNode<T>.List { node.items.map { $0.filter { !$0.filtered} } ?? [] }
+        var visibleItems    : [FilteredNode<T.Child>] { node.items.map { $0.filter { !$0.filtered} } ?? [] }
 
         var body: some View {
             let items = visibleItems

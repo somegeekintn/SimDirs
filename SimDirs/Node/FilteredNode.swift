@@ -9,17 +9,17 @@ import SwiftUI
 import Combine
 
 class FilteredNode<T: Node>: Node, ObservableObject {
-    typealias FilteredList = [FilteredNode<T.List.Element>]
+    typealias FilteredList = [FilteredNode<T.Child>]
     
     @Published var filtered : Bool
     @Published var isExpanded = false
+    @Published var items : FilteredList?
 
     var wrappedNode : T
     var title       : String { wrappedNode.title }
     var headerTitle : String { wrappedNode.headerTitle }
     var header      : some View { wrappedNode.header }
     var content     : some View { wrappedNode.content }
-    var items       : FilteredList?
     var children    : FilteredList { items ?? [] }
     
     init(_ node: T) {
@@ -63,9 +63,24 @@ class FilteredNode<T: Node>: Node, ObservableObject {
         
         return nodeMatch
     }
+
+    @discardableResult
+    func processUpdate(_ update: SimModel.Update) -> Bool {
+        if wrappedNode.processUpdate(update) {
+            items = wrappedNode.items?.asFilteredNodes()
+        }
+
+        if let items {
+            for node in items {
+                node.processUpdate(update)
+            }
+        }
+        
+        return false
+    }
 }
 
-extension NodeList {
+extension Array where Element: Node {
     func asFilteredNodes() -> [FilteredNode<Element>] {
         self.map { FilteredNode($0) }
     }

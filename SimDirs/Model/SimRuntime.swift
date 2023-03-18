@@ -112,6 +112,26 @@ class SimRuntime: ObservableObject, Comparable, Decodable {
             }
         }
     }
+
+    func reconcileDevices(_ curDevices: [SimDevice], forTypes deviceTypes: [SimDeviceType]) -> SimModel.Update? {
+        let curDevIDs       = curDevices.map { $0.udid }
+        let ourDevIDs       = devices.map { $0.udid }
+        let additions       = curDevices.filter { !ourDevIDs.contains($0.udid) }
+        let removals        = devices.filter { !curDevIDs.contains($0.udid) }
+        var result          : SimModel.Update? = nil
+        
+        if !additions.isEmpty || !removals.isEmpty {
+            let idsToRemove = removals.map { $0.udid }
+            
+            additions.completeSetup(with: deviceTypes)
+            devices.removeAll(where: { idsToRemove.contains($0.udid) })
+            devices.append(contentsOf: additions)
+            
+            result = SimModel.Update(runtime: self, additions: additions, removals: removals)
+        }
+        
+        return result
+    }
 }
 
 extension Array where Element == SimRuntime {

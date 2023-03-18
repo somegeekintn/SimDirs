@@ -13,13 +13,13 @@ enum SimError: Error {
     case invalidApp
 }
 
-struct SimDevicesUpdates {
-    let runtime     : SimRuntime
-    var additions   : [SimDevice]
-    var removals    : [SimDevice]
-}
-
 class SimModel {
+    struct Update {
+        let runtime     : SimRuntime
+        var additions   : [SimDevice]
+        var removals    : [SimDevice]
+    }
+
     var deviceTypes         : [SimDeviceType]
     var runtimes            : [SimRuntime]
     var monitor             : Cancellable?
@@ -28,7 +28,7 @@ class SimModel {
     var devices             : [SimDevice] { runtimes.flatMap { $0.devices } }
     var apps                : [SimApp] { devices.flatMap { $0.apps } }
 
-    var deviceUpdates       = PassthroughSubject<SimDevicesUpdates, Never>()
+    var deviceUpdates       = PassthroughSubject<SimModel.Update, Never>()
     
     init() {
         let simctl = SimCtl()
@@ -70,25 +70,13 @@ class SimModel {
             }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] runtimeDevs in
-                guard let this   = self else { return }
+                guard let this = self else { return }
                 
                 for (runtimeID, curDevices) in runtimeDevs {
                     guard let runtime   = this.runtimes.first(where: { $0.identifier == runtimeID }) else { print("missing runtime: \(runtimeID)"); continue }
-                    let curDevIDs       = curDevices.map { $0.udid }
-                    let lastDevID       = runtime.devices.map { $0.udid }
-                    let updates         = SimDevicesUpdates(
-                                            runtime: runtime,
-                                            additions: curDevices.filter { !lastDevID.contains($0.udid) },
-                                            removals: runtime.devices.filter { !curDevIDs.contains($0.udid) })
-
-                    if !updates.removals.isEmpty || !updates.additions.isEmpty {
-                        let idsToRemove = updates.removals.map { $0.udid }
-                        
-                        updates.additions.completeSetup(with: this.deviceTypes)
-                        runtime.devices.removeAll(where: { idsToRemove.contains($0.udid) })
-                        runtime.devices.append(contentsOf: updates.additions)
-                        
-                        this.deviceUpdates.send(updates)
+                    
+                    if let changes = runtime.reconcileDevices(curDevices, forTypes: this.deviceTypes) {
+                        this.deviceUpdates.send(changes)
                     }
 
                     for srcDevice in curDevices {
